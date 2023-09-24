@@ -6,17 +6,17 @@ const Success = () => {
     const { link } = useParams();
     const [transaction, setTransaction] = useState();
 
-    function fetchTransaction() {
-        api.get(`/api/user/transaction/success/${link}`)
-            .then((response) => {
-                setTransaction(response.data)
-            })
-            .catch((err) => {
-                console.log(err.response.data)
-            })
-    }
-
     useEffect(() => {
+        function fetchTransaction() {
+            api.get(`/api/user/transaction/success/${link}`)
+                .then((response) => {
+                    console.log(response.data)
+                    setTransaction(response.data)
+                })
+                .catch((err) => {
+                    console.log(err.response.data)
+                })
+        }
         fetchTransaction();
     }, [])
     return (

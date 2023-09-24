@@ -70,7 +70,7 @@ const Register = () => {
 
     return (
         <div>
-            <div className="h-screen flex justify-center items-center">
+            <div className="min-h-screen h-fit my-5 flex justify-center items-center">
                 <form onSubmit={handleSubmit}>
                     <div className='flex flex-row flex-wrap justify-center'>
                         <div className="bg-slate-200 h-auto w-full md:w-96 shadow rounded px-4 py-5 mx-3 mb-5">
@@ -94,6 +94,33 @@ const Register = () => {
                             <div className='mt-2'>
                                 <label htmlFor="address">Address</label>
                                 <input value={address} onChange={e => setAddress(e.target.value)} className='w-full px-3 py-1 rounded' type="text" id='address' placeholder='address' />
+                            </div>
+                        </div>
+
+                        <div className="bg-slate-200 h-fit w-full md:w-96 shadow rounded px-4 py-5 mx-3 mb-5">
+                            <div className='mt-2'>
+                                <label htmlFor="province">Province</label>
+                                <select name="" id="province" className='w-full px-3 py-1 rounded'>
+                                    <option className='w-full px-3 py-1 rounded' value="">Province</option>
+                                    <option className='w-full px-3 py-1 rounded' value=""></option>
+                                    <option className='w-full px-3 py-1 rounded' value=""></option>
+                                </select>
+                            </div>
+                            <div className='mt-2'>
+                                <label htmlFor="city">City</label>
+                                <select name="" id="city" className='w-full px-3 py-1 rounded'>
+                                    <option className='w-full px-3 py-1 rounded' value="">City</option>
+                                    <option className='w-full px-3 py-1 rounded' value=""></option>
+                                    <option className='w-full px-3 py-1 rounded' value=""></option>
+                                </select>
+                            </div>
+                            <div className='mt-2'>
+                                <label htmlFor="barangay">Barangay</label>
+                                <select name="" id="barangay" className='w-full px-3 py-1 rounded'>
+                                    <option className='w-full px-3 py-1 rounded' value="">Barangay</option>
+                                    <option className='w-full px-3 py-1 rounded' value=""></option>
+                                    <option className='w-full px-3 py-1 rounded' value=""></option>
+                                </select>
                             </div>
                         </div>
 

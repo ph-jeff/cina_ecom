@@ -26,20 +26,27 @@ module.exports.success = async (req, res) => {
             return res.status(400).json({error: 'Expired'})
         }
 
-        // const order = await Order.create({
-        //     user_id: user_id,
-        //     items: transaction.items,
-        // })
-        // console.log(order)
+        // if(transaction.url.visited){
+        //     return res.status(400).json({error: 'Expired'})
+        // }
+
+        if(!transaction.url.visited){
+            const order = await Order.create({
+                user_id: user_id,
+                items: transaction.items,
+                payment: transaction.payment,
+            })
+            console.log(order)
+        }
 
         await Cart.findOneAndDelete({user_id});
 
         // automatically set as visited once cancelled or success
         transaction.remarks = 'SUCCESS';
-        transaction.visited= true;
+        transaction.url.visited= true;
         transaction.save()
 
-        res.json(transaction)
+        res.status(200).json(transaction)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -62,7 +69,7 @@ module.exports.cancelled = async (req, res) => {
 
         // automatically set as visited once cancelled or success
         transaction.remarks = 'CANCELLED';
-        transaction.visited= true;
+        transaction.url.visited= true;
         transaction.save()
 
         res.json(transaction.items)

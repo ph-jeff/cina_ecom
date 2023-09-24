@@ -9,7 +9,7 @@ const Details = ({addToCart, product, addQuantity, subQuantity, quantity, inputQ
         {product ? (
             <>
                 <div className="min-h-screen h-fit flex flex-col items-center px-2 md:px-24 py-10">
-                    <div className="h-fit w-full shadow-xl p-2 flex"> {/* Use flex class */}
+                    <div className="h-fit w-full shadow-xl p-2 flex border border-gray-300"> {/* Use flex class */}
                         {/* for image */}
                         <div className="h-64 w-80 bg-red-900 flex items-center justify-center">
                             <img className="w-full h-full object-cover" src={product.img_url} alt="" />
@@ -63,7 +63,7 @@ const Details = ({addToCart, product, addQuantity, subQuantity, quantity, inputQ
                             </div>
                         </div>
                     </div>
-                    <div className="mt-10 min-h-24 h-fit w-full shadow-md p-2">
+                    <div className="mt-10 min-h-24 h-fit w-full shadow-md p-2 border border-gray-300">
                         <h1 className="font-medium text-2xl">Prodcut Details</h1>
                         <p className="text-gray-800">{product.description}</p>
                     </div>

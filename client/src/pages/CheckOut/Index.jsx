@@ -53,7 +53,8 @@ const Index = () => {
                 .then((response) => {
                     console.log(response)
                     setIsLoading(false);
-                    window.location.href = response.data.url
+                    navigate('/transaction/success/' + response.data.url.link)
+                    // window.location.href = response.data.url
                 })
                 .catch((error) => {
                     setIsLoading(false);

@@ -211,7 +211,7 @@ module.exports.place_order = async (req, res) => {
                     price: product.price,
                     quantity: quantity,
                 }],
-                mode: mode,
+                payment: mode,
             })
             const session = await stripe.checkout.sessions.create({
                 payment_method_types: ['card'],
@@ -229,7 +229,8 @@ module.exports.place_order = async (req, res) => {
                 success_url: process.env.STRIPE_SUCCESS_URL + transaction.url.link,
                 cancel_url: process.env.STRIPE_CANCELLED_URL + transaction.url.link,
             })
-            return res.json({ url: session.url })
+            // return res.json({ url: session.url })
+            return res.json(transaction)
         }
         else if(mode == 'cod'){
             const transaction = await Transaction.create({
@@ -243,9 +244,10 @@ module.exports.place_order = async (req, res) => {
                     price: product.price,
                     quantity: quantity,
                 }],
-                mode: mode,
+                payment: mode,
             })
-            return res.json({url: process.env.STRIPE_SUCCESS_URL + transaction.url.link})
+            // return res.json({url: process.env.STRIPE_SUCCESS_URL + transaction.url.link})
+            return res.json(transaction)
         }
 
     } catch (error) {

@@ -3,9 +3,11 @@ import delete_icon from "../../assets/delete.svg";
 import api from "../../services/apiRequest";
 import { toast } from 'react-hot-toast';
 import Loading from "../../components/Loading";
+import { useNavigate } from 'react-router-dom';
 import Items from "./Items";
 
 const CartPage = () => {
+    const navigate = useNavigate();
     const [cart, setCart] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [mode, setMode] = useState("");
@@ -24,7 +26,8 @@ const CartPage = () => {
             })
                 .then((response) => {
                     setIsLoading(false);
-                    window.location.href = response.data.url;
+                    navigate('/transaction/success/' + response.data.url.link)
+                    // window.location.href = response.data.url;
                 })
                 .catch((err) => {
                     console.log(err)

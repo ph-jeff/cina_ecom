@@ -15,7 +15,7 @@ router.get('/message', isLogin, message.index);
 router.post('/message', isLogin, message.create);
 
 // brands
-router.get('/brand', isLogin, brand.view);
+router.get('/brand', brand.view);
 
 router.get('/product', product.index);
 router.get('/product/featured', product.featured);

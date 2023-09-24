@@ -18,8 +18,12 @@ const Index = () => {
         fetchBrand()
     }, [])
     return (
-        <div className="h-fit min-h-screen bg-gray-100">
-            <div className="container mx-auto p-8">
+        <div className="h-screen flex justify-center items-center">
+            {/* filter */}
+            <div className='h-[100vh] w-[20%]'>
+
+            </div>
+            <div className='h-[100vh] min-h-fit w-[80%] bg-slate-200 flex flex-wrap flex overflow-hidden'>
                 <h1 className="text-4xl font-bold mb-8">Our Brands</h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                     {brands.length !== 0 ? (

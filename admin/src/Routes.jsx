@@ -18,10 +18,10 @@ import Category from "./pages/Product/Category/Category";
 import Size from "./pages/Product/Size/Size";
 import Brand from "./pages/Product/Brand/Brand";
 
-import Order from './pages/Order/Index';
-import Prepairing from './pages/Order/Prepairing';
-import ToShip from './pages/Order/ToShip';
-import Completed from './pages/Order/Completed';
+import Order from './pages/Order/Pending/Index';
+import Prepairing from './pages/Order/Prepairing/Index';
+import ToShip from './pages/Order/ToShip/Index';
+import Completed from './pages/Order/Completed/Index';
 
 import User from './pages/User/Index';
 import Report from './pages/Report/Index';

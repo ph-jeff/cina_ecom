@@ -5,6 +5,10 @@ const transactionSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+    // order_id: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'Order'
+    // },
     url: {
         link: {
             type: String,
@@ -37,7 +41,7 @@ const transactionSchema = new mongoose.Schema({
             type: Number
         }
     }],
-    mode: {
+    payment: {
         type: String,
     },
     remarks: {

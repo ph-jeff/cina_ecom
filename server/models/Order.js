@@ -6,6 +6,9 @@ const orderSchema = new mongoose.Schema({
         ref: 'User'
     },
     items: [{}],
+    payment: {
+        type: String,
+    },
     sub_total: {
         type: Number,
     },
@@ -15,6 +18,10 @@ const orderSchema = new mongoose.Schema({
     status: {
         type: String,
         default: 'pending',
+    },
+    destination: {
+        type: String,
+        // required: true,
     }
 },{ timestamps: true });
 const Order = mongoose.model('Order', orderSchema);
