@@ -3,6 +3,7 @@ const router = express.Router();
 
 const user = require('../controllers/UserController');
 const product = require('../controllers/ProductController');
+const brand = require('../controllers/BrandController')
 const transaction = require('../controllers/TransactionController');
 const cart = require('../controllers/CartController');
 const top_up = require('../controllers/TopUpController');
@@ -12,6 +13,9 @@ const { isLogin } = require('../middlewares/userAuth');
 
 router.get('/message', isLogin, message.index);
 router.post('/message', isLogin, message.create);
+
+// brands
+router.get('/brand', isLogin, brand.view);
 
 router.get('/product', product.index);
 router.get('/product/featured', product.featured);

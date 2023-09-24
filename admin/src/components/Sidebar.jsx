@@ -28,11 +28,11 @@ const Sidebar = () => {
                             <p className='text-slate-200 text-[14px] leading-[20px] font-bold'>Home</p>
                         </div>
                     </Link>
-                    <Link to="/sales">
+                    {/* <Link to="/sales">
                         <div className='flex items-center gap-[15px] py-[10px]'>
                             <p className='text-slate-200 text-[14px] leading-[20px] font-bold'>Sales</p>
                         </div>
-                    </Link>
+                    </Link> */}
                 </div>
 
                 <div className='text-slate-200 pt-[15px] border-b-[1px] border-slate-200/[0.5] font-medium'>

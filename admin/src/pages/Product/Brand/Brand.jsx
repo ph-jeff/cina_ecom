@@ -3,6 +3,7 @@ import ProductLayout from '../components/ProductLayout'
 import api from '../../../services/apiRequest'
 import Create from './Create'
 import Table from './Table'
+import Loading from '../../../components/Loading';
 
 const Brand = () => {
     const [open, setOpen] = useState(false);
@@ -11,6 +12,7 @@ const Brand = () => {
 
     const [brands, setBrands] = useState([]);
     const [brandName, setBrandName] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     function fetchBrand(){
         api.get('/api/admin/brand')
@@ -35,7 +37,8 @@ const Brand = () => {
                 </div>
                 <div className='bg-slate-200'>
                     {/* create modal */}
-                    <Create open={open} setOpen={setOpen} handleClose={handleClose} brandName={brandName} setBrandName={setBrandName} />
+                    <Create open={open} setOpen={setOpen} handleClose={handleClose} brandName={brandName} setBrandName={setBrandName} setIsLoading={setIsLoading} />
+                    {isLoading && <Loading />}
                 </div>
                 <Table brands={brands} />
             </div>

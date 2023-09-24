@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Update from './Update';
+import Loading from '../../../components/Loading';
 
 const Table = ({brands}) => {
     const [open, setOpen] = useState(false);
     const [brand, setBrand] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     
     const handleOpen = (brand) => {
         setBrand(brand)
@@ -37,7 +39,8 @@ const Table = ({brands}) => {
                     ))}
                 </tbody>
             </table>
-            <Update brand={brand} open={open} setOpen={setOpen} handleClose={handleClose} />
+            <Update brand={brand} open={open} setOpen={setOpen} handleClose={handleClose} setIsLoading={setIsLoading} />
+            {isLoading && <Loading />}
         </>
     )
 }

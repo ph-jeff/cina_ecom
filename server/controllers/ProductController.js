@@ -1,7 +1,7 @@
 const Product = require('../models/Product');
 const Transaction = require('../models/Transaction');
-const Order = require('../models/Order');
 const mongoose = require('mongoose');
+const slug = require('slug');
 
 const cloudinary = require('../middlewares/fileUploader');
 const path = require('path');
@@ -58,14 +58,19 @@ module.exports.view = async (req, res) => {
 
 module.exports.create = async (req, res) => {
     try {
+        const { name, quantity, price, category, brand, description, is_featured } = req.body;
+        const slug_name = slug(name, '-', {lower: true})
+        if(await Product.findOne({slug: slug_name})){
+            return res.status(400).json({error: 'Already existed'});
+        }
         const result = await cloudinary.uploader.upload(req.file.path);
 
         // Delete the temporary file created by multer
         fs.unlinkSync(req.file.path);
 
-        const { name, quantity, price, category, brand, description, is_featured } = req.body;
         const product = await Product.create({
             name,
+            slug: slug_name,
             quantity,
             price,
             img_url: result.url,
@@ -95,13 +100,21 @@ module.exports.update = async (req, res) => {
     try {
         const id = req.params.id;
         const { name, quantity, price, category, brand, description, is_featured } = req.body;
+        const slug_name = slug(name, '-', {lower: true})
+
+        if(await Product.findOne({slug: slug_name})){
+            return res.status(400).json({error: "You are trying to save a data that hasn't change"});
+        }
+
         let result = null;
         if (req.file) {
             result = await cloudinary.uploader.upload(req.file.path);
             fs.unlinkSync(req.file.path);
         }
+
         const product = await Product.findByIdAndUpdate(id, {
             name,
+            slug: slug_name,
             quantity,
             price,
             img_url: result && result.url ? result.url : this.img_url,

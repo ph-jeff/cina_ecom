@@ -61,6 +61,7 @@ const Create = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
+
         if (!fileUpload) {
             alert('No image is selected');
             setIsLoading(false);
@@ -86,6 +87,7 @@ const Create = () => {
             .catch(err => {
                 console.log(err.response)
                 setIsLoading(false);
+                alert(err.response.data.error)
             })
     }
 
@@ -191,7 +193,7 @@ const Create = () => {
                     </div>
 
                     <div className="mb-4">
-                        <label htmlFor="category" className="block text-sm font-medium text-gray-700">Category</label>
+                        <label htmlFor="category" className="block text-sm font-medium text-gray-700">Brand</label>
                         <select value={brand} onChange={(e) => setBrand(e.target.value)} className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500" name="" id="category">
                             <option value="">Please Select</option>
                             {brands.map((brand) => (

@@ -132,8 +132,8 @@ const NavigationBar = () => {
                     <Link className="px-5 border" to="/category?value=men">
                         Men
                     </Link>
-                    <Link className="px-5 border" to="/brand?value=all">
-                        Brand
+                    <Link className="px-5 border" to="/brand">
+                        Brands
                     </Link>
                 </div>
 
