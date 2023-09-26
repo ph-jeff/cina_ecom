@@ -16,10 +16,21 @@ const createToken = (id, email) => {
 }
 
 module.exports.register = async(req, res) => {
-    const {firstname, middlename, lastname, contact, address, email, password} = req.body;
+    const {
+        firstname,
+        middlename,
+        lastname, contact,
+        house_number,
+        zip_code,
+        barangay,
+        municipal,
+        province,
+        email,
+        password
+    } = req.body;
     const hashedPassword = await bcrypt.hash(password, salt)
     try {
-        if(!email || !password || !firstname || !middlename || !lastname || !contact || !address){
+        if(!email || !password || !firstname || !middlename || !lastname || !contact){
             return res.status(400).json({error: "Please fill out all fields"})
         }
 
@@ -47,7 +58,11 @@ module.exports.register = async(req, res) => {
             middlename,
             lastname,
             contact,
-            address,
+            house_number,
+            zip_code,
+            barangay,
+            municipal,
+            province,
         });
 
         const balance = await Balance.create({

@@ -50,6 +50,7 @@ const Details = ({addToCart, product, addQuantity, subQuantity, quantity, inputQ
                                                 <button className="p-2 bg-gray-800 hover:bg-gray-700 text-slate-200 rounded">Buy Now</button>
                                             </Link>
                                             <button onClick={addToCart} className="mx-2 p-2 bg-gray-800 hover:bg-gray-700 text-slate-200 rounded">Add to cart</button>
+                                            <Link to={`/product/try-it-on/${id}`} className="mx-2 p-2 bg-gray-800 hover:bg-gray-700 text-slate-200 rounded">Try it on</Link>
                                         </>
                                         
                                     ) : (

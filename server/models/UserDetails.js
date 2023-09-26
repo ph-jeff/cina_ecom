@@ -21,7 +21,23 @@ const userDetailsSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    address: {
+    house_number: {
+        type: String,
+        required: true,
+    },
+    zip_code: {
+        type: String,
+        required: true,
+    },
+    barangay: {
+        type: String,
+        required: true,
+    },
+    municipal: {
+        type: String,
+        required: true,
+    },
+    province: {
         type: String,
         required: true,
     },

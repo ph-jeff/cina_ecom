@@ -13,6 +13,7 @@ import Login from './pages/Login/Index';
 import Register from './pages/Register/Index';
 
 import ProductDetails from './pages/ProductDetails/Index';
+import TryItOn from './pages/TryItOn/Index';
 import SearchItem from './pages/SearchItem/Index';
 import NotFound from './pages/NotFound/Index';
 import TopUpForm from "./pages/TopUp/TopUpForm";
@@ -46,6 +47,7 @@ const AppRoutes = () => {
             </SettingLayout> : <Navigate to={'/login'}/>}/>
 
             <Route path='/product/details/:id' element={<ProductDetails/>}/>
+            <Route path='/product/try-it-on/:id' element={<TryItOn/>}/>
             <Route path='/check-out/:id' element={user ? <CheckOut/> : <Navigate to={'/login'}/>}/>
 
             <Route path='/transaction/success/:link' element={user ? <Success/> : <Navigate to={'/login'}/>}/>

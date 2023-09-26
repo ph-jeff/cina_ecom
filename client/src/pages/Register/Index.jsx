@@ -11,7 +11,13 @@ const Register = () => {
     const [middlename, setMiddlename] = useState("");
     const [lastname, setLastname] = useState("");
     const [contact, setContact] = useState("");
-    const [address, setAddress] = useState("");
+
+    const [house_number, setHouseNumber] = useState("");
+    const [zip_code, setZipCode] = useState("");
+
+    const [province, setProvince] = useState("");
+    const [municipal, setMunicipal] = useState("");
+    const [barangay, setBarangay] = useState("");
 
     const [email, setEmail] = useState("");
     const [emailExisted, setEmailExisted] = useState(false);
@@ -44,7 +50,11 @@ const Register = () => {
             middlename,
             lastname,
             contact,
-            address,
+            house_number,
+            zip_code,
+            province,
+            municipal,
+            barangay,
             email,
             password
         })
@@ -54,7 +64,6 @@ const Register = () => {
             setMiddlename("");
             setLastname("");
             setContact("");
-            setAddress("");
 
             setEmail("");
             setPassword("");
@@ -91,35 +100,38 @@ const Register = () => {
                                 <label htmlFor="contact_number">Contact Number</label>
                                 <input value={contact} onChange={e => setContact(e.target.value)} className='w-full px-3 py-1 rounded' type="text" id='contact_number' placeholder='contact number' />
                             </div>
-                            <div className='mt-2'>
-                                <label htmlFor="address">Address</label>
-                                <input value={address} onChange={e => setAddress(e.target.value)} className='w-full px-3 py-1 rounded' type="text" id='address' placeholder='address' />
-                            </div>
                         </div>
 
                         <div className="bg-slate-200 h-fit w-full md:w-96 shadow rounded px-4 py-5 mx-3 mb-5">
                             <div className='mt-2'>
+                                <label htmlFor="house_number">House Number</label>
+                                <input value={house_number} onChange={(e) => setHouseNumber(e.target.value)} className='w-full px-3 py-1 rounded' type="text" id='house_number' placeholder='House Number' />
+                            </div>
+                            <div className='mt-2'>
+                                <label htmlFor="zip_code">Zip Code</label>
+                                <input value={zip_code} onChange={(e) => setZipCode(e.target.value)} className='w-full px-3 py-1 rounded' type="text" id='zip_code' placeholder='Zip Code' />
+                            </div>
+                            <div className='mt-2'>
                                 <label htmlFor="province">Province</label>
-                                <select name="" id="province" className='w-full px-3 py-1 rounded'>
-                                    <option className='w-full px-3 py-1 rounded' value="">Province</option>
-                                    <option className='w-full px-3 py-1 rounded' value=""></option>
-                                    <option className='w-full px-3 py-1 rounded' value=""></option>
+                                <select value={province} onChange={(e) => setProvince(e.target.value)} name="" id="province" className='w-full px-3 py-1 rounded'>
+                                    <option className='w-full px-3 py-1 rounded' >Province</option>
+                                    <option className='w-full px-3 py-1 rounded' value="Cavite">Cavite</option>
                                 </select>
                             </div>
                             <div className='mt-2'>
-                                <label htmlFor="city">City</label>
-                                <select name="" id="city" className='w-full px-3 py-1 rounded'>
-                                    <option className='w-full px-3 py-1 rounded' value="">City</option>
-                                    <option className='w-full px-3 py-1 rounded' value=""></option>
-                                    <option className='w-full px-3 py-1 rounded' value=""></option>
+                                <label htmlFor="city">Municipal</label>
+                                <select value={municipal} onChange={(e) => setMunicipal(e.target.value)} name="" id="city" className='w-full px-3 py-1 rounded'>
+                                    <option className='w-full px-3 py-1 rounded' >City</option>
+                                    <option className='w-full px-3 py-1 rounded' value="Trece Martires">Trece Martires</option>
+                                    <option className='w-full px-3 py-1 rounded' value="Tanza">Tanza</option>
                                 </select>
                             </div>
                             <div className='mt-2'>
                                 <label htmlFor="barangay">Barangay</label>
-                                <select name="" id="barangay" className='w-full px-3 py-1 rounded'>
-                                    <option className='w-full px-3 py-1 rounded' value="">Barangay</option>
-                                    <option className='w-full px-3 py-1 rounded' value=""></option>
-                                    <option className='w-full px-3 py-1 rounded' value=""></option>
+                                <select value={barangay} onChange={(e) => setBarangay(e.target.value)} name="" id="barangay" className='w-full px-3 py-1 rounded'>
+                                    <option className='w-full px-3 py-1 rounded' >Barangay</option>
+                                    <option className='w-full px-3 py-1 rounded' value="Barangay 1">Barangay 1</option>
+                                    <option className='w-full px-3 py-1 rounded' value="Barangay 2">Barangay 2</option>
                                 </select>
                             </div>
                         </div>
