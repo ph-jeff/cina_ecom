@@ -1,21 +1,80 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react';
+import * as posenet from '@tensorflow-models/posenet';
+import Webcam from 'react-webcam';
 
 const Index = () => {
-    return (
-        <a-scene embedded>
-            {/* VR shoe model */}
-            <a-entity
-                gltf-model="url(path/to/your/shoe-model.gltf)"
-                scale="0.2 0.2 0.2"
-                position="0 0 -5"
-            ></a-entity>
+  const webcamRef = useRef(null);
+  const canvasRef = useRef(null);
 
-            {/* Basic environment */}
-            <a-sky color="#ECECEC"></a-sky>
-            <a-light type="ambient" color="#888"></a-light>
-            <a-light type="directional" position="-3 5 1" intensity="0.5"></a-light>
-        </a-scene>
-    )
-}
+  useEffect(() => {
+    const runPoseNet = async () => {
+      const net = await posenet.load();
+      setInterval(() => {
+        detect(net);
+      }, 100);
+    };
 
-export default Index
+    runPoseNet();
+  }, []);
+
+  const detect = async (net) => {
+    if (
+      typeof webcamRef.current !== 'undefined' &&
+      webcamRef.current !== null &&
+      webcamRef.current.video.readyState === 4
+    ) {
+      const video = webcamRef.current.video;
+      const videoWidth = webcamRef.current.video.videoWidth;
+      const videoHeight = webcamRef.current.video.videoHeight;
+
+      webcamRef.current.video.width = videoWidth;
+      webcamRef.current.video.height = videoHeight;
+
+      canvasRef.current.width = videoWidth;
+      canvasRef.current.height = videoHeight;
+
+      const pose = await net.estimateSinglePose(video);
+      // Access body part positions from 'pose' object
+      console.log(pose);
+
+      // Draw detected body parts on canvas
+      const ctx = canvasRef.current.getContext('2d');
+      posenet.drawSinglePose(canvasRef.current, pose);
+    }
+  };
+
+  return (
+    <div>
+      <Webcam
+        ref={webcamRef}
+        mirrored={true}
+        style={{
+          position: 'absolute',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          left: 0,
+          right: 0,
+          textAlign: 'center',
+          zIndex: 9,
+          width: 640,
+          height: 480,
+        }}
+      />
+      <canvas
+        ref={canvasRef}
+        style={{
+          position: 'absolute',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          left: 0,
+          right: 0,
+          zIndex: 9,
+          width: 640,
+          height: 480,
+        }}
+      />
+    </div>
+  );
+};
+
+export default Index;
