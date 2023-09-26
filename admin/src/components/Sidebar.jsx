@@ -15,7 +15,7 @@ const Sidebar = () => {
             })
     }
     return (
-        <div className="basis-[15%] h-[100vh]">
+        <div className="basis-[20%] h-[100vh]">
             <div className='bg-gray-600 h-screen px-[25px]'>
                 <div className='px-[15px] py-[30px] flex items-center justify-center font-medium border-b-[1px] border-slate-200/[0.5]'>
                     <h1 className='text-slate-200'>Admin Panel</h1>
@@ -37,15 +37,9 @@ const Sidebar = () => {
 
                 <div className='text-slate-200 pt-[15px] border-b-[1px] border-slate-200/[0.5] font-medium'>
                     <p className='text-[11px] leading-[16px]'>Quick Menu</p>
-                    <Link to="/users">
-                        <div className='flex items-center gap-[15px] py-[10px] border-slate-200/[0.3]'>
-                            <p className='text-slate-200 text-[14px] leading-[20px] font-bold'>User</p>
-                        </div>
-                    </Link>
-
                     <Link to="/product">
                         <div className='flex items-center gap-[15px] py-[10px] border-slate-200/[0.3]'>
-                            <p className='text-slate-200 text-[14px] leading-[20px] font-bold'>Product</p>
+                            <p className='text-slate-200 text-[14px] leading-[20px] font-bold'>Inventory</p>
                         </div>
                     </Link>
 
@@ -60,13 +54,24 @@ const Sidebar = () => {
                             <p className='text-slate-200 text-[14px] leading-[20px] font-bold'>Report</p>
                         </div>
                     </Link>
+                    <Link to="/users">
+                        <div className='flex items-center gap-[15px] py-[10px] border-slate-200/[0.3]'>
+                            <p className='text-slate-200 text-[14px] leading-[20px] font-bold'>Accounts</p>
+                        </div>
+                    </Link>
                 </div>
 
-                <div className='h-[100px] flex justify-center items-center'>
-                    <form className='flex justify-center' onSubmit={logout}>
+                <div className='text-slate-200 border-slate-200/[0.5] font-medium'>
+                    <form className='flex items-center gap-[15px] py-[10px] border-slate-200/[0.3]' onSubmit={logout}>
                         <button className='text-slate-200 text-[14px] font-bold'>Logout</button>
                     </form>
                 </div>
+
+                {/* <div className='h-[100px] flex justify-center items-center'>
+                    <form className='flex justify-center' onSubmit={logout}>
+                        <button className='text-slate-200 text-[14px] font-bold'>Logout</button>
+                    </form>
+                </div> */}
             </div>
         </div>
     )

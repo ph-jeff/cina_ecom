@@ -1,9 +1,11 @@
 import React from 'react'
 import LinkButton from '../../../components/LinkButton'
+import HeadingMark from '../../../components/HeadingMark'
 
 const ProductLayout = ({ children }) => {
     return (
         <div className='mt-[50px] mx-[50px]'>
+            <HeadingMark title={'Inventory'} />
             <div className="flex border bg-gray-800">
                 <LinkButton params={'/product'} actionName={'Product'} />
                 <LinkButton params={'/product/category'} actionName={'Category'} />

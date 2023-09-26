@@ -6,6 +6,7 @@ const slug = require('slug');
 const cloudinary = require('../middlewares/fileUploader');
 const path = require('path');
 const fs = require('fs');
+const generate_string = require('../utils/generateString')
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
@@ -102,7 +103,7 @@ module.exports.update = async (req, res) => {
         const { name, quantity, price, category, brand, description, is_featured } = req.body;
         const slug_name = slug(name, '-', {lower: true})
 
-        if(await Product.findOne({slug: slug_name})){
+        if(await Product.findOne({slug: slug_name}).count() >= 1){
             return res.status(400).json({error: "You are trying to save a data that hasn't change"});
         }
 
@@ -183,8 +184,6 @@ module.exports.checkout = async (req, res) => {
         res.status(400).json({ error: error.message })
     }
 }
-
-const generate_string = require('../utils/generateString')
 
 // place order the item
 module.exports.place_order = async (req, res) => {
