@@ -13,7 +13,7 @@
         "@emotion/react": "^11.11.1",
         "@emotion/styled": "^11.11.0",
         "@mui/icons-material": "^5.14.9",
-        "@mui/material": "^5.14.10",
+        "@mui/material": "^5.14.11",
         "@tensorflow-models/posenet": "^2.2.2",
         "@tensorflow/tfjs": "^4.11.0",
         "aframe": "^1.4.2",
