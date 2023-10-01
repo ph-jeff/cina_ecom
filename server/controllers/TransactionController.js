@@ -31,11 +31,12 @@ module.exports.success = async (req, res) => {
         // }
 
         if(!transaction.url.visited){
-            const order = await Order.create({
+            const order = await Order({
                 user_id: user_id,
                 items: transaction.items,
                 payment: transaction.payment,
             })
+            await order.save()
             console.log(order)
         }
 
