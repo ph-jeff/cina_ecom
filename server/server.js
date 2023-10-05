@@ -18,12 +18,10 @@ app.use(cors({
     credentials: true,
 }));
 
-// const local = "mongodb://localhost/e_com";
-
 const connectDB = async () => {
     try {
-        const conn = await mongoose.connect(process.env.MONGO_URI)
-        // const conn = await mongoose.connect(local)
+        // const conn = await mongoose.connect(process.env.MONGO_URI)
+        const conn = await mongoose.connect("mongodb://localhost/e_com")
         console.log(`Successfully Connected To The Database`)
     } catch (err) {
         console.log(err.message)

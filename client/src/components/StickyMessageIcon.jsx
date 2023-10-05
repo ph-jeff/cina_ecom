@@ -78,8 +78,20 @@ const StickyMessageIcon = () => {
             message
         })
         .then(response => {
-            console.log(response)
+            console.log(response.data)
             setMessage("")
+            setConversations(prev => [...prev, response.data])
+            // fetchConversation()
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
+    function fetchConversation(){
+        api.get('/api/user/message')
+        .then(response => {
+            console.log(response)
+            setConversations(response.data)
         })
         .catch(error => {
             console.log(error)
@@ -87,16 +99,6 @@ const StickyMessageIcon = () => {
     }
 
     useEffect(() => {
-        function fetchConversation(){
-            api.get('/api/user/message')
-            .then(response => {
-                console.log(response)
-                setConversations(response.data)
-            })
-            .catch(error => {
-                console.log(error)
-            })
-        }
         fetchConversation()
     }, [])
 

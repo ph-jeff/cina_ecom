@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const Index = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [product, setProduct] = useState({})
+    const [product, setProduct] = useState(null)
     const [quantity, setQuantity] = useState(1)
     const [overlimit, setOverlimit] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -64,7 +64,7 @@ const Index = () => {
             setIsLoading(false);
             toast.error(error.message)
         }
-        
+
     }
 
     function fetchItem() {
