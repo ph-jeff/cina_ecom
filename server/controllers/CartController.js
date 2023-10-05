@@ -138,7 +138,7 @@ module.exports.checkout = async(req, res) => {
         const cart = await Cart.findOne({user_id});
 
         if(mode == 'e-pay'){
-            const transaction = await Transaction.create({
+            const transaction = await Transaction({
                 user_id: user_id,
                 url: {
                     link: generate_string(),
@@ -146,6 +146,7 @@ module.exports.checkout = async(req, res) => {
                 items: cart.items,
                 payment: mode,
             })
+            await transaction.save()
             const session = await stripe.checkout.sessions.create({
                 payment_method_types: ['card'],
                 mode: 'payment',
@@ -164,11 +165,12 @@ module.exports.checkout = async(req, res) => {
                 success_url: process.env.STRIPE_SUCCESS_URL + transaction.url.link,
                 cancel_url: process.env.STRIPE_CANCELLED_URL + transaction.url.link,
             })
-            // return res.json({url: session.url})
-            return res.json(transaction)
+            console.log(transaction.url.link)
+            return res.json({url: session.url})
+            // return res.json(transaction)
         }
         else if(mode == 'cod'){
-            const transaction = await Transaction.create({
+            const transaction = await Transaction({
                 user_id: user_id,
                 url: {
                     link: generate_string(),
@@ -176,8 +178,10 @@ module.exports.checkout = async(req, res) => {
                 items: cart.items,
                 payment: mode,
             })
-            // return res.json({url: process.env.STRIPE_SUCCESS_URL + transaction.url.link})
-            return res.json(transaction)
+            await transaction.save()
+            console.log(process.env.STRIPE_SUCCESS_URL + transaction.url.link)
+            return res.json({url: process.env.STRIPE_SUCCESS_URL + transaction.url.link})
+            // return res.json(transaction)
         }
     } catch (error) {
         console.log(error.message)
