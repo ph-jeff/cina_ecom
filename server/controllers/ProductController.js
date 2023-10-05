@@ -103,9 +103,9 @@ module.exports.update = async (req, res) => {
         const { name, quantity, price, category, brand, description, is_featured } = req.body;
         const slug_name = slug(name, '-', {lower: true})
 
-        if(await Product.findOne({slug: slug_name}).count() >= 1){
-            return res.status(400).json({error: "You are trying to save a data that hasn't change"});
-        }
+        // if(await Product.findOne({slug: slug_name}).count() >= 1){
+        //     return res.status(400).json({error: "You are trying to save a data that hasn't change"});
+        // }
 
         let result = null;
         if (req.file) {

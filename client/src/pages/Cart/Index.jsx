@@ -46,6 +46,7 @@ const CartPage = () => {
         api.put(`/api/user/cart/add/${id}`)
             .then((response) => {
                 setCart(response.data.items);
+                console.log(response.data.items)
                 setIsLoading(false);
             })
             .catch((err) => {
@@ -69,18 +70,18 @@ const CartPage = () => {
     }
 
     function removeItem(id) {
+        console.log(id)
         setIsLoading(true);
         api.delete(`/api/user/cart/${id}`)
             .then((response) => {
-                selectedItem(id)
-                setCart(prev => prev.filter(product => product.product_id !== id))
+                setCart(prev => prev.filter(product => product.product_id._id !== id))
                 // setCart(response.data.items); //same as above
                 toast.success(`The item is removed`)
                 setIsLoading(false);
             })
-            .catch((err) => {
-                console.log(err);
-                toast.error(err.response.data.error)
+            .catch((error) => {
+                console.log(error);
+                // toast.error(err.response.data.error)
                 setIsLoading(false);
             });
     }

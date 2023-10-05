@@ -39,7 +39,7 @@ const Sidebar = () => {
                     <p className='text-[11px] leading-[16px]'>Quick Menu</p>
                     <Link to="/product">
                         <div className='flex items-center gap-[15px] py-[10px] border-slate-200/[0.3]'>
-                            <p className='text-slate-200 text-[14px] leading-[20px] font-bold'>Inventory</p>
+                            <p className='text-slate-200 text-[14px] leading-[20px] font-bold'>Product Management</p>
                         </div>
                     </Link>
 
@@ -49,7 +49,7 @@ const Sidebar = () => {
                         </div>
                     </Link>
 
-                    <Link to="/reports">
+                    <Link to="/reports/sales">
                         <div className='flex items-center gap-[15px] py-[10px] border-slate-200/[0.3]'>
                             <p className='text-slate-200 text-[14px] leading-[20px] font-bold'>Report</p>
                         </div>

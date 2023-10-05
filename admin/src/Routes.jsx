@@ -25,6 +25,8 @@ import Completed from './pages/Order/Completed/Index';
 
 import User from './pages/User/Index';
 import Report from './pages/Report/Index';
+import SalesReport from './pages/Report/SalesReport/SalesReport';
+import InventoryReport from './pages/Report/InventoryReport/InventoryReport';
 
 const AppRoutes = () => {
     return(
@@ -84,8 +86,12 @@ const AppRoutes = () => {
                 <User />
             </MainLayout>} />
 
-            <Route path="/reports" element={<MainLayout>
-                <Report />
+            <Route path="/reports/inventory" element={<MainLayout>
+                <InventoryReport />
+            </MainLayout>} />
+
+            <Route path="/reports/sales" element={<MainLayout>
+                <SalesReport />
             </MainLayout>} />
 
             <Route path="/*" element={<h1>Not Found</h1>} />
