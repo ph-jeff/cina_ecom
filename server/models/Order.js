@@ -5,7 +5,15 @@ const orderSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    items: [{}],
+    items: [{
+        product_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Product'
+        },
+        quantity: {
+            type: Number
+        }
+    }],
     payment: {
         type: String,
     },

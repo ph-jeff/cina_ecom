@@ -3,7 +3,12 @@ const slug = require('slug');
 
 module.exports.view = async(req, res) => {
     try {
-        const size = await Size.find()
+        const query = req.query.value || "";
+        const size = await Size.find({
+            $or: [
+                { size_origin: { $regex: query, $options: "i" } },
+            ]
+        })
         res.json(size)
     } catch (error) {
         res.status(400).json({error: error.message})

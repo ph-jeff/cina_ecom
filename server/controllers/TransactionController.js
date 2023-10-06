@@ -16,7 +16,8 @@ module.exports.success = async (req, res) => {
         const user_id = res.locals.userID;
         const { link } = req.params;
 
-        const transaction = await Transaction.findOne({ 'url.link': link, user_id })
+        const transaction = await Transaction.findOne({ 'url.link': link, user_id }).populate('items.product_id')
+        console.log(transaction)
 
         if (!transaction) {
             return res.status(404).json({ error: 'No Transaction Found' })

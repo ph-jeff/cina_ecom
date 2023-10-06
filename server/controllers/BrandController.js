@@ -6,7 +6,12 @@ const fs = require('fs');
 
 module.exports.view = async(req, res) => {
     try {
-        const brand = await Brand.find()
+        const query = req.query.value || "";
+        const brand = await Brand.find({
+            $or: [
+                { brand_name: { $regex: query, $options: "i" } },
+            ]
+        })
         res.json(brand)
     } catch (error) {
         res.status(400).json({error: error.message})

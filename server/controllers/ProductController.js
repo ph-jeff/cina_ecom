@@ -206,8 +206,6 @@ module.exports.place_order = async (req, res) => {
                 },
                 items: [{
                     product_id: product.id,
-                    name: product.name,
-                    price: product.price,
                     quantity: quantity,
                 }],
                 payment: mode,
@@ -239,8 +237,6 @@ module.exports.place_order = async (req, res) => {
                 },
                 items: [{
                     product_id: product.id,
-                    name: product.name,
-                    price: product.price,
                     quantity: quantity,
                 }],
                 payment: mode,

@@ -22,7 +22,7 @@ const Success = () => {
     return (
         <>
             {transaction ? (
-                <div className='h-screen flex flex-col justify-center items-center'>
+                <div className='h-screen flex flex-col justify-center items-center px-4 py-5'>
                     <h3 className="text-xl font-medium text-gray-800 mb-4">
                         Your purchase is successful!
                     </h3>
@@ -32,11 +32,11 @@ const Success = () => {
                             <div className="flex flex-col md:flex-row">
                                 <div className="w-full md:w-1/2 p-4">
                                     <h2 className="text-3xl font-medium text-gray-800 mb-4">
-                                        {product.name}
+                                        {product.product_id.name}
                                     </h2>
-                                    <p className="text-lg text-gray-600 mb-4">{product.description}</p>
+                                    <p className="text-lg text-gray-600 mb-4">{product.product_id.description}</p>
                                     <p className="text-xl text-gray-800 mb-4">
-                                        {parseInt(product.price).toLocaleString("en-PH", {
+                                        {parseInt(product.product_id.price).toLocaleString("en-PH", {
                                             style: "currency",
                                             currency: "PHP",
                                         })}
@@ -50,7 +50,7 @@ const Success = () => {
                                         <div className="flex justify-between mb-2">
                                             <span>Item Price:</span>
                                             <span>
-                                                {parseInt(product.price).toLocaleString("en-PH", {
+                                                {parseInt(product.product_id.price).toLocaleString("en-PH", {
                                                     style: "currency",
                                                     currency: "PHP",
                                                 })}
@@ -64,7 +64,7 @@ const Success = () => {
                                             <span>Total:</span>
                                             <span>
                                                 {(
-                                                    parseInt(product.price) * product.quantity
+                                                    parseInt(product.product_id.price) * product.quantity
                                                 ).toLocaleString("en-PH", {
                                                     style: "currency",
                                                     currency: "PHP",

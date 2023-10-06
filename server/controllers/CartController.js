@@ -137,7 +137,7 @@ module.exports.checkout = async(req, res) => {
         const user_id = res.locals.userID;
         const mode = req.body.mode;
         const products = await Product.find();
-        const cart = await Cart.findOne({user_id});
+        const cart = await Cart.findOne({user_id}).populate('items.product_id');
 
         if(mode == 'e-pay'){
             const transaction = await Transaction({
@@ -157,9 +157,9 @@ module.exports.checkout = async(req, res) => {
                         price_data: {
                             currency: 'php',
                             product_data: {
-                                name: item.name
+                                name: item.product_id.name
                             },
-                            unit_amount: 100 * parseInt(item.price),
+                            unit_amount: 100 * parseInt(item.product_id.price),
                         },
                         quantity: item.quantity,
                     }

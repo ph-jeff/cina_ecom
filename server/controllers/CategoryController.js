@@ -3,7 +3,12 @@ const slug = require('slug');
 
 module.exports.view = async(req, res) => {
     try {
-        const category = await Category.find()
+        const query = req.query.value || "";
+        const category = await Category.find({
+            $or: [
+                { category_name: { $regex: query, $options: "i" } },
+            ]
+        })
         res.json(category)
     } catch (error) {
         res.status(400).json({error: error.message})

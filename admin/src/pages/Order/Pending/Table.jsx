@@ -3,6 +3,8 @@ import api from '../../../services/apiRequest'
 
 const Table = ({orders, setOrders}) => {
 
+    console.log(orders)
+
     function handleOpen(pending){
 
     }
@@ -25,7 +27,7 @@ const Table = ({orders, setOrders}) => {
                             <td className="px-4 py-2">{order._id}</td>
                             <td className="px-4 py-2">{order.items.map(item => (
                                 <div key={item._id}>
-                                    <p>{item.name}</p>
+                                    <p>{item.product_id.name}</p>
                                 </div>
                             ))}</td>
                             <td className="px-4 py-2">{order.items.map(item => (
