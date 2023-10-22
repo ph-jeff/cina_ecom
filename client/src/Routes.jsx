@@ -23,7 +23,9 @@ import Success from './pages/Transaction/Success';
 import Cancelled from './pages/Transaction/Cancelled';
 
 import Category from './pages/Category/Index'
-import Brand from './pages/Brand/Index'
+import Brand from './pages/Brand/Index';
+import SelectedBrand from './pages/Brand/SelectedBrand';
+import Sale from './pages/Sale/Index'
 
 const AppRoutes = () => {
     const {user} = useAuthContext();
@@ -55,10 +57,13 @@ const AppRoutes = () => {
 
             <Route path='/product/search/' element={<SearchItem />}/>
             <Route path='/account/top-up' element={user ? <TopUpForm /> : <Navigate to={'/login'}/>}/>
-            <Route path='*' element={<NotFound />}/>
 
             <Route path='/category' element={<Category />}/>
             <Route path='/brand' element={<Brand />}/>
+            <Route path='/brand/:brand' element={<SelectedBrand />}/>
+            <Route path='/sale' element={<Sale />}/>
+
+            <Route path='*' element={<NotFound />}/>
 
         </Routes>
     )

@@ -74,8 +74,7 @@ const CartPage = () => {
         setIsLoading(true);
         api.delete(`/api/user/cart/${id}`)
             .then((response) => {
-                setCart(prev => prev.filter(product => product.product_id._id !== id))
-                // setCart(response.data.items); //same as above
+                fetchCart();
                 toast.success(`The item is removed`)
                 setIsLoading(false);
             })

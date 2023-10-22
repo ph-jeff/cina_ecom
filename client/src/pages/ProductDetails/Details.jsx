@@ -6,6 +6,27 @@ import TryItOnModal from './TryItOnModal';
 const Details = ({ addToCart, product, addQuantity, subQuantity, quantity, inputQuantity, overlimit }) => {
     const { id } = useParams();
     const [open, setOpen] = useState(false);
+
+    const [selectedSizeUnit, setSelectedSizeUnit] = useState('US');
+    const [selectedSize, setSelectedSize] = useState(null);
+
+    const handleSizeUnitChange = (event) => {
+        setSelectedSizeUnit(event.target.value);
+        setSelectedSize(null);
+    };
+
+    const handleSizeRadioChange = (event) => {
+        setSelectedSize(event.target.value);
+    };
+
+    const sizeOptions = {
+        US: ['Small', 'Medium', 'Large', 'XL'],
+        EU: ['36', '38', '40', '42'],
+        UK: ['8', '10', '12', '14'],
+        cm: ['30', '32', '34', '36'],
+        in: ['12', '14', '16', '18'],
+    };
+
     return (
         <>
             {product ? (
@@ -22,6 +43,51 @@ const Details = ({ addToCart, product, addQuantity, subQuantity, quantity, input
                                 <div>
                                     <h1 className="font-medium text-2xl line-clamp-1 text-gray-800">{product.name}</h1>
                                 </div>
+
+                                <div className="mb-4">
+                                    <label className="block font-bold" htmlFor="sizeUnitSelect">
+                                        Select Size Unit:
+                                    </label>
+                                    <select
+                                        id="sizeUnitSelect"
+                                        value={selectedSizeUnit}
+                                        onChange={handleSizeUnitChange}
+                                        className="p-2 border rounded-lg"
+                                    >
+                                        <option value="US">US</option>
+                                        <option value="EU">EU</option>
+                                        <option value="UK">UK</option>
+                                        <option value="cm">cm</option>
+                                        <option value="in">in</option>
+                                    </select>
+
+                                    <div className="mt-4">
+                                        <p className="font-semibold">Sizes available in {selectedSizeUnit}:</p>
+                                        <div className="flex space-x-2">
+                                            {sizeOptions[selectedSizeUnit].map((size, index) => (
+                                                <label
+                                                    key={index}
+                                                    className={`flex items-center space-x-2 p-2 rounded-lg border border-gray-400 cursor-pointer ${selectedSize === size
+                                                            ? 'bg-blue-200 border-blue-500'
+                                                            : 'bg-white'
+                                                        }`}
+                                                >
+                                                    <input
+                                                        type="radio"
+                                                        name="size"
+                                                        value={size}
+                                                        onChange={handleSizeRadioChange}
+                                                        checked={selectedSize === size}
+                                                        className="sr-only"
+                                                    />
+                                                    {size}
+                                                </label>
+                                            ))}
+                                        </div>
+                                        <p className="font-semibold mt-2">Selected size: {selectedSize}</p>
+                                    </div>
+                                </div>
+
                                 <div>
                                     <p className="text-gray-800">
                                         {product.price.toLocaleString("en-PH", {

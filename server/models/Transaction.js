@@ -5,10 +5,6 @@ const transactionSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    // order_id: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Order'
-    // },
     url: {
         link: {
             type: String,
@@ -33,6 +29,14 @@ const transactionSchema = new mongoose.Schema({
         },
         quantity: {
             type: Number
+        },
+        size: {
+            unit_size: {
+                type: String,
+            },
+            selected_size: {
+                type: String,
+            }
         }
     }],
     payment: {

@@ -10,21 +10,32 @@ const cartSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Product'
         },
-        name: {
-            type: String,
-        },
         quantity: {
             type: Number,
         },
-        price: {
-            type: Number,
-        },
-        img_url: {
-            type: String,
-        },
-        description: {
-            type: String,
-        },
+        size: {
+            unit_size: {
+                type: String,
+            },
+            selected_size: {
+                type: String,
+            }
+        }
+        // name: {
+        //     type: String,
+        // },
+        // quantity: {
+        //     type: Number,
+        // },
+        // price: {
+        //     type: Number,
+        // },
+        // img_url: {
+        //     type: String,
+        // },
+        // description: {
+        //     type: String,
+        // },
     }],
     sub_total: {
         type: Number,

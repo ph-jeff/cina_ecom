@@ -19,6 +19,9 @@ const Items = ({ cart, sub, add, removeItem }) => {
                     <div className="h-full w-1/2 grid grid-cols-3 gap-5">
                         <div className="p-4 flex justify-center items-center">
                             <span>
+                                {item.size.selected_size}
+                            </span>
+                            <span>
                                 {(item.product_id.price * item.quantity).toLocaleString("en-PH", {
                                     style: "currency",
                                     currency: "PHP",

@@ -1,6 +1,7 @@
 const Transaction = require('../models/Transaction');
 const Cart = require('../models/Cart');
 const Order = require('../models/Order');
+const UserDetails = require('../models/UserDetails');
 
 module.exports.index = async (req, res) => {
     try {
@@ -14,10 +15,11 @@ module.exports.index = async (req, res) => {
 module.exports.success = async (req, res) => {
     try {
         const user_id = res.locals.userID;
+        const user = await UserDetails.findOne({user_id})
         const { link } = req.params;
 
-        const transaction = await Transaction.findOne({ 'url.link': link, user_id }).populate('items.product_id')
-        console.log(transaction)
+        const transaction = await Transaction.findOne({ 'url.link': link, user_id }).populate('items.product_id').populate('user_id')
+        // console.log(transaction.items)
 
         if (!transaction) {
             return res.status(404).json({ error: 'No Transaction Found' })
@@ -32,10 +34,19 @@ module.exports.success = async (req, res) => {
         // }
 
         if(!transaction.url.visited){
+            let sub_total = 0;
+            transaction.items.forEach(item => {
+                sub_total = item.product_id.sale.is_sale
+                    ? sub_total + item.product_id.price - (item.product_id.price * (item.product_id.sale.discount / 100))
+                    : sub_total + item.product_id.price;
+            })
+            console.log(sub_total)
             const order = await Order({
                 user_id: user_id,
                 items: transaction.items,
                 payment: transaction.payment,
+                sub_total: sub_total,
+                destination: `${user.house_number} ${user.zip_code} ${user.barangay} ${user.municipal} ${user.province}`
             })
             await order.save()
             console.log(order)

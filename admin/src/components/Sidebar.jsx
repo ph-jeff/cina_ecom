@@ -45,7 +45,7 @@ const Sidebar = () => {
 
                     <Link to="/order">
                         <div className='flex items-center gap-[15px] py-[10px] border-slate-200/[0.3]'>
-                            <p className='text-slate-200 text-[14px] leading-[20px] font-bold'>Order</p>
+                            <p className='text-slate-200 text-[14px] leading-[20px] font-bold'>Order Management</p>
                         </div>
                     </Link>
 

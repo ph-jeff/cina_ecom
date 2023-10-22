@@ -6,7 +6,8 @@ const slug = require('slug');
 const cloudinary = require('../middlewares/fileUploader');
 const path = require('path');
 const fs = require('fs');
-const generate_string = require('../utils/generateString')
+const generate_string = require('../utils/generateString');
+const UserDetails = require('../models/UserDetails');
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
@@ -14,10 +15,10 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 module.exports.index = async (req, res) => {
     try {
         const query = req.query.value || "";
-        const limit = req.query.limit;
+        const limit = req.query.limit || 0;
         const product = await Product.find(
             {
-                is_archived: { $ne: true },
+                quantity: {$ne: 0},
                 $or: [
                     { name: { $regex: query, $options: "i" } },
                     // {description: {$regex: query}}
@@ -25,6 +26,26 @@ module.exports.index = async (req, res) => {
             }
         ).sort('-createdAt').limit(limit);
         res.status(200).json(product);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+
+module.exports.latest = async (req, res) => {
+    try {
+        const product = await Product.find({
+            quantity: {$ne: 0},
+        }).sort({createdAt: 1}).limit(5);
+        res.status(200).json(product);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+
+module.exports.sale = async (req, res) => {
+    try {
+        const sale_product = await Product.find({ "sale.is_sale": true, "quantity" : { $ne:0 } });
+        res.status(200).json(sale_product);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -59,7 +80,19 @@ module.exports.view = async (req, res) => {
 
 module.exports.create = async (req, res) => {
     try {
-        const { name, quantity, price, category, brand, description, is_featured } = req.body;
+        const {
+            name,
+            quantity,
+            price,
+            category,
+            brand,
+            description,
+            is_featured,
+            is_sale,
+            discount,
+            start,
+            end
+        } = req.body;
         const slug_name = slug(name, '-', {lower: true})
         if(await Product.findOne({slug: slug_name})){
             return res.status(400).json({error: 'Already existed'});
@@ -69,7 +102,7 @@ module.exports.create = async (req, res) => {
         // Delete the temporary file created by multer
         fs.unlinkSync(req.file.path);
 
-        const product = await Product.create({
+        const product = new Product({
             name,
             slug: slug_name,
             quantity,
@@ -79,7 +112,15 @@ module.exports.create = async (req, res) => {
             brand,
             description,
             is_featured,
+            sale: {
+                is_sale,
+                discount,
+                start,
+                end
+            }
         })
+
+        await product.save()
 
         res.status(200).json(product);
     } catch (error) {
@@ -100,7 +141,19 @@ module.exports.get_update = async (req, res) => {
 module.exports.update = async (req, res) => {
     try {
         const id = req.params.id;
-        const { name, quantity, price, category, brand, description, is_featured } = req.body;
+        const {
+            name,
+            quantity,
+            price,
+            category,
+            brand,
+            description,
+            is_featured,
+            is_sale,
+            discount,
+            start,
+            end
+        } = req.body;
         const slug_name = slug(name, '-', {lower: true})
 
         // if(await Product.findOne({slug: slug_name}).count() >= 1){
@@ -122,7 +175,13 @@ module.exports.update = async (req, res) => {
             category,
             brand,
             description,
-            is_featured
+            is_featured,
+            sale: {
+                is_sale,
+                discount,
+                start,
+                end
+            }
         }, { new: true })
         res.status(200).json(product);
     } catch (error) {
@@ -133,7 +192,7 @@ module.exports.update = async (req, res) => {
 module.exports.delete = async (req, res) => {
     try {
         const id = req.params.id;
-        const product = await Product.findByIdAndUpdate(id, { is_archived: true }, { new: true });
+        const product = await Product.findByIdAndDelete(id, { is_archived: true }, { new: true });
         res.status(200).json('remove');
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -164,8 +223,22 @@ module.exports.search = async (req, res) => {
 module.exports.category = async (req, res) => {
     try {
         const query = req.query.value;
-        const product = await Product.find({ category: query }).sort('-createdAt');
+        const product = await Product.find({
+            category: { $regex: query, $options: "i" },
+            quantity: { $ne: 0 }
+        }).sort('-createdAt');
         res.status(200).json(product);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+
+module.exports.per_brand = async (req, res) => {
+    try {
+        const { brand_name } = req.params;
+        const products = await Product.find({brand: { $regex: brand_name, $options: "i" },})
+        console.log(products)
+        res.status(200).json(products);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -175,11 +248,17 @@ module.exports.category = async (req, res) => {
 module.exports.checkout = async (req, res) => {
     try {
         const product_id = req.params.id;
+        const user_id = res.locals.userID;
         if (!mongoose.Types.ObjectId.isValid(product_id)) {
             return res.status(404).json({ error: 'No item found' });
         }
+        const user = await UserDetails.findOne({user_id});
         const product = await Product.findById(product_id);
-        res.status(200).json(product)
+        const data = {
+            product,
+            user
+        }
+        res.status(200).json(data)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -190,7 +269,8 @@ module.exports.place_order = async (req, res) => {
     try {
         const product_id = req.params.id;
         const user_id = res.locals.userID;
-        const { quantity, mode } = req.body;
+        const { quantity, mode, unit_size, selected_size } = req.body;
+        // console.log(req.body)
 
         if (!mongoose.Types.ObjectId.isValid(product_id)) {
             return res.status(404).json({ error: 'No item found' });
@@ -207,6 +287,10 @@ module.exports.place_order = async (req, res) => {
                 items: [{
                     product_id: product.id,
                     quantity: quantity,
+                    size: {
+                        unit_size,
+                        selected_size
+                    }
                 }],
                 payment: mode,
             })
@@ -219,7 +303,9 @@ module.exports.place_order = async (req, res) => {
                         product_data: {
                             name: product.name
                         },
-                        unit_amount: 100 * parseInt(product.price),
+                        unit_amount: product.sale.is_sale
+                            ? 100 * (product.price - (product.price * (product.sale.discount / 100)))
+                            : 100 * product.price
                     },
                     quantity: quantity,
                 }],

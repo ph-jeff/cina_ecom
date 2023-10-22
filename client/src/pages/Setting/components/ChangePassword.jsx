@@ -2,10 +2,15 @@ import React from 'react'
 import ActionButton from '../../../components/ActionButton'
 
 const ChangePassword = () => {
+    
+    function updatePassword(e){
+        e.preventDefault()
+    }
+
     return (
         <div className="w-full md:w-1/2">
             <div className="bg-white shadow-md p-4 rounded-md">
-                <form>
+                <form onSubmit={updatePassword}>
                     <p className="text-xl">Change Password</p>
                     <div className="mt-2 mb-2">
                         <label htmlFor="current_password" className="block mb-2">

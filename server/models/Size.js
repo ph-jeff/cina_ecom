@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const sizeSchema = new mongoose.Schema({
-    size_origin: {
+    unit_size: {
         type: String,
         required: true,
         unique: true,

@@ -27,7 +27,7 @@ const Table = ({ sizes }) => {
                 <tbody>
                     {sizes.map((size) => (
                         <tr key={size._id}>
-                            <td className="px-4 py-2">{size.size_origin}</td>
+                            <td className="px-4 py-2">{size.unit_size}</td>
                             <td className="px-4 py-2">{size.createdAt}</td>
                             <td className="px-4 py-2">{size.updatedAt}</td>
                             <td className="px-4 py-2">

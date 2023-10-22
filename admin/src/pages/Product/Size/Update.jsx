@@ -34,7 +34,7 @@ const Update = ({ size, open, setOpen, handleClose }) => {
         })
     }
     useEffect(() => {
-        setSizeOrigin(size.size_origin || "")
+        setSizeOrigin(size.unit_size || "")
     }, [size])
     return (
         <Modal

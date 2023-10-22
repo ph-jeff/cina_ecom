@@ -18,19 +18,22 @@ const style = {
     p: 4,
 };
 
-const Update = ({ category, open, setOpen, handleClose}) => {
+const Update = ({ category, open, setOpen, handleClose, setLoading}) => {
     const [categoryName, setCategoryName] = useState()
     function updateCategory(e){
         e.preventDefault()
+        setOpen(false)
+        setLoading(true);
         api.post('/api/admin/category/' + category._id, {
             category_name: categoryName,
         })
         .then(response => {
             console.log(response)
-            setOpen(false)
+            setLoading(false);
         })
         .catch(error => {
             console.log(error)
+            setLoading(false);
         })
     }
     useEffect(() => {

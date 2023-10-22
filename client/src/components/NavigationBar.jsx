@@ -135,6 +135,9 @@ const NavigationBar = () => {
                     <Link className="px-5 border" to="/brand">
                         Brands
                     </Link>
+                    <Link className="px-5 border" to="/sale">
+                        Sale
+                    </Link>
                 </div>
 
                 {/* Navigation items on the right side */}

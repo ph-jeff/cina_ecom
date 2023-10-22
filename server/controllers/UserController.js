@@ -16,7 +16,7 @@ module.exports.update = async(req, res) => {
     try {
         const user_id = res.locals.userID;
         const { firstname, middlename, lastname, contact, address } = req.body;
-        if(!firstname || !lastname || !contact || !address){
+        if(!firstname || !lastname || !contact){
             return res.status(400).json({error: 'Required field must be filled'});
         }
         const user = await UserDetails.findOneAndUpdate({user_id: user_id}, {

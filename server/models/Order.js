@@ -12,6 +12,14 @@ const orderSchema = new mongoose.Schema({
         },
         quantity: {
             type: Number
+        },
+        size: {
+            unit_size: {
+                type: String,
+            },
+            selected_size: {
+                type: String,
+            }
         }
     }],
     payment: {

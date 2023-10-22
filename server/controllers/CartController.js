@@ -21,7 +21,8 @@ module.exports.addcart = async(req, res) => {
     try {
         const product_id = req.params.id;
         const user_id = res.locals.userID;
-        const quantity = req.body.quantity;
+        const { quantity, unit_size, selected_size } = req.body;
+        console.log(req.body)
         const product = await Product.findById(product_id);
 
         const user_cart = await Cart.findOne({user_id: user_id})
@@ -38,26 +39,28 @@ module.exports.addcart = async(req, res) => {
                 user_cart.items.push({
                     product_id: product.id,
                     quantity: quantity,
-                    // name: product.name,
-                    // price: product.price,
-                    // img_url: product.img_url,
-                    // description: product.description,
+                    size: {
+                        unit_size: unit_size,
+                        selected_size: selected_size,
+                    }
                 })
             }
             user_cart.save()
+            console.log(user_cart)
             res.status(200).json(user_cart);
         }else{
-            const user_cart = await Cart.create({
+            const user_cart = new Cart({
                 user_id: user_id,
                 items: [{
                     product_id: product.id,
                     quantity: quantity,
-                    // name: product.name,
-                    // price: product.price,
-                    // img_url: product.img_url,
-                    // description: product.description,
+                    size: {
+                        unit_size: unit_size,
+                        selected_size: selected_size,
+                    }
                 }],
             })
+            await user_cart.save()
             console.log(user_cart)
             res.status(200).json(user_cart);
         }
@@ -136,7 +139,6 @@ module.exports.checkout = async(req, res) => {
     try {
         const user_id = res.locals.userID;
         const mode = req.body.mode;
-        const products = await Product.find();
         const cart = await Cart.findOne({user_id}).populate('items.product_id');
 
         if(mode == 'e-pay'){
@@ -159,7 +161,9 @@ module.exports.checkout = async(req, res) => {
                             product_data: {
                                 name: item.product_id.name
                             },
-                            unit_amount: 100 * parseInt(item.product_id.price),
+                            unit_amount: item.product_id.sale.is_sale
+                                ? 100 * (item.product_id.price - (item.product_id.price * (item.product_id.sale.discount / 100)))
+                                : 100 * item.product_id.price
                         },
                         quantity: item.quantity,
                     }

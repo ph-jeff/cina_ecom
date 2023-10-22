@@ -1,0 +1,43 @@
+{
+    "provinces": [
+        {
+            "name": "Metro manila",
+            "municipalities": [
+                {
+                    "name": "Manila",
+                    "barangays": [
+                        "Manila",
+                        "Quezon City",
+                        "Makati",
+                        "Pasig"
+                    ]
+                },
+                {
+                    "name": "Quezon City",
+                    "barangays": [
+                        "Barangay 1",
+                        "Barangay 2"
+                    ]
+                }
+            ]
+        },{
+            "name": "Cavite",
+            "municipalities": [
+                {
+                    "name": "Bacoor",
+                    "barangays": [
+                        "Molino 1",
+                        "Molino 2"
+                    ]
+                },
+                {
+                    "name": "Tagaytay",
+                    "barangays": [
+                        "Barangay A",
+                        "Barangay B"
+                    ]
+                }
+            ]
+        }
+    ]
+}

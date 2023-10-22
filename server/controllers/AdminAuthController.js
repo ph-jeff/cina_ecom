@@ -7,7 +7,8 @@ const validator = require('validator');
 const salt = parseInt(process.env.SALT);
 const secret = process.env.SECRET_KEY;
 
-const maxAge = 24 * 60 * 60; // 1 days
+const maxAge = 24 * 60 * 60 * 1000;
+
 const createToken = (id, email) => {
     return jwt.sign({id, email}, secret, { expiresIn: '3d' });
 }

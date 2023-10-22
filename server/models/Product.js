@@ -29,9 +29,9 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    size: {
-        type: [String]
-    },
+    // size: {
+    //     type: [String]
+    // },
     img_url: {
         type: String,
     },
@@ -42,6 +42,24 @@ const productSchema = new mongoose.Schema({
     is_featured: {
         type: Boolean,
         default: false,
+    },
+    sale: {
+        is_sale: {
+            type: Boolean,
+            default: false,
+        },
+        discount: {
+            type: Number,
+            default: 0,
+        },
+        start: {
+            type: Date,
+            default: null,
+        },
+        end: {
+            type: Date,
+            default: null,
+        }
     },
     is_archived: {
         type: Boolean,
