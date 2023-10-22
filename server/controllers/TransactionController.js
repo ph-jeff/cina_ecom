@@ -52,7 +52,9 @@ module.exports.success = async (req, res) => {
             console.log(order)
         }
 
-        await Cart.findOneAndDelete({user_id});
+        if(transaction.order_type === 'cart'){
+            await Cart.findOneAndDelete({user_id});
+        }
 
         // automatically set as visited once cancelled or success
         transaction.remarks = 'SUCCESS';

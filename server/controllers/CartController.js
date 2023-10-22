@@ -149,6 +149,7 @@ module.exports.checkout = async(req, res) => {
                 },
                 items: cart.items,
                 payment: mode,
+                order_type: 'cart',
             })
             await transaction.save()
             const session = await stripe.checkout.sessions.create({
@@ -183,6 +184,7 @@ module.exports.checkout = async(req, res) => {
                 },
                 items: cart.items,
                 payment: mode,
+                order_type: 'cart',
             })
             await transaction.save()
             console.log(process.env.STRIPE_SUCCESS_URL + transaction.url.link)

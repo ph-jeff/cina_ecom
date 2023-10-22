@@ -293,6 +293,7 @@ module.exports.place_order = async (req, res) => {
                     }
                 }],
                 payment: mode,
+                order_type: 'quick',
             })
             const session = await stripe.checkout.sessions.create({
                 payment_method_types: ['card'],
@@ -326,6 +327,7 @@ module.exports.place_order = async (req, res) => {
                     quantity: quantity,
                 }],
                 payment: mode,
+                order_type: 'quick',
             })
             return res.json({url: process.env.STRIPE_SUCCESS_URL + transaction.url.link})
             // return res.json(transaction)
