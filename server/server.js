@@ -18,6 +18,11 @@ app.use(cors({
     credentials: true,
 }));
 
+app.use(cors({
+    origin: "*",
+    credentials: true,
+}));
+
 const connectDB = async () => {
     try {
         const conn = await mongoose.connect(process.env.MONGO_URI)
@@ -27,13 +32,6 @@ const connectDB = async () => {
         console.log(err.message)
         process.exit(1)
     }
-}
-
-if(process.env.NODE_ENV === 'production'){
-    app.use(express.static('client/dist'));
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'))
-    })
 }
 
 const PORT = process.env.PORT || 5000;
