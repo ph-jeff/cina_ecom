@@ -4,32 +4,18 @@ const app = express();
 const cors = require('cors');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
-const path = require('path');
 dotenv.config({ path: '.env' });
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
-// app.use(cors({
-//     origin: [
-//         "http://localhost:3000",
-//         "http://localhost:3001",
-//     ],
-//     credentials: true,
-// }));
-
-// app.use(cors({
-//     origin: "*",
-//     credentials: true,
-// }));
-
-const corsOptions = {
-    origin: '*',
-    optionsSuccessStatus: 200,
-    credentials: true
-};
-
-app.use(cors(corsOptions));
+app.use(cors({
+    origin: [
+        "http://localhost:3000",
+        "http://localhost:3001",
+    ],
+    credentials: true,
+}));
 
 const connectDB = async () => {
     try {
