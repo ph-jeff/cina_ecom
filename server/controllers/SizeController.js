@@ -3,7 +3,12 @@ const slug = require('slug');
 
 module.exports.view = async(req, res) => {
     try {
-        const size = await Size.find()
+        const query = req.query.value || "";
+        const size = await Size.find({
+            $or: [
+                { unit_size: { $regex: query, $options: "i" } },
+            ]
+        })
         res.json(size)
     } catch (error) {
         res.status(400).json({error: error.message})
@@ -19,7 +24,7 @@ module.exports.create = async(req, res) => {
             return res.status(400).json({error: 'Already Exist'})
         }
         const size = await Size.create({
-            size_origin: size_origin,
+            unit_size: size_origin,
             slug: slug_name,
         })
         res.json(size)
@@ -34,7 +39,7 @@ module.exports.update = async(req, res) => {
         const size_origin = req.body.size_origin;
         const slug_name = slug(size_origin, '-', {lower: true})
         const size = await Size.findByIdAndUpdate(size_id, {
-            size_origin: size_origin,
+            unit_size: size_origin,
             slug: slug_name,
         }, {new: true})
         res.json(size)

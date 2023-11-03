@@ -47,12 +47,12 @@ module.exports.register = async(req, res) => {
             return res.status(400).json({error: "Email is already in used"})
         }
 
-        const user = await User.create({
+        const user = new User({
             email,
             password: hashedPassword,
         });
     
-        const information = await UserDetails.create({
+        const information = new UserDetails({
             user_id: user.id,
             firstname,
             middlename,
@@ -65,10 +65,8 @@ module.exports.register = async(req, res) => {
             province,
         });
 
-        const balance = await Balance.create({
-            user_id: user.id,
-            amount: 0
-        });
+        await information.save();
+        await user.save();
 
         res.status(200).json(user)
     } catch (error) {

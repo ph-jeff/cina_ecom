@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 
 const SettingSidebar = () => {
     return (
-        <div className='w-screen md:w-[20vw] min-w-[150px] h-full text-gray-800 border border-gray-300 flex justify-center'>
+        <div className='w-screen md:w-[20vw] min-w-[150px] h-full text-gray-800 flex justify-center'>
             <ul className='h-fit w-full'>
-                <li><Link to={'/account'}>Profile Settings</Link></li>
-                <li><Link to={'/transactions'}>Transaction</Link></li>
+                <li><Link className='w-full bg-red-900 text-center' to={'/account'}>Profile Settings</Link></li>
+                <li><Link className='w-full bg-red-900 text-center' to={'/transactions'}>Transaction</Link></li>
             </ul>
         </div>
     )

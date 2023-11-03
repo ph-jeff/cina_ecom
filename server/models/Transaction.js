@@ -5,10 +5,6 @@ const transactionSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    // order_id: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Order'
-    // },
     url: {
         link: {
             type: String,
@@ -31,14 +27,16 @@ const transactionSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Product'
         },
-        name: {
-            type: String
-        },
-        price: {
-            type: Number
-        },
         quantity: {
             type: Number
+        },
+        size: {
+            unit_size: {
+                type: String,
+            },
+            selected_size: {
+                type: String,
+            }
         }
     }],
     payment: {
@@ -47,6 +45,9 @@ const transactionSchema = new mongoose.Schema({
     remarks: {
         type: String,
         default: null,
+    },
+    order_type: {
+        type: String,
     }
 }, { timestamps: true });
 const Transaction = mongoose.model('Transaction', transactionSchema);

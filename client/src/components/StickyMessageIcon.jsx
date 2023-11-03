@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import api from '../services/apiRequest';
+import { messageRoute } from '../utils/apiRoutes'
 
 
 const buttonStyles = {
@@ -17,49 +18,6 @@ const buttonStyles = {
     cursor: 'pointer',
 };
 
-const conversations = [
-    {
-        user: "user1",
-        message: "Hello this is jeff seome asdfmasdf  sadf asdf asdfasdf",
-    },
-    {
-        user: "user2",
-        message: "Hello",
-    },
-    {
-        user: "user2",
-        message: "Hello",
-    },
-    {
-        user: "user2",
-        message: "Hello",
-    },
-    {
-        user: "user2",
-        message: "Hello",
-    },
-    {
-        user: "user2",
-        message: "Hello",
-    },
-    {
-        user: "user2",
-        message: "Hello",
-    },
-    {
-        user: "user2",
-        message: "Hello",
-    },
-    {
-        user: "user2",
-        message: "Hello",
-    },
-    {
-        user: "user2",
-        message: "Hello",
-    },
-]
-
 const StickyMessageIcon = () => {
     const [open, setOpen] = useState(false)
     const [conversations, setConversations] = useState([])
@@ -72,38 +30,38 @@ const StickyMessageIcon = () => {
         setOpen(false)
     }
 
-    function sendMessage(e){
+    function sendMessage(e) {
         e.preventDefault()
-        api.post('/api/user/message', {
-            message
+        api.post(messageRoute, {
+            new_message: message
         })
-        .then(response => {
-            console.log(response.data)
-            setMessage("")
-            setConversations(prev => [...prev, response.data])
-            // fetchConversation()
-        })
-        .catch(error => {
-            console.log(error)
-        })
+            .then(response => {
+                console.log(response.data)
+                setMessage("")
+                // setConversations(prev => [...prev, response.data])
+                fetchConversation()
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
-    function fetchConversation(){
-        api.get('/api/user/message')
-        .then(response => {
-            console.log(response)
-            setConversations(response.data)
-        })
-        .catch(error => {
-            console.log(error)
-        })
+    function fetchConversation() {
+        api.get(messageRoute)
+            .then(response => {
+                console.log(response)
+                setConversations(response.data)
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
 
     useEffect(() => {
-        fetchConversation()
+        // fetchConversation()
     }, [])
 
     return (
-        <div className="fixed bottom-4 right-4 text-white rounded-full shadow-md">
+        <div className="fixed bottom-4 right-8 text-white rounded-full shadow-md">
             <button onClick={openMessage} style={buttonStyles}>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -115,7 +73,7 @@ const StickyMessageIcon = () => {
                 </svg>
             </button>
 
-            <div className={`fixed bottom-24 right-4 bg-white w-72 h-fit rounded-lg shadow-lg transform transition-transform ${open ? 'scale-100' : 'scale-0'}`}>
+            <div className={`fixed bottom-20 right-8 bg-white w-72 h-fit rounded-lg shadow-lg transform transition-transform ${open ? 'scale-100' : 'scale-0'}`}>
                 <div className="flex justify-between bg-black p-2 px-4 rounded-t-lg">
                     <p className="text-white font-bold">Message</p>
                     <button className="text-white text-xl" onClick={closeMessage}>
@@ -123,13 +81,22 @@ const StickyMessageIcon = () => {
                     </button>
                 </div>
                 {/* Chat content */}
-                <section className='px-4 py-4 text-gray-800'>
+                <section className='px-4 py-2 text-gray-800'>
                     {/* messages */}
-                    <div className='rounded w-full h-[280px] mb-2 overflow-y-scroll'>
+                    <div className='w-full h-[280px] mb-2 overflow-y-scroll'>
                         {conversations.map((conversation, index) => (
-                            <div key={index}>
-                                <p></p>
-                                <p className={`bg-blue-600 my-1 p-1 w-fit rounded text-white ${conversations.length - 1 === index ? 'focus' : ''}`}>{conversation.message}</p>
+                            <div className='flex' key={index}>
+                                {conversation.fromSelf ? (
+                                    <div className='mb-3 max-w-[100px] text-left'> {/* Use text-left for your messages */}
+                                        <p className={`bg-blue-600 my-1 p-1 w-fit rounded text-white`}>{conversation.message}</p>
+                                        {/* <p className='text-slate-400 text-[10px]'>{conversation.createdAt}</p> */}
+                                    </div>
+                                ) : (
+                                    <div className='mb-3 max-w-[100px] text-right'> {/* Use text-right for others' messages */}
+                                        <p className={`bg-blue-600 my-1 p-1 w-fit rounded text-white`}>{conversation.message}</p>
+                                        {/* <p className='text-slate-400 text-[10px]'>{conversation.createdAt}</p> */}
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </div>

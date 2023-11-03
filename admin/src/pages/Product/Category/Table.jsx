@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Update from './Update';
 
-const Table = ({categories}) => {
+const Table = ({categories, setLoading}) => {
     const [open, setOpen] = useState(false);
     const [category, setCategory] = useState({})
 
@@ -37,7 +37,7 @@ const Table = ({categories}) => {
                     ))}
                 </tbody>
             </table>
-            <Update category={category} open={open} setOpen={setOpen} handleClose={handleClose} />
+            <Update category={category} open={open} setOpen={setOpen} handleClose={handleClose} setLoading={setLoading} />
         </>
     )
 }

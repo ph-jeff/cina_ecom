@@ -22,6 +22,11 @@ const Create = () => {
     const [featured, setFeatured] = useState(false);
     const navigate = useNavigate();
 
+    const [isOnSale, setIsOnSale] = useState(false);
+    const [discount, setDiscount] = useState('');
+    const [saleStartDate, setSaleStartDate] = useState('');
+    const [saleEndDate, setSaleEndDate] = useState('');
+
     // check and save file into renderable file
     const uploadImage = async (e) => {
         const file = e.target.files[0]
@@ -77,6 +82,10 @@ const Create = () => {
         formData.append('brand', brand);
         formData.append('description', description);
         formData.append('is_featured', featured);
+        formData.append('is_sale', isOnSale);
+        formData.append('discount', discount);
+        formData.append('start', saleStartDate);
+        formData.append('end', saleEndDate);
 
         api.post('/api/admin/product', formData)
             .then(({ data }) => {
@@ -92,29 +101,26 @@ const Create = () => {
     }
 
     useEffect(() => {
-        function fetchCategory(){
+        function fetchCategory() {
             api.get('/api/admin/category')
-            .then(response => {
-                setCategories(response.data)
-            })
+                .then(response => {
+                    setCategories(response.data)
+                })
         }
-        function fetchBrand(){
+        function fetchBrand() {
             api.get('/api/admin/brand')
-            .then(response => {
-                setBrands(response.data)
-                console.log(response.data)
-            })
+                .then(response => {
+                    setBrands(response.data)
+                    console.log(response.data)
+                })
         }
         fetchCategory()
         fetchBrand()
     }, [])
 
-    if (isLoading) {
-        return <Loading />
-    }
-
     return (
         <ProductLayout>
+            {isLoading && <Loading />}
             <div className="mt-10 bg-white w-full p-4 shadow-md rounded-lg border border-slate-200">
                 <div className="mb-4 flex justify-between">
                     <LinkButton params={'/product'} actionName={'Back'} />
@@ -168,6 +174,69 @@ const Create = () => {
                             />
                         </div>
                     </div>
+
+                    <div className="mb-4">
+                        <input
+                            id="isOnSale"
+                            className="mx-2"
+                            type="checkbox"
+                            checked={isOnSale}
+                            onChange={(e) => {
+                                setIsOnSale(e.target.checked)
+                                if (!e.target.checked) {
+                                    setDiscount("");
+                                    setSaleStartDate("");
+                                    setSaleEndDate("");
+                                }
+                            }}
+                        />
+                        <label htmlFor="isOnSale">Set Product on Sale</label>
+                    </div>
+
+                    {isOnSale && (
+                        <div className="grid grid-cols-3 gap-4">
+                            <div className="mb-4">
+                                <label htmlFor="discount" className="block text-sm font-medium text-gray-700">Discount (%)</label>
+                                <input
+                                    id="discount"
+                                    className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
+                                    value={discount}
+                                    onChange={(e) => setDiscount(e.target.value)}
+                                    type="number"
+                                    placeholder="Discount percentage"
+                                    min="0"
+                                    max="100"
+                                />
+                            </div>
+
+                            <div className="mb-4">
+                                <label htmlFor="saleStartDate" className="block text-sm font-medium text-gray-700">Sale Start Date</label>
+                                <input
+                                    id="saleStartDate"
+                                    className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
+                                    value={saleStartDate}
+                                    onChange={(e) => setSaleStartDate(e.target.value)}
+                                    type="date"
+                                    placeholder="Sale start date"
+                                    required
+                                />
+                            </div>
+
+                            <div className="mb-4">
+                                <label htmlFor="saleEndDate" className="block text-sm font-medium text-gray-700">Sale End Date</label>
+                                <input
+                                    id="saleEndDate"
+                                    className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
+                                    value={saleEndDate}
+                                    onChange={(e) => setSaleEndDate(e.target.value)}
+                                    type="date"
+                                    placeholder="Sale end date"
+                                    required
+                                />
+                            </div>
+                        </div>
+                    )}
+
                     <div className="grid grid-cols-2 gap-4">
                         <div className="mb-4">
                             <label htmlFor="category" className="block text-sm font-medium text-gray-700">Category</label>
@@ -180,26 +249,26 @@ const Create = () => {
                         </div>
 
                         <div className="mb-4">
-                            <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
-                            <input
-                                id="description"
-                                className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
-                                type="text"
-                                placeholder="Description"
-                            />
+                            <label htmlFor="category" className="block text-sm font-medium text-gray-700">Brand</label>
+                            <select value={brand} onChange={(e) => setBrand(e.target.value)} className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500" name="" id="category">
+                                <option value="">Please Select</option>
+                                {brands.map((brand) => (
+                                    <option value={brand.brand_name} key={brand._id}>{brand.brand_name}</option>
+                                ))}
+                            </select>
                         </div>
                     </div>
 
                     <div className="mb-4">
-                        <label htmlFor="category" className="block text-sm font-medium text-gray-700">Brand</label>
-                        <select value={brand} onChange={(e) => setBrand(e.target.value)} className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500" name="" id="category">
-                            <option value="">Please Select</option>
-                            {brands.map((brand) => (
-                                <option value={brand.brand_name} key={brand._id}>{brand.brand_name}</option>
-                            ))}
-                        </select>
+                        <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
+                        <input
+                            id="description"
+                            className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            type="text"
+                            placeholder="Description"
+                        />
                     </div>
 
                     <UploadImage image={image} uploadImage={uploadImage} removeImage={removeImage} />

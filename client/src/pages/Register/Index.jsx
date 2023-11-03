@@ -1,9 +1,10 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import api from '../../services/apiRequest';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
+import provincesData from '../../utils/provinceData.json';
 
 const Register = () => {
     const navigate = useNavigate();
@@ -23,27 +24,27 @@ const Register = () => {
     const [emailExisted, setEmailExisted] = useState(false);
     const [password, setPassword] = useState("");
 
-    function emailChecker(e){
+    function emailChecker(e) {
         setEmail(e.target.value)
-        if(email){
+        if (email) {
             api.post('/api/user/auth/register/check-email', {
                 email: e.target.value,
             })
-            .then(response => {
-                console.log(response);
-                if(response.data){
-                    setEmailExisted(true)
-                }else{
-                    setEmailExisted(false)
-                }
-            })
-            .catch(err => {
-                console.log(err.response)
-            })
+                .then(response => {
+                    console.log(response);
+                    if (response.data) {
+                        setEmailExisted(true)
+                    } else {
+                        setEmailExisted(false)
+                    }
+                })
+                .catch(err => {
+                    console.log(err.response)
+                })
         }
     }
 
-    async function handleSubmit(e){
+    async function handleSubmit(e) {
         e.preventDefault();
         api.post('/api/user/auth/register', {
             firstname,
@@ -58,24 +59,60 @@ const Register = () => {
             email,
             password
         })
-        .then(response => {
-            console.log(response.data)
-            setFirstname("");
-            setMiddlename("");
-            setLastname("");
-            setContact("");
+            .then(response => {
+                console.log(response.data)
+                setFirstname("");
+                setMiddlename("");
+                setLastname("");
+                setContact("");
 
-            setEmail("");
-            setPassword("");
-            setEmailExisted(false)
-            toast.success('You are now registered')
-            navigate('/login')
-        })
-        .catch(err => {
-            console.log(err)
-            toast.error(err.response.data.error)
-        })
+                setEmail("");
+                setPassword("");
+                setEmailExisted(false)
+                toast.success('You are now registered')
+                navigate('/login')
+            })
+            .catch(err => {
+                console.log(err)
+                toast.error(err.response.data.error)
+            })
     }
+
+    const [selectedProvince, setSelectedProvince] = useState('');
+    const [selectedMunicipality, setSelectedMunicipality] = useState('');
+    const [selectedBarangay, setSelectedBarangay] = useState('');
+
+    const [municipals, setMunicipals] = useState({});
+    const [barangays, setBarangays] = useState({});
+
+    const handleProvinceChange = (event) => {
+        const selectedProvince = event.target.value;
+        setProvince(selectedProvince)
+        setSelectedProvince(selectedProvince);
+        // reset city and barangay
+        setSelectedMunicipality('');
+        setSelectedBarangay('');
+
+        const province = provincesData.provinces.find(province => province.name === selectedProvince);
+        setMunicipals(province)
+    };
+
+    const handleMunicipalChange = (event) => {
+        const selectedMunicipality = event.target.value;
+        setMunicipal(selectedMunicipality)
+        setSelectedMunicipality(selectedMunicipality);
+        // reset barangay
+        setSelectedBarangay('');
+
+        const municipal = municipals.municipalities.find(municipal => municipal.name === selectedMunicipality);
+        setBarangays(municipal)
+    };
+
+    const handleBarangayChange = (event) => {
+        const selectedBarangay = event.target.value;
+        setBarangay(selectedBarangay)
+        setSelectedBarangay(selectedBarangay);
+    };
 
     return (
         <div>
@@ -111,27 +148,40 @@ const Register = () => {
                                 <label htmlFor="zip_code">Zip Code</label>
                                 <input value={zip_code} onChange={(e) => setZipCode(e.target.value)} className='w-full px-3 py-1 rounded' type="text" id='zip_code' placeholder='Zip Code' />
                             </div>
+
                             <div className='mt-2'>
                                 <label htmlFor="province">Province</label>
-                                <select value={province} onChange={(e) => setProvince(e.target.value)} name="" id="province" className='w-full px-3 py-1 rounded'>
-                                    <option className='w-full px-3 py-1 rounded' >Province</option>
-                                    <option className='w-full px-3 py-1 rounded' value="Cavite">Cavite</option>
+                                <select className='w-full px-3 py-1 rounded' onChange={handleProvinceChange} value={selectedProvince}>
+                                    <option value="">Select Province</option>
+                                    {provincesData.provinces.map((province, index) => (
+                                        <option key={index} value={province.name}>
+                                            {province.name}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
+
                             <div className='mt-2'>
-                                <label htmlFor="city">Municipal</label>
-                                <select value={municipal} onChange={(e) => setMunicipal(e.target.value)} name="" id="city" className='w-full px-3 py-1 rounded'>
-                                    <option className='w-full px-3 py-1 rounded' >City</option>
-                                    <option className='w-full px-3 py-1 rounded' value="Trece Martires">Trece Martires</option>
-                                    <option className='w-full px-3 py-1 rounded' value="Tanza">Tanza</option>
+                                <label htmlFor="province">Municipal</label>
+                                <select className='w-full px-3 py-1 rounded' onChange={handleMunicipalChange} value={selectedMunicipality}>
+                                    <option value="">Select Municipal</option>
+                                    {selectedProvince && municipals.municipalities.map((city, index) => (
+                                        <option key={index} value={city.name}>
+                                            {city.name}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
+
                             <div className='mt-2'>
-                                <label htmlFor="barangay">Barangay</label>
-                                <select value={barangay} onChange={(e) => setBarangay(e.target.value)} name="" id="barangay" className='w-full px-3 py-1 rounded'>
-                                    <option className='w-full px-3 py-1 rounded' >Barangay</option>
-                                    <option className='w-full px-3 py-1 rounded' value="Barangay 1">Barangay 1</option>
-                                    <option className='w-full px-3 py-1 rounded' value="Barangay 2">Barangay 2</option>
+                                <label htmlFor="province">Barangay</label>
+                                <select className='w-full px-3 py-1 rounded' onChange={handleBarangayChange} value={selectedBarangay}>
+                                    <option value="">Select Barangay</option>
+                                    {selectedMunicipality && barangays.barangays.map((barangay, index) => (
+                                        <option key={index} value={barangay}>
+                                            {barangay}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
                         </div>

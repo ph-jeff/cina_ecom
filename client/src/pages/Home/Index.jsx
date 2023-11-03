@@ -24,7 +24,7 @@ const Index = () => {
 
     function fetchProduct() {
         setIsLoading(true);
-        api.get('/api/user/product')
+        api.get('/api/user/product/latest')
         .then(response => {
             console.log(response);
             setProduct(response.data);

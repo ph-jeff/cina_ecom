@@ -5,7 +5,23 @@ const orderSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    items: [{}],
+    items: [{
+        product_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Product'
+        },
+        quantity: {
+            type: Number
+        },
+        size: {
+            unit_size: {
+                type: String,
+            },
+            selected_size: {
+                type: String,
+            }
+        }
+    }],
     payment: {
         type: String,
     },

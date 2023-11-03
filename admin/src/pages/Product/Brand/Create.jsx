@@ -18,7 +18,7 @@ const style = {
     p: 4,
 };
 
-const Create = ({ open, setOpen, handleClose, brandName, setBrandName, setIsLoading }) => {
+const Create = ({ open, setOpen, handleClose, brandName, setBrandName, setLoading }) => {
     const [fileUpload, setFileUpload] = useState(null);
     const [image, setImage] = useState(null);
 
@@ -55,7 +55,7 @@ const Create = ({ open, setOpen, handleClose, brandName, setBrandName, setIsLoad
     function addBrand(e) {
         e.preventDefault()
         setOpen(false)
-        setIsLoading(true)
+        setLoading(true)
 
         if (!fileUpload) {
             alert('No image is selected');
@@ -73,14 +73,14 @@ const Create = ({ open, setOpen, handleClose, brandName, setBrandName, setIsLoad
 
         api.post('/api/admin/brand', data)
             .then(response => {
+                console.log(response)
                 setBrandName("")
                 setImage(null)
-                setIsLoading(false)
-                alert('Added Successfully')
+                setLoading(false)
             })
             .catch(error => {
                 console.log(error)
-                setIsLoading(false)
+                setLoading(false)
             })
     }
     return (

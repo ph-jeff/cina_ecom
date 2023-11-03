@@ -16,25 +16,28 @@ const upload = multer({
 const { isAdminLogin } = require('../middlewares/userAuth');
 
 const admin = require('../controllers/AdminController')
+const dashboard = require('../controllers/DashboardController')
 
 const product = require('../controllers/ProductController')
 const transaction = require('../controllers/TransactionController')
 const brand = require('../controllers/BrandController')
 const category = require('../controllers/CategoryController')
 const size = require('../controllers/SizeController')
+const message = require('../controllers/MessageController')
+const generateInventoryReport = require('../middlewares/inventoryReport')
 
 const order = require('../controllers/OrderController')
 
-router.get('/dashboard', isAdminLogin, (req, res) => {
-    res.send('dashboard');
-})
+router.get('/dashboard', isAdminLogin, dashboard.index)
+
+router.post('/message', isAdminLogin, message.create);
 
 // products
 router.get('/product', isAdminLogin, product.index);
-router.post('/product', isAdminLogin, upload.single('image'), product.create);
+router.post('/product', isAdminLogin, generateInventoryReport, upload.single('image'), product.create);
 router.delete('/product/:id', isAdminLogin, product.delete);
 router.get('/product/update/:id', isAdminLogin, product.get_update);
-router.put('/product/update/:id', isAdminLogin, upload.single('image'), product.update);
+router.put('/product/update/:id', isAdminLogin, generateInventoryReport, upload.single('image'), product.update);
 router.get('/product/search', product.search);
 
 // brands
@@ -57,8 +60,11 @@ router.get('/users', isAdminLogin, admin.user)
 
 // orders
 router.get('/order', isAdminLogin, order.pending)
+router.put('/order/:id', isAdminLogin, order.to_be_prepared)
 router.get('/order/prepairing', isAdminLogin, order.prepairing)
+router.put('/order/prepairing/:id', isAdminLogin, order.to_be_ship)
 router.get('/order/to-ship', isAdminLogin, order.to_ship)
+router.put('/order/to-ship/:id', isAdminLogin, order.to_arrive)
 router.get('/order/completed', isAdminLogin, order.completed)
 
 router.get('/transactions', isAdminLogin, transaction.index)
