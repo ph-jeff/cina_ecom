@@ -4,8 +4,8 @@ const app = express();
 const cors = require('cors');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
+const path = require('path');
 dotenv.config({path: '.env'});
-const PORT = process.env.PORT || 5000;
 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
@@ -28,6 +28,15 @@ const connectDB = async () => {
         process.exit(1)
     }
 }
+
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static('client/dist'));
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'))
+    })
+}
+
+const PORT = process.env.PORT || 5000;
 connectDB()
 .then(() => {
     app.listen(PORT, () => {

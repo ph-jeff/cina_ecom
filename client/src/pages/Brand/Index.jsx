@@ -27,7 +27,7 @@ const Index = () => {
     return (
         <>
         {isLoading && <Loading />}
-            <div className="h-fit min-h-screen flex justify-center flex-col md:flex-row bg-[#FEE599]">
+            <div className="h-fit min-h-screen flex justify-center flex-col md:flex-row bg-[#C4A353]">
                 {/* Brand filter */}
                 {/* <div className="md:w-[20%] bg-[#C4A353] px-3 py-3">
                 <h2 className="text-slate-200 text-center text-xl font-semibold">Brands</h2>

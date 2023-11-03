@@ -5,17 +5,60 @@ import ActionButton from '../../components/ActionButton';
 import { toast } from 'react-hot-toast';
 import ChangePassword from './components/ChangePassword';
 import Loading from '../../components/Loading';
+import provincesData from '../../utils/provinceData.json';
 
 const SettingPage = () => {
     const navigate = useNavigate();
+    const [isLoading, setLoading] = useState(false);
+
     const [user, setUser] = useState({});
     const [userdetails, setUserDetails] = useState({});
+
     const [firstname, setFirstname] = useState('');
     const [middlename, setMiddlename] = useState('');
     const [lastname, setLastname] = useState('');
     const [contact, setContact] = useState('');
-    const [address, setAddress] = useState('');
-    const [isLoading, setLoading] = useState(false);
+
+    const [province, setProvince] = useState("");
+    const [municipal, setMunicipal] = useState("");
+    const [barangay, setBarangay] = useState("");
+
+    // for address
+    const [selectedProvince, setSelectedProvince] = useState('');
+    const [selectedMunicipality, setSelectedMunicipality] = useState('');
+    const [selectedBarangay, setSelectedBarangay] = useState('');
+
+    const [municipals, setMunicipals] = useState({});
+    const [barangays, setBarangays] = useState({});
+
+    const handleProvinceChange = (event) => {
+        const selectedProvince = event.target.value;
+        setProvince(selectedProvince)
+        setSelectedProvince(selectedProvince);
+        // reset city and barangay
+        setSelectedMunicipality('');
+        setSelectedBarangay('');
+
+        const province = provincesData.provinces.find(province => province.name === selectedProvince);
+        setMunicipals(province)
+    };
+
+    const handleMunicipalChange = (event) => {
+        const selectedMunicipality = event.target.value;
+        setMunicipal(selectedMunicipality)
+        setSelectedMunicipality(selectedMunicipality);
+        // reset barangay
+        setSelectedBarangay('');
+
+        const municipal = municipals.municipalities.find(municipal => municipal.name === selectedMunicipality);
+        setBarangays(municipal)
+    };
+
+    const handleBarangayChange = (event) => {
+        const selectedBarangay = event.target.value;
+        setBarangay(selectedBarangay)
+        setSelectedBarangay(selectedBarangay);
+    };
 
     function handleSubmit(e) {
         setLoading(true);
@@ -26,7 +69,7 @@ const SettingPage = () => {
                 middlename,
                 lastname,
                 contact,
-                address,
+                // address,
             })
             .then(({ data }) => {
                 console.log(data);
@@ -43,22 +86,26 @@ const SettingPage = () => {
     function fetchUser() {
         setLoading(true);
         api.get('/api/user/account')
-            .then((response) => {
-                setUserDetails(response.data.userdetails);
-                setUser(response.data.userdetails.user_id);
-                setFirstname(response.data.userdetails.firstname);
-                setMiddlename(response.data.userdetails.middlename);
-                setLastname(response.data.userdetails.lastname);
-                setContact(response.data.userdetails.contact);
-                setAddress(response.data.userdetails.address);
-                console.log(response)
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.log(error);
-                setLoading(false);
-                navigate('/login');
-            });
+        .then((response) => {
+            // console.log(response)
+            setUserDetails(response.data.userdetails);
+            setUser(response.data.userdetails.user_id);
+            setFirstname(response.data.userdetails.firstname);
+            setMiddlename(response.data.userdetails.middlename);
+            setLastname(response.data.userdetails.lastname);
+            setContact(response.data.userdetails.contact);
+
+            // setProvince(response.data.userdetails.province || '')
+            // setMunicipal(response.data.userdetails.municipal || '')
+            // setBarangay(response.data.userdetails.barangay || '')
+
+            setLoading(false);
+        })
+        .catch((error) => {
+            console.log(error);
+            setLoading(false);
+            navigate('/login');
+        });
     }
 
     useEffect(() => {
@@ -111,6 +158,42 @@ const SettingPage = () => {
                                             type="text"
                                             className="w-full p-2 border rounded-md"
                                         />
+                                    </div>
+
+                                    <div className='mb-2'>
+                                        <label htmlFor="province">Province</label>
+                                        <select className='w-full p-2 border rounded-md' onChange={handleProvinceChange} value={selectedProvince}>
+                                            <option value="">Select Province</option>
+                                            {provincesData.provinces.map((province, index) => (
+                                                <option key={index} value={province.name}>
+                                                    {province.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    <div className='mb-2'>
+                                        <label htmlFor="province">Municipal</label>
+                                        <select className='w-full p-2 border rounded-md' onChange={handleMunicipalChange} value={selectedMunicipality}>
+                                            <option value="">Select Municipal</option>
+                                            {selectedProvince && municipals.municipalities.map((city, index) => (
+                                                <option key={index} value={city.name}>
+                                                    {city.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    <div className='mb-2'>
+                                        <label htmlFor="province">Barangay</label>
+                                        <select className='w-full p-2 border rounded-md' onChange={handleBarangayChange} value={selectedBarangay}>
+                                            <option value="">Select Barangay</option>
+                                            {selectedMunicipality && barangays.barangays.map((barangay, index) => (
+                                                <option key={index} value={barangay}>
+                                                    {barangay}
+                                                </option>
+                                            ))}
+                                        </select>
                                     </div>
                                     <ActionButton actionName={'Save'} />
                                 </form>

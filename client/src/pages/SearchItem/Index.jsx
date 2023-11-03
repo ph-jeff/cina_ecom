@@ -26,8 +26,8 @@ const Index = () => {
 
     return (
         <div>
-            <div className="h-fit flex justify-center items-center">
-                <div className='h-fit min-h-screen w-[80%] bg-slate-200 flex flex-wrap flex justify-center overflow-hidden'>
+            <div className="h-fit flex justify-center items-center bg-[#C4A353]">
+                <div className='h-fit min-h-screen w-[80%] bg-[#C4A353] flex flex-wrap flex justify-center overflow-hidden'>
                     {products.length != 0 ? (
                         <>
                             {products.map((product) => (

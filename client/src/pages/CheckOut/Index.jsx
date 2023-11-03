@@ -120,7 +120,7 @@ const Index = () => {
     return (
         <>
             {isLoading && <Loading />}
-            <div className="min-h-screen flex flex-col items-center justify-center bg-[#FEE599] bg-slate-200 py-10 px-4 md:px-24">
+            <div className="min-h-screen flex flex-col items-center justify-center bg-[#C4A353] py-10 px-4 md:px-24">
                 {product ? (
                     <>
                         <div className="w-full max-w-screen-md bg-white rounded-lg overflow-hidden mb-4">

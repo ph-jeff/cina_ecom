@@ -105,23 +105,32 @@ const CartPage = () => {
     return (
         <div>
             {isLoading && <Loading />}
-            <div className="min-h-screen h-fit flex flex-col justify-center items-center px-2 md:px-24 py-10 bg-slate-200">
+            <div className="min-h-screen h-fit flex flex-col justify-center items-center px-2 md:px-24 py-10 bg-[#C4A353]">
                 <h1 className="text-gray-800 text-3xl">Your Cart</h1>
                 {cart.length !== 0 ? (
                     <>
                         <Items cart={cart} sub={sub} add={add} removeItem={removeItem} />
-                        <div className="w-full md:w-1/2 md:pr-4 mb-4 bg-white rounded-lg shadow-md p-4">
-                            <div className="w-full h-1/8 mb-4">
-                                <select value={mode} onChange={(e) => setMode(e.target.value)} name="" id="" className="w-full text-slate-200 hover:bg-gray-700 px-2 py-1 bg-gray-800 rounded">
-                                    <option value="" >Please Select</option>
+                        <div className="w-full md:w-1/2 md:pl-4 mb-4 bg-white rounded-lg shadow-md p-4">
+                            <h2 className="text-gray-800 font-semibold text-lg mb-4">Payment Options</h2>
+
+                            <div className="mb-4">
+                                <label htmlFor="payment-mode" className="block text-gray-600 text-sm mb-2">Select Payment Mode</label>
+                                <select
+                                    id="payment-mode"
+                                    value={mode}
+                                    onChange={(e) => setMode(e.target.value)}
+                                    className="w-full text-gray-800 px-3 py-2 bg-gray-200 rounded"
+                                >
+                                    <option value="">Please Select</option>
                                     <option value="cod">COD</option>
                                     <option value="e-pay">E-Pay</option>
                                 </select>
                             </div>
-                            <div className="w-full h-1/8">
-                                <button onClick={checkout} className="w-full text-slate-200 hover:bg-gray-700 px-2 py-1 bg-gray-800 rounded">Checkout</button>
-                            </div>
+                            <button onClick={checkout} className="w-full text-white hover:bg-gray-700 px-3 py-2 bg-gray-800 rounded">
+                                Checkout
+                            </button>
                         </div>
+
                     </>
 
                 ) : (
