@@ -18,7 +18,7 @@ const style = {
     p: 4,
 };
 
-const Update = ({ brand, open, setOpen, handleClose, setLoading }) => {
+const Update = ({ brand, open, setOpen, handleClose, fetchBrand }) => {
     const [brandName, setBrandName] = useState("")
 
     const [fileUpload, setFileUpload] = useState(null);
@@ -57,7 +57,6 @@ const Update = ({ brand, open, setOpen, handleClose, setLoading }) => {
     function updateBrand(e) {
         e.preventDefault()
         setOpen(false)
-        setLoading(true)
 
         if (brandName == "") {
             alert('Brand Name should not be empty');
@@ -71,11 +70,10 @@ const Update = ({ brand, open, setOpen, handleClose, setLoading }) => {
         api.post('/api/admin/brand/' + brand._id, data)
             .then(response => {
                 console.log(response)
-                setLoading(false)
+                fetchBrand()
             })
             .catch(error => {
                 console.log(error)
-                setLoading(false)
             })
     }
     useEffect(() => {

@@ -20,6 +20,7 @@ module.exports.view = async(req, res) => {
 
 module.exports.create = async(req, res) => {
     try {
+        console.log(req.body)
         const image = await cloudinary.uploader.upload(req.file.path);
         const brand_name = req.body.brand_name;
         const slug_name = slug(brand_name, '-', {lower: true})
@@ -28,14 +29,18 @@ module.exports.create = async(req, res) => {
             return res.status(400).json({error: 'Already Exist'})
         }
         
-        const brand = await Brand.create({
+        const brand = new Brand({
             brand_name: brand_name,
             img_url: image.url,
             slug: slug_name,
         })
+
+        await brand.save();
+        console.log(brand)
         
         res.json(brand)
     } catch (error) {
+        console.log(error)
         res.status(400).json({error: error.message})
     }
 }
