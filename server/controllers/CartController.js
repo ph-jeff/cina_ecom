@@ -22,19 +22,37 @@ module.exports.addcart = async(req, res) => {
         const product_id = req.params.id;
         const user_id = res.locals.userID;
         const { quantity, unit_size, selected_size } = req.body;
-        console.log(req.body)
         const product = await Product.findById(product_id);
 
         const user_cart = await Cart.findOne({user_id: user_id})
         if(user_cart){
-            let itemIndex = user_cart.items.findIndex(p => p.product_id == product_id);
+            let itemIndex = user_cart.items.findIndex(p => p.product_id === product_id && p.size.selected_size === selected_size);
             if(itemIndex > -1){
                 let prodItem = user_cart.items[itemIndex];
-                if(product.quantity > prodItem.quantity){
-                    prodItem.quantity = prodItem.quantity + parseInt(quantity);
-                }else{
+                if(product.quantity < prodItem.quantity + parseInt(quantity)){
                     return res.status(400).json({error: 'Too many items on cart'});
                 }
+                
+                console.log(prodItem.size.selected_size)
+                console.log(req.body.selected_size)
+
+                const same = prodItem.size.selected_size != selected_size ? true : false
+                console.log(same)
+
+                if(prodItem.size.selected_size != selected_size){
+                    user_cart.items.push({
+                        product_id: product.id,
+                        quantity: quantity,
+                        size: {
+                            unit_size: unit_size,
+                            selected_size: selected_size,
+                        }
+                    })
+                    user_cart.save()
+                    return res.status(200).json(user_cart);
+                }
+
+                prodItem.quantity = prodItem.quantity + parseInt(quantity);
             }else{
                 user_cart.items.push({
                     product_id: product.id,
@@ -46,7 +64,6 @@ module.exports.addcart = async(req, res) => {
                 })
             }
             user_cart.save()
-            console.log(user_cart)
             res.status(200).json(user_cart);
         }else{
             const user_cart = new Cart({
@@ -61,7 +78,6 @@ module.exports.addcart = async(req, res) => {
                 }],
             })
             await user_cart.save()
-            console.log(user_cart)
             res.status(200).json(user_cart);
         }
     } catch (error) {
@@ -72,7 +88,7 @@ module.exports.addcart = async(req, res) => {
 
 module.exports.add = async(req, res) => {
     try {
-        const product_id = req.params.id;
+        const product_id = req.params.product_id;
         const user_id = res.locals.userID;
         const product = await Product.findById(product_id);
         const user_cart = await Cart.findOne({user_id: user_id}).populate('items.product_id')
@@ -97,7 +113,7 @@ module.exports.add = async(req, res) => {
 
 module.exports.sub = async(req, res) => {
     try {
-        const product_id = req.params.id;
+        const product_id = req.params.product_id;
         const user_id = res.locals.userID;
         const user_cart = await Cart.findOne({user_id: user_id}).populate('items.product_id')
         let itemIndex = user_cart.items.findIndex(p => p.product_id.id == product_id);
@@ -118,7 +134,7 @@ module.exports.sub = async(req, res) => {
 
 module.exports.remove = async(req, res) => {
     try {
-        const product_id = req.params.id;
+        const product_id = req.params.product_id;
         const user_id = res.locals.userID;
         const user_cart = await Cart.findOne({user_id: user_id}).populate('items.product_id')
         let itemIndex = user_cart.items.findIndex(p => p.product_id.id == product_id);

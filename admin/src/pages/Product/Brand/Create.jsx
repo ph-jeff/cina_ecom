@@ -18,7 +18,9 @@ const style = {
     p: 4,
 };
 
-const Create = ({ open, setOpen, handleClose, brandName, setBrandName, setLoading }) => {
+const Create = ({ open, handleClose, fetchBrand }) => {
+    
+    const [brandName, setBrandName] = useState("");
     const [fileUpload, setFileUpload] = useState(null);
     const [image, setImage] = useState(null);
 
@@ -48,15 +50,8 @@ const Create = ({ open, setOpen, handleClose, brandName, setBrandName, setLoadin
         });
     };
 
-    function removeImage() {
-        setImage(null);
-    }
-
     function addBrand(e) {
         e.preventDefault()
-        setOpen(false)
-        setLoading(true)
-
         if (!fileUpload) {
             alert('No image is selected');
             return;
@@ -76,11 +71,12 @@ const Create = ({ open, setOpen, handleClose, brandName, setBrandName, setLoadin
                 console.log(response)
                 setBrandName("")
                 setImage(null)
-                setLoading(false)
+                handleClose()
+                fetchBrand();
             })
             .catch(error => {
                 console.log(error)
-                setLoading(false)
+                handleClose(false)
             })
     }
     return (
@@ -133,7 +129,9 @@ const Create = ({ open, setOpen, handleClose, brandName, setBrandName, setLoadin
                                 <label className="block text-sm font-medium text-gray-700">Image Preview</label>
                                 <div className="relative w-24 h-24 bg-red-900 rounded-full">
                                     <img className="h-full w-full object-cover" src={image} alt="Product" />
-                                    <button onClick={removeImage} className="absolute top-0 right-0 rounded-full bg-red-900 text-white p-1">X</button>
+                                    <button type='button' onClick={() => {
+                                        setImage(null)
+                                    }} className="absolute top-0 right-0 rounded-full bg-red-900 text-white p-1">X</button>
                                 </div>
                             </div>
                         )}

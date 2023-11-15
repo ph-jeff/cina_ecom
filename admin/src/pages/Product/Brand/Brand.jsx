@@ -7,38 +7,39 @@ import Loading from '../../../components/Loading';
 
 const Brand = () => {
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
 
     const [brands, setBrands] = useState([]);
-    const [brandName, setBrandName] = useState("");
     const [query, setQuery] = useState("");
     const [isLoading, setLoading] = useState(false);
 
     function fetchBrand(){
+        setLoading(true);
         api.get(`/api/admin/brand?value=${query}`)
         .then(response => {
             setBrands(response.data)
+            setLoading(false);
         })
         .catch(error => {
             console.log(error)
+            setLoading(false);
         })
+        
     }
 
     useEffect(() => {
         fetchBrand()
-    }, [query, brands])
+    }, [query])
 
     return (
         <ProductLayout>
             {isLoading && <Loading />}
             <div className="mt-10 bg-white w-full p-4 shadow-md rounded-lg border border-slate-200">
                 <div className="flex justify-between mb-4">
-                    <button onClick={handleOpen} className="bg-gray-800 hover:bg-gray-600 text-white py-2 px-4 rounded">+</button>
+                    <button onClick={() => setOpen(!open)} className="bg-gray-800 hover:bg-gray-600 text-white py-2 px-4 rounded">+</button>
                     <input className="px-4 py-2 rounded border" value={query} onChange={(e) => setQuery(e.target.value)} type="search" placeholder="Search" />
                 </div>
-                    <Create open={open} setOpen={setOpen} handleClose={handleClose} brandName={brandName} setBrandName={setBrandName} setLoading={setLoading} />
-                <Table brands={brands} setLoading={setLoading} />
+                <Create open={open} handleClose={() => setOpen(!open)} fetchBrand={fetchBrand} />
+                <Table brands={brands} setLoading={setLoading} fetchBrand={fetchBrand} />
             </div>
         </ProductLayout>
     )

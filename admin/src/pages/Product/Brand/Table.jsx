@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Update from './Update';
 import Loading from '../../../components/Loading';
 
-const Table = ({brands, setLoading}) => {
+const Table = ({brands, fetchBrand}) => {
     const [open, setOpen] = useState(false);
     const [brand, setBrand] = useState("");
     
@@ -38,7 +38,7 @@ const Table = ({brands, setLoading}) => {
                     ))}
                 </tbody>
             </table>
-            <Update brand={brand} open={open} setOpen={setOpen} handleClose={handleClose} setLoading={setLoading} />
+            <Update brand={brand} open={open} setOpen={setOpen} handleClose={handleClose} fetchBrand={fetchBrand} />
         </>
     )
 }

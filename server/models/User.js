@@ -25,15 +25,20 @@ const salt = parseInt(process.env.SALT);
 async function createUser(){
     try {
         const hashed = await bcrypt.hash('password', salt);
-        const user = await User.create({
-            email: 'Admin',
-            password:  hashed,
-            account_type: 'admin',
-        })
-        console.log(user);
+
+        const has_user = await User.findOne({email: 'Admin'});
+        if(!has_user){
+            const user = new User({
+                email: 'Admin',
+                password:  hashed,
+                account_type: 'admin',
+            })
+            await user.save();
+            console.log(user);
+        }
     } catch (error) {
         console.log(error);
     }
 }
 
-// createUser();
+createUser();
