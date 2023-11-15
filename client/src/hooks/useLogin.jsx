@@ -23,11 +23,10 @@ export const useLogin = () => {
             navigate('/');
         })
         .catch(err => {
-            toast.error(err.response.data.error);
             localStorage.removeItem('user');
             setIsLoading(false);
             localStorage.removeItem('user');
-            // navigate('/login');
+            navigate('/login');
         })
     }
     return { login, isLoading };

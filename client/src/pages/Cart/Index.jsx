@@ -93,9 +93,10 @@ const CartPage = () => {
                 setIsLoading(false);
                 setCart(response.data);
             })
-            .catch((err) => {
+            .catch((error) => {
                 setIsLoading(false);
-                console.log(err);
+                toast.error(error.response.data.error);
+                navigate('/login');
             });
     }
     useEffect(() => {
