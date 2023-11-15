@@ -107,7 +107,12 @@ module.exports.login = async(req, res) => {
         }
 
         const token = createToken(user._id, user.email);
-        res.cookie('u_token', token, { httpOnly: true, secure: true, maxAge: maxAge * 1000 }).status(200).json({user});
+        // res.cookie('u_token', token, { httpOnly: true, secure: true, maxAge: maxAge * 1000 }).status(200).json({user});
+
+        // for testing
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 7);
+        res.cookie('u_token', token, { httpOnly: true, sameSite: 'None', secure: true, expires: expirationDate }).status(200).json(data);
 
     } catch (error) {
         res.status(400).json({error: error.message});
