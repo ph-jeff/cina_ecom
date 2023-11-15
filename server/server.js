@@ -37,7 +37,7 @@ app.use(cors({
         "http://localhost:3000",
         "http://localhost:3001",
 
-        // dynamic host / for dev
+        // local host / for dev
         // `http://${getLocalIpAddress()}:3000`,
         // `http://${getLocalIpAddress()}:3001`,
     ],
@@ -63,7 +63,7 @@ connectDB()
         console.log(`listening on http://${getLocalIpAddress()}:${PORT}`);
     });
 
-    // for development
+    // for development / local hosting
     // app.listen(PORT, () => {
     //     console.log(`The server is running on http://${getLocalIpAddress()}:${PORT}`);
     // })
