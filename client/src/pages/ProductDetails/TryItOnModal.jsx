@@ -42,8 +42,8 @@ const TryItOnModal = ({ open, closeModal }) => {
                 detect(net);
             }, 100);
         };
-      
-          runPoseNet();
+
+        runPoseNet();
     }, []);
 
     const detect = async (net) => {
@@ -52,29 +52,7 @@ const TryItOnModal = ({ open, closeModal }) => {
             webcamRef.current !== null &&
             webcamRef.current.video.readyState === 4
         ) {
-            const video = webcamRef.current.video;
-            const videoWidth = webcamRef.current.video.videoWidth;
-            const videoHeight = webcamRef.current.video.videoHeight;
-
-            webcamRef.current.video.width = videoWidth;
-            webcamRef.current.video.height = videoHeight;
-
-            canvasRef.current.width = videoWidth;
-            canvasRef.current.height = videoHeight;
-
-            const pose = await net.estimateSinglePose(video);
-            // Access body part positions from 'pose' object
-            // console.log(pose.keypoints);
-
-            pose.keypoints.forEach(keypoint => {
-                if(keypoint.part === 'rightAnkle' || keypoint.part === 'leftAnkle'){
-                    console.log(keypoint.score)
-                }
-            });
-
-            // Draw detected body parts on canvas
-            //   const ctx = canvasRef.current.getContext('2d');
-            //   posenet.drawSinglePose(canvasRef.current, pose);
+            const video = document.getElementById('ar-video');
         }
     };
 
@@ -101,3 +79,61 @@ const TryItOnModal = ({ open, closeModal }) => {
 }
 
 export default TryItOnModal
+
+// // src/components/ARShoeTryOn.js
+// import React, { useEffect } from 'react';
+// import * as tf from '@tensorflow/tfjs';
+// import 'aframe';
+// import 'aframe-ar';
+
+// const TryItOnModal = () => {
+//   useEffect(() => {
+//     const runARShoeTryOn = async () => {
+//       const net = await tf.loadGraphModel('/path/to/tfjs_model/model.json');
+
+//       // Access webcam
+//       const video = document.getElementById('ar-video');
+//       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+//       video.srcObject = stream;
+
+//       // Perform shoe detection and display AR content
+//       video.addEventListener('loadeddata', async () => {
+//         const canvas = document.getElementById('ar-canvas');
+//         const context = canvas.getContext('2d');
+
+//         while (true) {
+//           context.drawImage(video, 0, 0, 640, 480);
+
+//           const img = tf.browser.fromPixels(canvas);
+//           const result = await net.executeAsync(tf.image.resizeBilinear(img, [224, 224]));
+
+//           // Check for shoe detection and render AR content
+//           // Implement your AR rendering logic here
+
+//           img.dispose();
+//           await tf.nextFrame();
+//         }
+//       });
+//     };
+
+//     runARShoeTryOn();
+//   }, []);
+
+//   return (
+//     <div>
+//       <a-scene embedded arjs='sourceType: webcam;'>
+//         <a-video
+//           src="#ar-video"
+//           width="640"
+//           height="480"
+//           rotation="-90 0 0"
+//         ></a-video>
+//         {/* Add your AR content components here */}
+//       </a-scene>
+//       <video id="ar-video" />
+//       <canvas id="ar-canvas" width="640" height="480" style={{ display: 'none' }} />
+//     </div>
+//   );
+// };
+
+// export default TryItOnModal;

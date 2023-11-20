@@ -8,6 +8,7 @@ import Loading from "../../components/Loading";
 import NotFound from "../NotFound/Index";
 import Details from "./Details";
 import UnitSizeConverter from "./UnitSizeConverter";
+import TryItOnModal from './TryItOnModal';
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -20,6 +21,7 @@ const ProductDetails = () => {
     const [selectedSizeUnit, setSelectedSizeUnit] = useState('US');
     const [selectedSize, setSelectedSize] = useState(null);
     const [sizeError, setSizeError] = useState(false);
+    const [open, setOpen] = useState(false);
 
     const handleSizeUnitChange = (event) => {
         setSelectedSizeUnit(event.target.value);
@@ -225,7 +227,7 @@ const ProductDetails = () => {
                                                     <button className="p-2 bg-gray-800 hover:bg-gray-700 text-slate-200 rounded">Buy Now</button>
                                                 </Link>
                                                 <button onClick={addToCart} className="mx-2 p-2 bg-gray-800 hover:bg-gray-700 text-slate-200 rounded">Add to cart</button>
-                                                {/* <button onClick={() => setOpen(!open)} className="mx-2 p-2 bg-gray-800 hover:bg-gray-700 text-slate-200 rounded">Try it on</button> */}
+                                                <button onClick={() => setOpen(!open)} className="mx-2 p-2 bg-gray-800 hover:bg-gray-700 text-slate-200 rounded">Try it on</button>
                                             </>
 
                                         ) : (
@@ -249,6 +251,7 @@ const ProductDetails = () => {
                     </div>
                 </>
             )}
+            <TryItOnModal open={open} closeModal={() => setOpen(!open)} />
             {/* <UnitSizeConverter /> */}
             {/* <Details addToCart={addToCart} product={product} addQuantity={addQuantity} subQuantity={subQuantity} quantity={quantity} inputQuantity={inputQuantity} overlimit={overlimit} /> */}
         </div >
