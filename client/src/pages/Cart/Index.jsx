@@ -41,9 +41,9 @@ const CartPage = () => {
 
     }
 
-    function add(id) {
+    function add(product_id, item_id) {
         setIsLoading(true);
-        api.put(`/api/user/cart/add/${id}`)
+        api.put(`/api/user/cart/add/${product_id}/${item_id}`)
             .then((response) => {
                 setCart(response.data.items);
                 console.log(response.data.items)
@@ -55,9 +55,9 @@ const CartPage = () => {
             });
     }
 
-    function sub(id) {
+    function sub(product_id, item_id) {
         setIsLoading(true);
-        api.put(`/api/user/cart/sub/${id}`)
+        api.put(`/api/user/cart/sub/${product_id}/${item_id}`)
             .then((response) => {
                 setCart(response.data.items);
                 setIsLoading(false);
@@ -69,10 +69,9 @@ const CartPage = () => {
             });
     }
 
-    function removeItem(id) {
-        console.log(id)
+    function removeItem(product_id, item_id) {
         setIsLoading(true);
-        api.delete(`/api/user/cart/${id}`)
+        api.delete(`/api/user/cart/${product_id}/${item_id}`)
             .then((response) => {
                 fetchCart();
                 toast.success(`The item is removed`)

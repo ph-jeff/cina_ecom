@@ -37,9 +37,9 @@ router.get('/transaction/cancelled/:link', isLogin, transaction.cancelled)
 router.get('/cart', isLogin, cart.cart);
 router.post('/cart/:id', isLogin, cart.addcart);
 
-router.put('/cart/add/:product_id', isLogin, cart.add); 
-router.put('/cart/sub/:product_id', isLogin, cart.sub); 
-router.delete('/cart/:product_id', isLogin, cart.remove);
+router.put('/cart/add/:product_id/:item_id', isLogin, cart.add); 
+router.put('/cart/sub/:product_id/:item_id', isLogin, cart.sub); 
+router.delete('/cart/:product_id/:item_id', isLogin, cart.remove);
 router.post('/checkout', isLogin, cart.checkout)
 
 router.get('/account', isLogin, user.account);

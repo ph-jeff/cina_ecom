@@ -31,12 +31,12 @@ const Items = ({ cart, sub, add, removeItem }) => {
                         </div>
 
                         <div className="flex items-center mb-2 md:mb-0 mx-4">
-                            <button onClick={() => sub(item.product_id._id)} className="px-3 py-2 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold">-</button>
+                            <button onClick={() => sub(item.product_id._id, item._id)} className="px-3 py-2 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold">-</button>
                             <span className="mx-2 text-gray-800">{item.quantity}</span>
-                            <button onClick={() => add(item.product_id._id)} className="px-3 py-2 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold">+</button>
+                            <button onClick={() => add(item.product_id._id, item._id)} className="px-3 py-2 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold">+</button>
                         </div>
 
-                        <button className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-full transition duration-300" onClick={() => removeItem(item.product_id._id)}>
+                        <button className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-full transition duration-300" onClick={() => removeItem(item.product_id._id, item._id)}>
                             Delete
                         </button>
                     </div>

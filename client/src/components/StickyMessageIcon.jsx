@@ -22,6 +22,7 @@ const StickyMessageIcon = () => {
     const [open, setOpen] = useState(false)
     const [conversations, setConversations] = useState([])
     const [message, setMessage] = useState("")
+    const [g_send, setGSend] = useState(false);
     const openMessage = () => {
         setOpen(!open)
     }
@@ -58,7 +59,8 @@ const StickyMessageIcon = () => {
 
     useEffect(() => {
         // fetchConversation()
-    }, [])
+        message !== "" ? setGSend(true) : setGSend(false);
+    }, [message])
 
     return (
         <div className="fixed bottom-4 right-8 text-white rounded-full shadow-md">
@@ -103,9 +105,11 @@ const StickyMessageIcon = () => {
                     <form onSubmit={sendMessage}>
                         <div className='flex justify-center w-full'>
                             <input value={message} onChange={(e) => setMessage(e.target.value)} className='w-[90%] px-2 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500' type="text" />
-                            <button className='ml-2 w-[10%]'>
-                                <SendOutlinedIcon />
-                            </button>
+                            {g_send &&
+                                <button className='ml-2 w-[10%]'>
+                                    <SendOutlinedIcon />
+                                </button>
+                            }
                         </div>
                     </form>
                 </section>

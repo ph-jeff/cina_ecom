@@ -42,15 +42,6 @@ const Success = () => {
                                         {product.product_id.name}
                                     </h2>
                                     <p className="text-lg text-gray-600 mb-4">{product.product_id.description}</p>
-                                    {/* <p className="text-xl text-gray-800 mb-4">
-                                        {parseInt(product.product_id.price).toLocaleString("en-PH", {
-                                            style: "currency",
-                                            currency: "PHP",
-                                        })}
-                                    </p>
-                                    <div>
-                                        <p className="text-gray-800">Quantity: {product.quantity}</p>
-                                    </div> */}
                                 </div>
                                 <div className="w-full md:w-1/2 p-4">
                                     <div className="bg-gray-200 rounded-lg p-4">
@@ -62,6 +53,12 @@ const Success = () => {
                                                     currency: "PHP",
                                                 })}
                                             </span>
+                                        </div>
+                                        <div className="flex justify-between mb-2">
+                                            <span>Size:</span>
+                                            <p>
+                                                {product.size.unit_size} - {product.size.selected_size}
+                                            </p>
                                         </div>
                                         <div className="flex justify-between mb-2">
                                             <span>Quantity:</span>

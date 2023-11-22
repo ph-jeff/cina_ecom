@@ -36,17 +36,18 @@ const Transaction = () => {
                             <table className="w-full table-auto border-collapse border border-gray-300">
                                 <thead>
                                     <tr className="bg-gray-100">
-                                        <th className="px-4 py-2 text-left">Order ID</th>
                                         <th className="px-4 py-2 text-left">Items</th>
                                         <th className="px-4 py-2 text-left">Address</th>
                                         <th className="px-4 py-2 text-left">Date Ordered</th>
-                                        <th className="px-4 py-2 text-left">{status !== "delivered" ? "Action" : "Rate"}</th>
+                                        {/* <th className="px-4 py-2 text-left">{status !== "delivered" ? "Action" : "Rate"}</th> */}
+                                        {status === 'pending' && (
+                                            <th className="px-4 py-2 text-left">Action</th>
+                                        )}
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {orders.map((order) => (
                                         <tr key={order._id}>
-                                            <td className="px-4 py-2">{order._id}</td>
                                             <td className="px-4 py-2">
                                                 {order.items.map((item) => (
                                                     <div key={item._id}>
@@ -56,19 +57,28 @@ const Transaction = () => {
                                             </td>
                                             <td className="px-4 py-2">{order.destination}</td>
                                             <td className="px-4 py-2">{order.createdAt}</td>
-                                            {status !== 'delivered' ?
+                                            {/* {status === 'pending'
+                                                ?
                                                 <td className="px-4 py-2">
                                                     cancel
                                                 </td>
-                                            : <td className="px-4 py-2">
-                                                <div className='flex'>
-                                                    {defaultStar.map((star, index) => (
-                                                        <p onClick={() => {
-                                                            console.log(index)
-                                                        }} className='bg-gray-900 m-1' key={index}>a</p>
-                                                    ))}
-                                                </div>
-                                            </td>}
+                                                :
+                                                <td className="px-4 py-2">
+                                                    <div className='flex'>
+                                                        {defaultStar.map((star, index) => (
+                                                            <p onClick={() => {
+                                                                console.log(index)
+                                                            }} className='bg-gray-900 m-1' key={index}>a</p>
+                                                        ))}
+                                                    </div>
+                                                </td>
+                                            } */}
+                                            {status === 'pending'
+                                                &&
+                                                <td className="px-4 py-2">
+                                                    <button className='bg-red-700 text-white px-2 py-1 rounded'>cancel</button>
+                                                </td>
+                                            }
                                         </tr>
                                     ))}
                                 </tbody>

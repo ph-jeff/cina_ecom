@@ -22,10 +22,12 @@ export const useLogin = () => {
             setIsLoading(false);
             navigate('/');
         })
-        .catch(err => {
+        .catch(error => {
             localStorage.removeItem('user');
             setIsLoading(false);
             localStorage.removeItem('user');
+            console.log(error)
+            toast.error(error.response.data.error);
             navigate('/login');
         })
     }

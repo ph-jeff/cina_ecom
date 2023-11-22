@@ -224,14 +224,14 @@ module.exports.category = async (req, res) => {
     try {
         const query = req.query.value;
         const product = await Product.find({
-            category: { $regex: query, $options: "i" },
+            category: { $regex: '\\b' + query + '\\b', $options: 'i' },
             quantity: { $ne: 0 }
         }).sort('-createdAt');
         res.status(200).json(product);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
-}
+};
 
 module.exports.per_brand = async (req, res) => {
     try {
@@ -270,7 +270,6 @@ module.exports.place_order = async (req, res) => {
         const product_id = req.params.id;
         const user_id = res.locals.userID;
         const { quantity, mode, unit_size, selected_size } = req.body;
-        // console.log(req.body)
 
         if (!mongoose.Types.ObjectId.isValid(product_id)) {
             return res.status(404).json({ error: 'No item found' });
@@ -278,23 +277,30 @@ module.exports.place_order = async (req, res) => {
 
         const product = await Product.findById(product_id);
 
+        const items = [
+            {
+                product_id: product.id,
+                quantity: quantity,
+                size: {
+                    unit_size,
+                    selected_size
+                }
+            }
+        ]
+
+        console.log(items)
+
         if (mode == 'e-pay') {
             const transaction = await Transaction.create({
                 user_id: user_id,
                 url: {
                     link: generate_string(),
                 },
-                items: [{
-                    product_id: product.id,
-                    quantity: quantity,
-                    size: {
-                        unit_size,
-                        selected_size
-                    }
-                }],
+                items: items,
                 payment: mode,
                 order_type: 'quick',
             })
+            console.log(transaction)
             const session = await stripe.checkout.sessions.create({
                 payment_method_types: ['card'],
                 mode: 'payment',
@@ -314,7 +320,7 @@ module.exports.place_order = async (req, res) => {
                 cancel_url: process.env.STRIPE_CANCELLED_URL + transaction.url.link,
             })
             return res.json({ url: session.url })
-            return res.json(transaction)
+            // return res.json(transaction)
         }
         else if(mode == 'cod'){
             const transaction = await Transaction.create({
@@ -322,10 +328,7 @@ module.exports.place_order = async (req, res) => {
                 url: {
                     link: generate_string(),
                 },
-                items: [{
-                    product_id: product.id,
-                    quantity: quantity,
-                }],
+                items: items,
                 payment: mode,
                 order_type: 'quick',
             })

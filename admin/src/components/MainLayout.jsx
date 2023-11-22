@@ -12,12 +12,7 @@ function MainLayout({ children }) {
         <>
             <div className="flex">
                 <Sidebar />
-                <div className="basis-[80%] h-[100vh] overflow-x-hidden">
-                    {/* <div className='flex items-center gap-[15px] relative bg-gray-700'>
-                        <div className='h-[50px] flex items-center'>
-                            nav bar
-                        </div>
-                    </div> */}
+                <div className="basis-[80%] h-[100vh] overflow-x-hidden bg-[#C4A353]">
                     { children }
                 </div>
             </div>
