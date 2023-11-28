@@ -76,7 +76,7 @@ module.exports.login = async(req, res) => {
         }
 
         if(!user){
-            return res.status(400).json({error: "No email found"});
+            return res.status(400).json({error: "No user found"});
         }
         const passwordMatched = await bcrypt.compare(password, user.password)
         if(!passwordMatched){

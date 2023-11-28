@@ -31,11 +31,10 @@ import InventoryReport from './pages/Report/InventoryReport/InventoryReport';
 const AppRoutes = () => {
     return(
         <Routes>
-            <Route
-                path="/login"
-                element={<LoginLayout>
-                    <Login />
-                </LoginLayout>}/>
+            {/* <Route path="/login" element={<LoginLayout> <Login />
+                </LoginLayout>}
+            /> */}
+            <Route path="/login" element={<Login />} />
             <Route path="/" element={<MainLayout>
                 <Dashboard />
             </MainLayout>} />

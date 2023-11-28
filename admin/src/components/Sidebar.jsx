@@ -17,7 +17,7 @@ const Sidebar = () => {
     }
     return (
         <div className="basis-[20%] h-[100vh]">
-            <div className='bg-gray-600 h-screen px-[25px]'>
+            <div className='bg-black h-screen px-[25px]'>
                 <div className='px-[15px] py-[30px] flex items-center justify-center font-medium border-b-[1px] border-slate-200/[0.5]'>
                     <img src={logo} alt="Logo" className="w-[150px] h-[150px] mr-[10px]" />
                 </div>

@@ -52,7 +52,7 @@ const InventoryReport = () => {
                             <td className='text-left'>1</td>
                         </tr>
                     </tbody>
-                </table>
+                </table>S
             </div>
         </ReportLayout>
     )
