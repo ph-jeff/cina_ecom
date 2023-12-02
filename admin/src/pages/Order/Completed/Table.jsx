@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import ConfirmDialog from '../../../components/ConfirmDialog'
 
 const Table = ({orders, setOrders}) => {
     return (

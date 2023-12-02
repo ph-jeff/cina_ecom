@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Update from './Update';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
 
 const Table = ({categories, setLoading}) => {
     const [open, setOpen] = useState(false);
@@ -31,7 +32,7 @@ const Table = ({categories, setLoading}) => {
                             <td className="px-4 py-2">{category.createdAt}</td>
                             <td className="px-4 py-2">{category.updatedAt}</td>
                             <td className="px-4 py-2">
-                                <button onClick={() => handleOpen(category)}>edit</button>
+                                <button className='bg-blue-200 rounded' onClick={() => handleOpen(category)}><BorderColorIcon/></button>
                             </td>
                         </tr>
                     ))}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Update from './Update';
-import Loading from '../../../components/Loading';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
 
 const Table = ({brands, fetchBrand}) => {
     const [open, setOpen] = useState(false);
@@ -32,7 +32,7 @@ const Table = ({brands, fetchBrand}) => {
                             <td className="px-4 py-2">{brand.createdAt}</td>
                             <td className="px-4 py-2">{brand.updatedAt}</td>
                             <td className="px-4 py-2">
-                                <button onClick={() => {handleOpen(brand)}}>edit</button>
+                                <button className='bg-blue-200 rounded' onClick={() => {handleOpen(brand)}}><BorderColorIcon/></button>
                             </td>
                         </tr>
                     ))}

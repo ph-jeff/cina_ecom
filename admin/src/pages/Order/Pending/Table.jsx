@@ -63,7 +63,7 @@ const Table = ({orders, setOrders, onConfirm}) => {
                             <td className="px-4 py-2">{order.payment}</td>
                             <td className="px-4 py-2">{order.destination}</td>
                             <td className="px-4 py-2">
-                                <button onClick={() => {
+                                <button className='border shadow p-1 rounded' onClick={() => {
                                     setId(order._id)
                                     setOpen(!open)
                                 }}>accept</button>

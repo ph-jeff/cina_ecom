@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+
 const Table = ({ products, deleteItem }) => {
     return (
         <div className="overflow-x-auto">
@@ -36,7 +38,7 @@ const Table = ({ products, deleteItem }) => {
                                     <td className="px-4 py-2">{product.category}</td>
                                     <td className="px-4 py-2">{product.quantity}</td>
                                     <td className="px-4 py-2">
-                                        <Link to={`/product/update/${product._id}`} className="text-blue-500 hover:underline mr-2">Edit</Link>
+                                        <Link to={`/product/update/${product._id}`} className="bg-blue-200 rounded hover:underline mr-2"><BorderColorIcon /></Link>
                                         {/* <button onClick={() => deleteItem(product._id)} className="text-red-500 hover:underline">Delete</button> */}
                                     </td>
                                 </tr>

@@ -7,8 +7,8 @@ const ReportLayout = ({children}) => {
     <div className='mt-[50px] mx-[50px]'>
         <HeadingMark title={'Report'} />
         <div className="flex border bg-gray-800">
-            <LinkButton params={'/reports/sales'} actionName={'Sales'} />
-            <LinkButton params={'/reports/inventory'} actionName={'Inventory'} />
+            <LinkButton params={'/reports/sales'} actionName={'Sales Report'} />
+            <LinkButton params={'/reports/inventory'} actionName={'Inventory Report'} />
         </div>
         {children}
     </div>
