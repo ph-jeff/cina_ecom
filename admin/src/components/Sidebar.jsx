@@ -9,11 +9,11 @@ const Sidebar = () => {
     function logout(e) {
         e.preventDefault()
         api.post('/api/admin/auth/logout')
-            .then(response => {
-                console.log(response)
-                localStorage.removeItem('user')
-                navigate('/login')
-            })
+        .then(response => {
+            console.log(response)
+            localStorage.removeItem('user')
+            navigate('/login')
+        })
     }
     return (
         <div className="basis-[20%] h-[100vh]">
