@@ -15,23 +15,27 @@ const Category = () => {
     const [query, setQuery] = useState("");
     const [isLoading, setLoading] = useState(false)
 
-    function fetchCategory() {
-        api.get(`/api/admin/category?value=${query}`)
-            .then(response => {
-                setCategories(response.data)
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }
+    
 
     useEffect(() => {
+        function fetchCategory() {
+            // setLoading(true);
+            api.get(`/api/admin/category?value=${query}`)
+                .then(response => {
+                    setCategories(response.data)
+                    setLoading(false);
+                })
+                .catch(error => {
+                    console.log(error)
+                    setLoading(false);
+                })
+        }
         fetchCategory();
     }, [query, categories])
 
     return (
         <ProductLayout>
-        {isLoading && <Loading />}
+            {isLoading && <Loading />}
             <div className="mt-10 bg-white w-full p-4 shadow-md rounded-lg border border-slate-200">
                 <div className="flex justify-between mb-4">
                     <button onClick={handleOpen} className="bg-gray-800 hover:bg-gray-600 text-white py-2 px-4 rounded">+</button>

@@ -71,7 +71,7 @@ const Main = () => {
                             currency: "PHP",
                         })}
                     </p>
-                    <span className=''>
+                    <span className={`${month_over_month > 0 ? 'text-green-500' : 'text-red-500'}`}>
                         {month_over_month}
                     </span>
                 </div>

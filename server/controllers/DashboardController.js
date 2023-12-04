@@ -88,7 +88,7 @@ module.exports.index = async (req, res) => {
         const data = {
             total_sales: total_amount,
             monthly_sales: current_amount,
-            month_over_month: gain_loss,
+            month_over_month: gain_loss.toFixed(2),
             total_order,
             pending_order,
             total_customers,
