@@ -22,6 +22,7 @@ import Order from './pages/Order/Pending/Index';
 import Prepairing from './pages/Order/Prepairing/Index';
 import ToShip from './pages/Order/ToShip/Index';
 import Completed from './pages/Order/Completed/Index';
+import Cancelled from './pages/Order/Cancelled/Index';
 
 import User from './pages/User/Index';
 import Report from './pages/Report/Index';
@@ -79,6 +80,10 @@ const AppRoutes = () => {
 
             <Route path="/order/completed" element={<MainLayout>
                 <Completed />
+            </MainLayout>} />
+
+            <Route path="/order/cancelled" element={<MainLayout>
+                <Cancelled />
             </MainLayout>} />
 
             <Route path="/users" element={<MainLayout>

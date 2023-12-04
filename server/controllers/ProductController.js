@@ -8,6 +8,7 @@ const path = require('path');
 const fs = require('fs');
 const generate_string = require('../utils/generateString');
 const UserDetails = require('../models/UserDetails');
+const InventoryReport = require('../models/InventoryReport');
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
@@ -120,7 +121,30 @@ module.exports.create = async (req, res) => {
             }
         })
 
-        await product.save()
+        product.save()
+        .then(async(result) => {
+            const report = new InventoryReport({
+                action: 'create',
+                product_name: product.name,
+                beginning_amount: {
+                    quantity: quantity,
+                    price: price
+                },
+                difference: {
+                    quantity: quantity - quantity ,
+                    price: price - price
+                },
+                ending_amount: {
+                    quantity: quantity,
+                    price: price
+                }
+            });
+        
+            const savedReport = await report.save();
+        })
+        .catch(error => {
+            console.log("didn't save")
+        })
 
         res.status(200).json(product);
     } catch (error) {
@@ -166,6 +190,8 @@ module.exports.update = async (req, res) => {
             fs.unlinkSync(req.file.path);
         }
 
+        const current_product = await Product.findById(id);
+
         const product = await Product.findByIdAndUpdate(id, {
             name,
             slug: slug_name,
@@ -183,6 +209,30 @@ module.exports.update = async (req, res) => {
                 end
             }
         }, { new: true })
+        
+        const report = new InventoryReport({
+            action: 'update',
+            product_name: product.name,
+            beginning_amount: {
+                quantity: current_product.quantity,
+                price: current_product.price
+            },
+            difference: {
+                quantity: product.quantity - current_product.quantity,
+                price: product.price - current_product.price,
+            },
+            ending_amount: {
+                quantity: product.quantity,
+                price: product.price
+            },
+            difference: {
+                quantity: product.quantity - current_product.quantity,
+                price: product.price - current_product.price,
+            }
+        });
+    
+        const savedReport = await report.save();
+
         res.status(200).json(product);
     } catch (error) {
         res.status(400).json({ error: error.message });

@@ -11,6 +11,7 @@ const OrderLayout = ({children}) => {
                 <LinkButton params={'/order/prepairing'} actionName={'Prepairing'} />
                 <LinkButton params={'/order/to-ship'} actionName={'To Ship'} />
                 <LinkButton params={'/order/completed'} actionName={'Completed'} />
+                <LinkButton params={'/order/cancelled'} actionName={'Cancelled'} />
             </div>
             {children}
         </div>

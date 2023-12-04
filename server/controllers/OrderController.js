@@ -69,3 +69,13 @@ module.exports.completed = async (req, res) => {
         res.status(400).json({ error: error.message })
     }
 }
+
+module.exports.cancelled = async (req, res) => {
+    try {
+        const query = req.body.query;
+        const orders = await Order.find({ status: { $regex: 'cancelled', $options: 'i' } }).populate('items.product_id')
+        res.json(orders)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
