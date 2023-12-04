@@ -95,9 +95,9 @@ const SettingPage = () => {
             setLastname(response.data.userdetails.lastname);
             setContact(response.data.userdetails.contact);
 
-            // setProvince(response.data.userdetails.province || '')
-            // setMunicipal(response.data.userdetails.municipal || '')
-            // setBarangay(response.data.userdetails.barangay || '')
+            setProvince(response.data.userdetails.province || '')
+            setMunicipal(response.data.userdetails.municipal || '')
+            setBarangay(response.data.userdetails.barangay || '')
 
             setLoading(false);
         })

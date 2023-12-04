@@ -25,6 +25,7 @@ const category = require('../controllers/CategoryController')
 const size = require('../controllers/SizeController')
 const message = require('../controllers/MessageController')
 const generateInventoryReport = require('../middlewares/inventoryReport')
+const report = require('../controllers/Report')
 
 const order = require('../controllers/OrderController')
 
@@ -66,7 +67,10 @@ router.put('/order/prepairing/:id', isAdminLogin, order.to_be_ship)
 router.get('/order/to-ship', isAdminLogin, order.to_ship)
 router.put('/order/to-ship/:id', isAdminLogin, order.to_arrive)
 router.get('/order/completed', isAdminLogin, order.completed)
+router.get('/order/cancelled', isAdminLogin, order.cancelled)
 
 router.get('/transactions', isAdminLogin, transaction.index)
+
+router.get('/report/inventory', isAdminLogin, report.inventory)
 
 module.exports = router;
