@@ -18,31 +18,31 @@ const style = {
     p: 4,
 };
 
-const Create = ({ open, setOpen, handleClose, setLoading }) => {
+const Create = ({ open, setOpen, fetchCategory }) => {
     const [categoryName, setCategoryName] = useState("");
 
     function addCategory(e) {
         e.preventDefault()
-        setOpen(false)
-        setLoading(true)
         api.post('/api/admin/category', {
             category_name: categoryName
         })
-            .then(response => {
-                console.log(response)
-                setLoading(false)
-            })
-            .catch(error => {
-                console.log(error.response.data.error)
-                alert(error.response.data.error)
-                setLoading(false)
-            })
+        .then(response => {
+            console.log(response)
+            setOpen()
+            fetchCategory();
+        })
+        .catch(error => {
+            console.log(error.response.data.error)
+            alert(error.response.data.error)
+            setOpen()
+            fetchCategory();
+        })
     }
 
     return (
         <Modal
             open={open}
-            onClose={handleClose}
+            onClose={setOpen}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >

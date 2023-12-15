@@ -7,7 +7,7 @@ const Table = ({ products, deleteItem }) => {
     return (
         <div className="overflow-x-auto">
             <table className="w-full table-auto border-collapse border border-gray-300">
-                <thead>
+                <thead className='w-full text-sm text-left text-gray-500'>
                     <tr className="bg-gray-100">
                         {/* <th className="px-4 py-2 text-left">Item</th> */}
                         <th className="px-4 py-2 text-left">Product Name</th>
@@ -22,7 +22,7 @@ const Table = ({ products, deleteItem }) => {
                     {products.length !== 0 ? (
                         <>
                             {products.map((product) => (
-                                <tr className="hover:bg-gray-200" key={product._id}>
+                                <tr className="bg-white border-b grap-5 hover:bg-gray-200" key={product._id}>
                                     {/* <td>
                                         <div className="w-16 h-16 overflow-hidden rounded-full">
                                             <img

@@ -17,7 +17,7 @@ const Table = ({brands, fetchBrand}) => {
     return (
         <>
             <table className="w-full table-auto border-collapse border border-gray-300">
-                <thead>
+                <thead className="w-full text-sm text-left text-gray-500">
                     <tr className="bg-gray-100">
                         <th className="px-4 py-2 text-left">Brand Name</th>
                         <th className="px-4 py-2 text-left">Created At</th>
@@ -27,7 +27,7 @@ const Table = ({brands, fetchBrand}) => {
                 </thead>
                 <tbody>
                     {brands.map((brand) => (
-                        <tr key={brand._id}>
+                        <tr className="bg-white border-b grap-5 hover:bg-gray-200" key={brand._id}>
                             <td className="px-4 py-2">{brand.brand_name}</td>
                             <td className="px-4 py-2">{brand.createdAt}</td>
                             <td className="px-4 py-2">{brand.updatedAt}</td>

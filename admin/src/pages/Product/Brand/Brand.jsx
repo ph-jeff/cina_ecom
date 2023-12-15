@@ -38,7 +38,7 @@ const Brand = () => {
                     <button onClick={() => setOpen(!open)} className="bg-gray-800 hover:bg-gray-600 text-white py-2 px-4 rounded">+</button>
                     <input className="px-4 py-2 rounded border" value={query} onChange={(e) => setQuery(e.target.value)} type="search" placeholder="Search" />
                 </div>
-                <Create open={open} handleClose={() => setOpen(!open)} fetchBrand={fetchBrand} />
+                <Create open={open} setOpen={() => setOpen(!open)} fetchBrand={fetchBrand} />
                 <Table brands={brands} setLoading={setLoading} fetchBrand={fetchBrand} />
             </div>
         </ProductLayout>

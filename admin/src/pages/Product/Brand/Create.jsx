@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import ActionButton from '../../../components/ActionButton';
 import api from '../../../services/apiRequest';
+import { toast } from 'react-hot-toast';
 
 const style = {
     position: 'absolute',
@@ -18,7 +19,7 @@ const style = {
     p: 4,
 };
 
-const Create = ({ open, handleClose, fetchBrand }) => {
+const Create = ({ open, setOpen, fetchBrand }) => {
     
     const [brandName, setBrandName] = useState("");
     const [fileUpload, setFileUpload] = useState(null);
@@ -72,17 +73,17 @@ const Create = ({ open, handleClose, fetchBrand }) => {
                 setBrandName("")
                 setImage(null)
                 fetchBrand();
-                handleClose(false)
+                toast.success(`successfully created!`)
             })
             .catch(error => {
                 console.log(error)
-                handleClose(false)
+                setOpen()
             })
     }
     return (
         <Modal
             open={open}
-            onClose={handleClose}
+            // onClose={setOpen}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
