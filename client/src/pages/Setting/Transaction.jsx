@@ -57,22 +57,6 @@ const Transaction = () => {
                                             </td>
                                             <td className="px-4 py-2">{order.destination}</td>
                                             <td className="px-4 py-2">{order.createdAt}</td>
-                                            {/* {status === 'pending'
-                                                ?
-                                                <td className="px-4 py-2">
-                                                    cancel
-                                                </td>
-                                                :
-                                                <td className="px-4 py-2">
-                                                    <div className='flex'>
-                                                        {defaultStar.map((star, index) => (
-                                                            <p onClick={() => {
-                                                                console.log(index)
-                                                            }} className='bg-gray-900 m-1' key={index}>a</p>
-                                                        ))}
-                                                    </div>
-                                                </td>
-                                            } */}
                                             {status === 'pending'
                                                 &&
                                                 <td className="px-4 py-2">

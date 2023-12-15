@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -18,7 +18,8 @@ const style = {
     p: 4,
 };
 
-const Create = ({ open, setOpen, handleClose, categoryName, setCategoryName, setLoading }) => {
+const Create = ({ open, setOpen, handleClose, setLoading }) => {
+    const [categoryName, setCategoryName] = useState("");
 
     function addCategory(e) {
         e.preventDefault()

@@ -1,16 +1,17 @@
 const Order = require('../models/Order');
 const User = require('../models/User');
+const moment = require('moment');
 
 module.exports.index = async (req, res) => {
     try {
-        const today = new Date();
+        const TODAY = new Date();
         // current month
-        const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-        const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        const firstDayOfMonth = new Date(TODAY.getFullYear(), TODAY.getMonth(), 1);
+        const lastDayOfMonth = new Date(TODAY.getFullYear(), TODAY.getMonth() + 1, 0);
 
         // First and last day of the previous month
-        const firstDayOfPreviousMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
-        const lastDayOfPreviousMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+        const firstDayOfPreviousMonth = new Date(TODAY.getFullYear(), TODAY.getMonth() - 1, 1);
+        const lastDayOfPreviousMonth = new Date(TODAY.getFullYear(), TODAY.getMonth(), 0);
 
         const current_sales = await Order.aggregate([
             {
@@ -53,14 +54,10 @@ module.exports.index = async (req, res) => {
         const current_amount = current_sales.length > 0 ? current_sales[0].subtotal : 0;
         const previous_amount = previous_sales.length > 0 ? previous_sales[0].subtotal : 0;
 
-        console.log(current_amount);
-        console.log(previous_amount);
-
         // calculate month_over_month sales
         const current = current_amount * 0.1;
         const previous = previous_amount * 0.1;
-        const gain_loss = current - previous;
-        console.log(gain_loss);
+        const gain_loss = current - previous; 
 
         const total_sales = await Order.aggregate([
             {
@@ -83,7 +80,30 @@ module.exports.index = async (req, res) => {
         // pending order
         const pending_order = await Order.find({status: 'pending'}).count()
         // count the number of customer
-        const total_customers = await User.find({ account_type: { $ne: 'admin' } }).count()
+        const total_customers = await User.find({ account_type: { $ne: 'admin' } }).count();
+
+        // fetch orders bsase on the current year
+        const CURRENT_YEAR = new Date().getFullYear();
+        const YEARLY_SALES = await Order.find({
+            createdAt: {
+                $gte: new Date(CURRENT_YEAR, 0, 1),
+            }
+        });
+        
+        // calculating the sales for the current year
+        const SALES_DATA = Array.from({ length: 12 }, (_, i) => {
+            const monthStart = moment().month(i).startOf('month');
+            const monthEnd = moment().month(i).endOf('month');
+        
+            const salesForMonth = YEARLY_SALES.filter(order => moment(order.createdAt).isBetween(monthStart, monthEnd));
+            console.log(salesForMonth);
+            const totalSales = salesForMonth.reduce((sum, order) => sum + order.sub_total, 0);
+        
+            return {
+                month: monthStart.format('MMM'),
+                sales: totalSales.toFixed(2), // Adjust the decimal places as needed
+            };
+        });
 
         const data = {
             total_sales: total_amount,
@@ -92,6 +112,7 @@ module.exports.index = async (req, res) => {
             total_order,
             pending_order,
             total_customers,
+            sales_data: SALES_DATA,
         }
         res.json(data)
     } catch (error) {

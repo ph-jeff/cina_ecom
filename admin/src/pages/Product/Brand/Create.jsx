@@ -71,8 +71,8 @@ const Create = ({ open, handleClose, fetchBrand }) => {
                 console.log(response)
                 setBrandName("")
                 setImage(null)
-                handleClose()
                 fetchBrand();
+                handleClose(false)
             })
             .catch(error => {
                 console.log(error)

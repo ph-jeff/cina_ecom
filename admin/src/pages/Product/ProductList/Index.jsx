@@ -3,6 +3,7 @@ import Table from "./Table";
 import ProductLayout from "../components/ProductLayout";
 import api from "../../../services/apiRequest";
 import LinkButton from "../../../components/LinkButton";
+import Range from "../../../components/Range";
 
 
 const Index = () => {
@@ -45,15 +46,25 @@ const Index = () => {
                     <input className="px-4 py-2 rounded border" value={query} onChange={(e) => setQuery(e.target.value)} type="search" placeholder="Search" />
                 </div>
                 <div>
-                    <select onChange={(e) => setLimit(e.target.value)} name="" id="">
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="15">15</option>
-                    </select>
+                    <Range setLimit={setLimit} />
                 </div>
                 <Table products={products} deleteItem={deleteItem} />
             </div>
         </ProductLayout>
+
+        // <ProductLayout>
+        //     <div className="mt-10 bg-gray-100 w-full p-6 shadow-lg rounded-lg">
+        //         <div className="flex justify-between items-center mb-4">
+        //             <LinkButton params={'/product/create'} actionName={'+'} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" />
+        //             <input className="px-4 py-2 rounded border focus:outline-none" value={query} onChange={(e) => setQuery(e.target.value)} type="search" placeholder="Search" />
+        //         </div>
+        //         <div className="mb-4">
+        //             <Range setLimit={setLimit} />
+        //         </div>
+        //         <Table products={products} deleteItem={deleteItem} />
+        //     </div>
+        // </ProductLayout>
+
     )
 }
 

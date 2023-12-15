@@ -11,7 +11,6 @@ const Category = () => {
     const handleClose = () => setOpen(false);
 
     const [categories, setCategories] = useState([]);
-    const [categoryName, setCategoryName] = useState("");
     const [query, setQuery] = useState("");
     const [isLoading, setLoading] = useState(false)
 
@@ -41,7 +40,7 @@ const Category = () => {
                     <button onClick={handleOpen} className="bg-gray-800 hover:bg-gray-600 text-white py-2 px-4 rounded">+</button>
                     <input className="px-4 py-2 rounded border" value={query} onChange={(e) => setQuery(e.target.value)} type="search" placeholder="Search" />
                 </div>
-                <Create open={open} setOpen={setOpen} handleClose={handleClose} categoryName={categoryName} setCategoryName={setCategoryName} setLoading={setLoading} />
+                <Create open={open} setOpen={setOpen} handleClose={handleClose} setLoading={setLoading} />
                 <Table categories={categories} setLoading={setLoading} />
             </div>
         </ProductLayout>

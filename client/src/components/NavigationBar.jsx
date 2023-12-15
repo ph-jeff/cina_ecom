@@ -32,10 +32,9 @@ const NavigationBar = () => {
     return (
         <>
             {isLoading && <Loading />}
-
             <nav className="shadow-md bg-[#000000] p-4 flex flex-col lg:flex-row items-center justify-between">
                 {/* Logo on the left side */}
-                <div className="flex items-center">
+                <div className="flex items-center py-2">
                     <Link to="/">
                         {/* <img className="h-8 w-8 mr-2" src="/path/to/logo.png" alt="Logo" /> */}
                         <span className="text-[#C4A353] text-xl font-semibold mr-4">CINA</span>
@@ -43,19 +42,19 @@ const NavigationBar = () => {
                 </div>
 
                 <div className="flex items-center text-slate-200">
-                    <Link className="px-5 border" to="/">
+                    <Link className="px-3 border" to="/">
                         Home
                     </Link>
-                    <Link className="px-5 border" to="/category?value=women">
+                    <Link className="px-3 border" to="/category?value=women">
                         Women
                     </Link>
-                    <Link className="px-5 border" to="/category?value=men">
+                    <Link className="px-3 border" to="/category?value=men">
                         Men
                     </Link>
-                    <Link className="px-5 border" to="/brand">
+                    <Link className="px-3 border" to="/brand">
                         Brands
                     </Link>
-                    <Link className="px-5 border" to="/sale">
+                    <Link className="px-3 border" to="/sale">
                         Sale
                     </Link>
                 </div>

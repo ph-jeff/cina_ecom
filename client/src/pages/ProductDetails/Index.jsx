@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from 'react-router-dom';
-// import Reviews from "./Reviews";
+import Reviews from "./Reviews";
 import cart_icon from "../../assets/cart.svg";
 import api from "../../services/apiRequest";
 import { toast } from "react-hot-toast";
@@ -113,17 +113,18 @@ const ProductDetails = () => {
         fetchProduct();
     }, [])
     return (
-        <div>
+        <>
             {isLoading && <Loading />}
             {product ? (
                 <>
-                    <div className="min-h-screen h-fit flex flex-col items-center px-2 md:px-24 py-10 bg-[#C4A353]">
-                        <div className="h-fit w-full shadow-xl p-2 flex border border-gray-300 bg-white"> {/* Use flex class */}
-                            {/* for image */}
-                            <div className="w-[400px] bg-red-900 flex items-center justify-center">
+                    <div className="flex flex-col lg:flex-row flex-wrap px-2 md:px-24 py-10 min-h-screen h-fit bg-[#C4A353]">
+                        <div className="p-4 w-full lg:w-1/2 flex items-center justify-center bg-white">
+                            <div className="bg-red-900">
                                 <img className="w-full h-full object-cover" src={product.img_url} alt="" />
                             </div>
-                            {/* for item */}
+                        </div>
+
+                        <div className="p-4 w-full lg:w-1/2 bg-white">
                             <div className="w-full h-full px-5 py-7">
                                 {/* header */}
                                 <div>
@@ -252,9 +253,7 @@ const ProductDetails = () => {
                 </>
             )}
             <TryItOnModal open={open} closeModal={() => setOpen(!open)} />
-            {/* <UnitSizeConverter /> */}
-            {/* <Details addToCart={addToCart} product={product} addQuantity={addQuantity} subQuantity={subQuantity} quantity={quantity} inputQuantity={inputQuantity} overlimit={overlimit} /> */}
-        </div >
+        </ >
     );
 };
 

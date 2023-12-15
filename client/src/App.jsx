@@ -16,11 +16,11 @@ function App() {
                 <NavigationBar />
                 <AppRoutes />
                 <Footer />
-                {user && (
+                {/* {user && (
                     <>
                         <StickyMessageIcon />
                     </>
-                )}
+                )} */}
             </Router>
         </>
     )
