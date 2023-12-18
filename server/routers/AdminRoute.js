@@ -73,5 +73,6 @@ router.get('/transactions', isAdminLogin, transaction.index)
 
 router.get('/report/inventory', isAdminLogin, report.inventory)
 router.get('/report/sales', isAdminLogin, report.sales)
+router.get('/report/sales/information/:id', isAdminLogin, report.sales_information)
 
 module.exports = router;

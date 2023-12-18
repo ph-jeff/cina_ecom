@@ -9,7 +9,7 @@ import Range from "../../../components/Range";
 const Index = () => {
     const [products, setProduct] = useState([]);
     const [query, setQuery] = useState("");
-    const [limit, setLimit] = useState(5);
+    const [limit, setLimit] = useState(100);
 
     function deleteItem(id) {
         api.delete(`/api/admin/product/${id}`)
@@ -45,9 +45,9 @@ const Index = () => {
                     <LinkButton params={'/product/create'} actionName={'+'} />
                     <input className="px-4 py-2 rounded border" value={query} onChange={(e) => setQuery(e.target.value)} type="search" placeholder="Search" />
                 </div>
-                <div>
+                {/* <div>
                     <Range setLimit={setLimit} />
-                </div>
+                </div> */}
                 <Table products={products} deleteItem={deleteItem} />
             </div>
         </ProductLayout>

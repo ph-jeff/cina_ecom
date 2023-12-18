@@ -83,7 +83,7 @@ const Create = ({ open, setOpen, fetchBrand }) => {
     return (
         <Modal
             open={open}
-            // onClose={setOpen}
+            onClose={setOpen}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >

@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react'
 import ReportLayout from '../components/ReportLayout';
 import Range from '../../../components/Range';
 import api from '../../../services/apiRequest'
+import DetailsModal from './DetailsModal';
 
 const SalesReport = () => {
     const [query, setQuery] = useState("");
     const [limit, setLimit] = useState(5);
     const [sales, setSales] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [salesId, setSalesId] = useState("");
 
     function fetchSales(){
         api.get('/api/admin/report/sales')
@@ -38,6 +41,7 @@ const SalesReport = () => {
                             <th className='py-2 px-4 text-left border'>Date Purchase</th>
                             <th className='py-2 px-4 text-left border'>Amount</th>
                             <th className='py-2 px-4 text-left border'>Customer</th>
+                            <th className='py-2 px-4 text-left border'>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,10 +64,18 @@ const SalesReport = () => {
                                 <td className='py-2 px-4 text-left border'>{sale.createdAt}</td>
                                 <td className='py-2 px-4 text-left border'>{sale.sub_total.toLocaleString("en-PH", { style: "currency", currency: "PHP" })}</td>
                                 <td className='py-2 px-4 text-left border'>{sale.user_id.email}</td>
+                                <td className='py-2 px-4 text-left border'>
+                                    {/* <a href="#" className='underline rounded px-2 py-1 bg-gray-200'>view</a> */}
+                                    <button onClick={() => {
+                                        setOpen(!open)
+                                        setSalesId(sale._id)
+                                    }} className='underline rounded px-2 py-1 bg-gray-200'>view</button>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
+                <DetailsModal open={open} setOpen={() => setOpen(!open)} salesId={salesId} />
             </div>
         </ReportLayout>
     )
