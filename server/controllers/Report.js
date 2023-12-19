@@ -29,12 +29,18 @@ module.exports.sales = async(req, res) => {
 module.exports.sales_information = async(req, res) => {
     try {
         const sales_id = req.params.id;
-        const order_information = await Order.findById(sales_id)
+        const order_information = await Order.findById(sales_id).populate('items.product_id')
         const customer_information = await UserDetails.findOne({user_id: order_information.user_id}).populate('user_id')
+        let sold_items = []
+        if(order_information){
+            sold_items = order_information.items
+        }
         const data = {
             order_information,
             customer_information,
+            sold_items
         };
+        console.log(order_information)
         res.json(data)
     } catch (error) {
         res.status(400).json({error: error.message})

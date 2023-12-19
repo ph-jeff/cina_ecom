@@ -3,6 +3,7 @@ import Table from "./Table";
 import ProductLayout from "../components/ProductLayout";
 import api from "../../../services/apiRequest";
 import LinkButton from "../../../components/LinkButton";
+import Loading from '../../../components/Loading'
 import Range from "../../../components/Range";
 
 
@@ -10,6 +11,7 @@ const Index = () => {
     const [products, setProduct] = useState([]);
     const [query, setQuery] = useState("");
     const [limit, setLimit] = useState(100);
+    const [isLoading, setLoading] = useState(false);
 
     function deleteItem(id) {
         api.delete(`/api/admin/product/${id}`)
@@ -23,13 +25,16 @@ const Index = () => {
     }
 
     async function fetchProduct() {
+        setLoading(true);
         api.get(`/api/admin/product?value=${query}&limit=${limit}`)
             .then(response => {
                 console.log(response);
                 setProduct(response.data);
+                setLoading(false);
             })
             .catch(err => {
                 console.log(err.response.data);
+                setLoading(false);
             })
     };
 
@@ -40,6 +45,7 @@ const Index = () => {
 
     return (
         <ProductLayout>
+            {isLoading && <Loading />}
             <div className="mt-10 bg-white w-full p-4 shadow-md rounded-lg border border-slate-200">
                 <div className="flex justify-between mb-4">
                     <LinkButton params={'/product/create'} actionName={'+'} />

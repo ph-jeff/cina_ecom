@@ -82,7 +82,7 @@ module.exports.index = async (req, res) => {
         // count the number of customer
         const total_customers = await User.find({ account_type: { $ne: 'admin' } }).count();
 
-        // fetch orders bsase on the current year
+        // fetch orders base on the current year
         const CURRENT_YEAR = new Date().getFullYear();
         const YEARLY_SALES = await Order.find({
             createdAt: {
@@ -96,7 +96,7 @@ module.exports.index = async (req, res) => {
             const monthEnd = moment().month(i).endOf('month');
         
             const salesForMonth = YEARLY_SALES.filter(order => moment(order.createdAt).isBetween(monthStart, monthEnd));
-            console.log(salesForMonth);
+            // console.log(salesForMonth);
             const totalSales = salesForMonth.reduce((sum, order) => sum + order.sub_total, 0);
         
             return {

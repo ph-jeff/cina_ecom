@@ -195,7 +195,6 @@ const Update = () => {
                             id="name"
                             className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
                             value={name}
-                            readOnly
                             onChange={(e) => setName(e.target.value)}
                             type="text"
                             placeholder="Product name"
@@ -318,14 +317,22 @@ const Update = () => {
 
                     <div className="mb-4">
                         <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
-                        <input
+                        {/* <input
                             id="description"
                             className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                             type="text"
                             placeholder="Description"
-                        />
+                        /> */}
+                        <textarea
+                            id="description"
+                            className="w-full px-3 py-2 h-[150px] border rounded focus:outline-none focus:ring focus:border-blue-500"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            type="text"
+                        >
+                        </textarea>
                     </div>
 
                     <UploadImage image={image} uploadImage={uploadImage} removeImage={removeImage} />

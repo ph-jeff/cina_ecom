@@ -12,12 +12,13 @@ const style = {
     bgcolor: "white",
     border: "2px solid #000",
     boxShadow: 24,
-    p: 4,
+    p: 2,
 };
 
 const DetailsModal = ({ open, setOpen, salesId }) => {
     const [customer_information, setCustomerInformation] = useState({})
     const [order_information, setSalesInformation] = useState({})
+    const [sold_items, setSoldItems] = useState([])
 
     useEffect(() => {
         api.get(`/api/admin/report/sales/information/${salesId}`)
@@ -25,6 +26,7 @@ const DetailsModal = ({ open, setOpen, salesId }) => {
             console.log(response)
             setCustomerInformation(response.data.customer_information)
             setSalesInformation(response.data.information)
+            setSoldItems(response.data.sold_items)
         })
         .catch(error => {
             console.log(error)
@@ -40,8 +42,8 @@ const DetailsModal = ({ open, setOpen, salesId }) => {
             aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
-                <div>
-                    <h1>Customer Details:</h1>
+                <div className="border mb-2">
+                    <h1 className="text-xl">Customer Details:</h1>
                     <div className="container">
                         <div>
                             <label htmlFor="">Name: </label>
@@ -54,7 +56,7 @@ const DetailsModal = ({ open, setOpen, salesId }) => {
                     </div>
                 </div>
                 <div className="border">
-                    <h1>Order Details:</h1>
+                    <h1 className="text-xl">Order Details:</h1>
                     <div className="container">
                         <table>
                             <thead>
@@ -66,14 +68,14 @@ const DetailsModal = ({ open, setOpen, salesId }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {/* {order_information.items.map((item) => (
+                                {sold_items.map((item) => (
                                     <tr key={item._id}>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
+                                        <td>{item.product_id.name}</td>
+                                        <td>{item.size.unit_size}</td>
+                                        <td>{item.quantity}</td>
+                                        <td>{item.quantity * item.product_id.price}</td>
                                     </tr>
-                                ))} */}
+                                ))}
                             </tbody>
                         </table>
                     </div>
