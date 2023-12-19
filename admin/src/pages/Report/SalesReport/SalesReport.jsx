@@ -12,15 +12,15 @@ const SalesReport = () => {
     const [open, setOpen] = useState(false);
     const [salesId, setSalesId] = useState("");
 
-    function fetchSales(){
+    function fetchSales() {
         api.get('/api/admin/report/sales')
-        .then(response => {
-            console.log(response)
-            setSales(response.data);
-        })
-        .catch(error => {
-            console.log(error)
-        })
+            .then(response => {
+                console.log(response)
+                setSales(response.data);
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
 
     useEffect(() => {
@@ -28,14 +28,14 @@ const SalesReport = () => {
     }, [])
 
     const styles = {
-        search_icon: { fontSize: 18},
+        search_icon: { fontSize: 18 },
     };
 
     return (
         <ReportLayout>
             <div className='absolute bg-white h-[78vh] -mt-10 rounded-lg ml-8 w-[95%] text-black'>
                 <div className='mt-8 px-10 text-sm'>
-                    
+
                     {/* <div className="relative flex justify-end w-full gap-3 mb-14">
                         <div className="absolute inset-y-0 right-[185px] flex items-center pl-3 pointer-events-none">
                             <svg className="w-4 h-4 flex flex-end text-[#686868] " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -59,7 +59,7 @@ const SalesReport = () => {
                             <div className='border border-gray-300 h-20 w-40'></div>
                             <div className='border border-gray-300 h-20 w-40'></div>
                         </div>
-                    </div> 
+                    </div>
                     <div className='flex justify-between w-full'>
                         <div className='flex items-center gap-2 text-[14px]'>
                             <label className="">Show</label>
@@ -71,12 +71,12 @@ const SalesReport = () => {
                             </select>
                             <span>Entries</span>
                         </div>
-                        
+
                         <div className="relative flex justify-end w-full gap-3">
                             <div className="absolute inset-y-0 right-[185px] flex items-center pl-3 pointer-events-none">
                                 <svg className="w-4 h-4 flex flex-end text-[#686868] " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                                </svg>    
+                                </svg>
                             </div>
                             <input className='block pl-10 py-2 px-4 w-38 rounded-xl border border-[#686868] text-sm' type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder='Search ...' style={{ backgroundColor: 'transparent' }} />
                         </div>
@@ -87,44 +87,50 @@ const SalesReport = () => {
                         <table className="w-full text-sm text-left">
                             <thead className="bg-[#F0F0F0] border-b border-zinc-400">
                                 <tr>
-                                    <th scope="col" className="px-6 h-12">1</th>
-                                    <th scope="col" className="px-6 h-12">1</th>
-                                    <th scope="col" className="px-6 h-12">1</th>
-                                    <th scope="col" className="px-6 h-12">1</th>
+                                    <th scope='col' className="px-6 h-12">Product</th>
+                                    <th scope='col' className="px-6 h-12">Quantity</th>
+                                    <th scope='col' className="px-6 h-12">Date Purchase</th>
+                                    <th scope='col' className="px-6 h-12">Amount</th>
+                                    <th scope='col' className="px-6 h-12">Customer</th>
+                                    <th scope='col' className="px-6 h-12">Action</th>
                                 </tr>
                             </thead>
                             <tbody className='bg-transparent '>
-                                <tr className="border-b border-[#5b5b5b]">
-                                    <td className="px-6 h-12">1</td>
-                                    <td className="px-6 h-12">1</td>
-                                    <td className="px-6 h-12">1</td>
-                                    <td className="px-6 h-12">1</td>
-                                </tr>
-                                <tr className="border-b border-[#5b5b5b]">
-                                    <td className="px-6 h-12">1</td>
-                                    <td className="px-6 py-4">1</td>
-                                    <td className="px-6 py-4">1</td>
-                                    <td className="px-6 py-4">1</td>
-                                </tr>
-                                <tr className="border-b border-[#5b5b5b]">
-                                    <td className="px-6 h-12">1</td>
-                                    <td className="px-6 py-4">1</td>
-                                    <td className="px-6 py-4">1</td>
-                                    <td className="px-6 py-4">1</td>
-                                </tr>
-                                <tr className="border-b border-[#5b5b5b]">
-                                    <td className="px-6 h-12">1</td>
-                                    <td className="px-6 py-4">1</td>
-                                    <td className="px-6 py-4">1</td>
-                                    <td className="px-6 py-4">1</td>
-                                </tr>   
+                                {sales.map((sale) => (
+                                    <tr key={sale._id} className="border-b border-[#5b5b5b]">
+                                        <td className="px-6 h-12">
+                                            {sale.items.map((item) => (
+                                                <div key={item._id}>
+                                                    {item.product_id.name}
+                                                </div>
+                                            ))}
+                                        </td>
+                                        <td className="px-6 h-12">
+                                            {sale.items.map((item) => (
+                                                <div key={item._id}>
+                                                    {item.quantity}
+                                                </div>
+                                            ))}
+                                        </td>
+                                        <td className="px-6 h-12">{sale.createdAt}</td>
+                                        <td className="px-6 h-12">{sale.sub_total.toLocaleString("en-PH", { style: "currency", currency: "PHP" })}</td>
+                                        <td className="px-6 h-12">{sale.user_id.email}</td>
+                                        <td className="px-6 h-12">
+                                            {/* <a href="#" className='underline rounded px-2 py-1 bg-gray-200'>view</a> */}
+                                            <button onClick={() => {
+                                                setOpen(!open)
+                                                setSalesId(sale._id)
+                                            }} className='underline rounded px-2 py-1 bg-gray-200'>view</button>
+                                        </td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
+                        <DetailsModal open={open} setOpen={() => setOpen(!open)} salesId={salesId} />
                     </div>
                 </div>
             </div>
-            <DetailsModal open={open} setOpen={() => setOpen(!open)} salesId={salesId} />
-        </ReportLayout>
+        </ReportLayout >
     )
 }
 
