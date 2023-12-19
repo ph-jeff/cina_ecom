@@ -12,7 +12,7 @@ function MainLayout({ children }) {
         <>
             <div className="flex">
                 <Sidebar />
-                <div className="basis-[80%] h-[100vh] overflow-x-hidden bg-[#C4A353]">
+                <div className="basis-[80%] h-[100vh] overflow-x-hidden bg-[#1A1A1A]">
                     { children }
                 </div>
             </div>

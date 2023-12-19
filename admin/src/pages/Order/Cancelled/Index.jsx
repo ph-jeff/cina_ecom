@@ -25,7 +25,7 @@ const Index = () => {
     
     return (
         <OrderLayout>
-            <div className="mt-10 bg-white w-full p-4 shadow-md rounded-lg border border-slate-200">
+            <div className="mt-5 bg-white h-[70vh] w-full p-8 shadow-md rounded-lg border border-slate-200">
                 <div className="flex justify-between mb-4">
                     <Range setLimit={setLimit} />
                     <input className="px-4 py-2 rounded border" value={query} onChange={(e) => setQuery(e.target.value)} type="search" placeholder="Search" />
