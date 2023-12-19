@@ -32,6 +32,24 @@ module.exports.index = async (req, res) => {
     }
 }
 
+module.exports.admin_index = async (req, res) => {
+    try {
+        const query = req.query.value || "";
+        const limit = req.query.limit || 0;
+        const product = await Product.find(
+            {
+                $or: [
+                    { name: { $regex: query, $options: "i" } },
+                    // {description: {$regex: query}}
+                ]
+            }
+        ).sort('-createdAt').limit(limit);
+        res.status(200).json(product);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+
 module.exports.latest = async (req, res) => {
     try {
         const product = await Product.find({

@@ -114,7 +114,7 @@ const InventoryReport = () => {
                     <input className="px-4 py-2 rounded border" value={query} onChange={(e) => setQuery(e.target.value)} type="search" placeholder="Search" />
                 </div>
                 <table className="w-full table-auto border-collapse border border-gray-300">
-                    <thead>
+                    <thead className="w-full text-sm text-left text-gray-500">
                         <tr className="bg-gray-100">
                             <th className='py-2 px-4 text-left border'>Product</th>
                             <th className='py-2 px-4 text-left border' colSpan="2">Beginning Amount</th>

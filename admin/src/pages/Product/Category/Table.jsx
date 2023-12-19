@@ -19,19 +19,19 @@ const Table = ({categories, setLoading}) => {
             <table className="w-full table-auto border-collapse border border-gray-300">
                 <thead className='w-full text-sm text-left text-gray-500'>
                     <tr className="bg-gray-100">
-                        <th className="px-4 py-2 text-left">Brand Name</th>
-                        <th className="px-4 py-2 text-left">Created At</th>
-                        <th className="px-4 py-2 text-left">Updated At</th>
-                        <th className="px-4 py-2 text-left">Action</th>
+                        <th className="px-4 py-2 text-left border">Brand Name</th>
+                        <th className="px-4 py-2 text-left border">Created At</th>
+                        <th className="px-4 py-2 text-left border">Updated At</th>
+                        <th className="px-4 py-2 text-left border">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     {categories.map((category) => (
                         <tr className="bg-white border-b grap-5 hover:bg-gray-200" key={category._id}>
-                            <td className="px-4 py-2">{category.category_name}</td>
-                            <td className="px-4 py-2">{category.createdAt}</td>
-                            <td className="px-4 py-2">{category.updatedAt}</td>
-                            <td className="px-4 py-2">
+                            <td className="px-4 py-2 text-left border">{category.category_name}</td>
+                            <td className="px-4 py-2 text-left border">{category.createdAt}</td>
+                            <td className="px-4 py-2 text-left border">{category.updatedAt}</td>
+                            <td className="px-4 py-2 text-left border">
                                 <button className='bg-blue-200 rounded' onClick={() => handleOpen(category)}><BorderColorIcon/></button>
                             </td>
                         </tr>

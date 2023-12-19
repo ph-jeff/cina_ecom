@@ -34,7 +34,7 @@ router.get('/dashboard', isAdminLogin, dashboard.index)
 router.post('/message', isAdminLogin, message.create);
 
 // products
-router.get('/product', isAdminLogin, product.index);
+router.get('/product', isAdminLogin, product.admin_index);
 router.post('/product', isAdminLogin, generateInventoryReport, upload.single('image'), product.create);
 router.delete('/product/:id', isAdminLogin, product.delete);
 router.get('/product/update/:id', isAdminLogin, product.get_update);
@@ -72,5 +72,6 @@ router.get('/order/cancelled', isAdminLogin, order.cancelled)
 router.get('/transactions', isAdminLogin, transaction.index)
 
 router.get('/report/inventory', isAdminLogin, report.inventory)
+router.get('/report/sales', isAdminLogin, report.sales)
 
 module.exports = router;
