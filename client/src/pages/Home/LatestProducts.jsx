@@ -4,7 +4,7 @@ import ProductBox from '../../components/ProductBox';
 
 const LatestProducts = ({ products }) => {
     return (
-        <div className="h-fit min-h-screen flex justify-center flex-col block px-10 py-10 bg-[#C4A353]">
+        <div className="h-fit min-h-screen flex justify-center flex-col block px-10 py-10 bg-slate-200">
             <h1 className="text-gray-800 font-medium text-center">
                 Latest Product
             </h1>

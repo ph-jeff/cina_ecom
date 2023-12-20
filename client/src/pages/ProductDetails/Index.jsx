@@ -117,7 +117,7 @@ const ProductDetails = () => {
             {isLoading && <Loading />}
             {product ? (
                 <>
-                    <div className="flex flex-col lg:flex-row flex-wrap px-2 md:px-24 py-10 min-h-screen h-fit bg-[#C4A353]">
+                    <div className="flex flex-col lg:flex-row flex-wrap px-2 md:px-24 py-10 min-h-screen h-fit bg-slate-200">
                         <div className="p-4 w-full lg:w-1/2 flex items-center justify-center bg-white">
                             <div className="bg-red-900">
                                 <img className="w-full h-full object-cover" src={product.img_url} alt="" />
@@ -128,7 +128,8 @@ const ProductDetails = () => {
                             <div className="w-full h-full px-5 py-7">
                                 {/* header */}
                                 <div>
-                                    <h1 className="font-medium text-2xl line-clamp-1 text-gray-800">{product.name} {product.description}</h1>
+                                    <h1 className="font-medium text-2xl text-gray-800">{product.name}</h1>
+                                    <p>{product.description}</p>
                                 </div>
 
                                 <div className="mt-2">
@@ -228,7 +229,7 @@ const ProductDetails = () => {
                                                     <button className="p-2 bg-gray-800 hover:bg-gray-700 text-slate-200 rounded">Buy Now</button>
                                                 </Link>
                                                 <button onClick={addToCart} className="mx-2 p-2 bg-gray-800 hover:bg-gray-700 text-slate-200 rounded">Add to cart</button>
-                                                <button onClick={() => setOpen(!open)} className="mx-2 p-2 bg-gray-800 hover:bg-gray-700 text-slate-200 rounded">Try it on</button>
+                                                {/* <button onClick={() => setOpen(!open)} className="mx-2 p-2 bg-gray-800 hover:bg-gray-700 text-slate-200 rounded">Try it on</button> */}
                                             </>
 
                                         ) : (

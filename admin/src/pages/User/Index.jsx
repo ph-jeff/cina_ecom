@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom'
 import api from '../../services/apiRequest';
 import Table from './Table';
 import HeadingMark from '../../components/HeadingMark';
+import TableHeader from '../../components/TableHeader';
 
 const Index = () => {
     const [users, setUsers] = useState([]);
     const [query, setQuery] = useState("");
+    const [limit, setLimit] = useState(5);
 
     function fetchUser(){
         api.get(`/api/admin/users?value=${query}`)
@@ -21,13 +23,15 @@ const Index = () => {
     }, [query])
     
     return (
-        <div className='mt-[50px] mx-[50px]'>
-            <HeadingMark title={'Users'} />
-            <div className="mt-10 bg-white w-full p-4 shadow-md rounded-lg border border-slate-200">
-                <div className="flex justify-between mb-4">
-                    {/* <Link className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded" to={'/product/create'}>Add Product</Link> */}
-                    <input value={query} onChange={(e) => setQuery(e.target.value)} className="px-4 py-2 rounded border" type="search" placeholder="Search" />
-                </div>
+        <div className='relative bg-[#FED32C] h-fit min-h-[38vh] text-[#515151]'>
+            <div className='pt-10 px-8'>
+                <p className='text-[18px] font-bold tracking-wide'>Users</p>
+            </div>
+            <div className='flex w-full px-10 mt-10 mb-4'>
+            </div>
+
+            <div className='absolute bg-white h-[78vh] -mt-10 min-h-[100vh] h-fit rounded-lg ml-8 w-[95%] text-black'>
+                <TableHeader limit={limit} setLimit={setLimit} query={query} setQuery={setQuery} />
                 <Table users={users} />
             </div>
         </div>

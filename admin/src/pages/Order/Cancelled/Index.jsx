@@ -3,21 +3,27 @@ import OrderLayout from '../components/OrderLayout'
 import Table from './Table'
 import api from '../../../services/apiRequest'
 import Range from '../../../components/Range'
+import TableHeader from '../../../components/TableHeader'
+import Loading from '../../../components/Loading'
 
 const Index = () => {
     const [orders, setOrders] = useState([])
     const [query, setQuery] = useState("")
     const [limit, setLimit] = useState(5)
+    const [isLoading, setLoading] = useState(false);
 
     useEffect(() => {
+        setLoading(true);
         function fetchOrder(){
             api.get('/api/admin/order/cancelled?value=' + query)
             .then(response => {
                 console.log(response)
                 setOrders(response.data)
+                setLoading(false);
             })
             .catch(error => {
                 console.log(error)
+                setLoading(false);
             })
         }
         fetchOrder()
@@ -25,12 +31,14 @@ const Index = () => {
     
     return (
         <OrderLayout>
-            <div className="mt-10 bg-white w-full p-4 shadow-md rounded-lg border border-slate-200">
-                <div className="flex justify-between mb-4">
-                    <Range setLimit={setLimit} />
-                    <input className="px-4 py-2 rounded border" value={query} onChange={(e) => setQuery(e.target.value)} type="search" placeholder="Search" />
+            {isLoading && <Loading />}
+            <div className='absolute bg-white h-[78vh] -mt-10 min-h-[100vh] h-fit rounded-lg ml-8 w-[95%] text-black'>
+                <TableHeader limit={limit} setLimit={setLimit} query={query} setQuery={setQuery} />
+                <div className='px-10 mt-4'>
+                    <div className="overflow-x-auto">
+                        <Table orders={orders} setOrders={setOrders} />
+                    </div>
                 </div>
-                <Table orders={orders} setOrders={setOrders} />
             </div>
         </OrderLayout>
     )

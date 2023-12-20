@@ -303,7 +303,8 @@ module.exports.category = async (req, res) => {
 
 module.exports.per_brand = async (req, res) => {
     try {
-        const { brand_name } = req.params;
+        const brand_name = req.params.brand_name.replace(/-/g, ' ');
+        console.log(brand_name)
         const products = await Product.find({brand: { $regex: brand_name, $options: "i" },})
         console.log(products)
         res.status(200).json(products);

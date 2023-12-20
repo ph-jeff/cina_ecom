@@ -3,20 +3,27 @@ import ReportLayout from '../components/ReportLayout'
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import api from '../../../services/apiRequest'
 import Range from '../../../components/Range';
+import DateRange from '../../../components/DateRange';
+import TableHeader from '../../../components/TableHeader';
+import Loading from '../../../components/Loading';
 
 const InventoryReport = () => {
     const [query, setQuery] = useState("");
     const [limit, setLimit] = useState(5);
     const [reports, setReports] = useState([]);
+    const [isLoading, setLoading] = useState(false);
 
     function fetchReport(){
+        setLoading(true);
         api.get(`/api/admin/report/inventory?value=${query}`)
         .then(response => {
             console.log(response)
             setReports(response.data)
+            setLoading(false);
         })
         .catch(error => {
             console.log(error)
+            setLoading(false);
         })
     }
 
@@ -26,46 +33,48 @@ const InventoryReport = () => {
 
     return (
         <ReportLayout>
-            <div className="mt-10 bg-white w-full p-4 shadow-md rounded-lg border border-slate-200 overflow-x-auto">
-                <div className="flex justify-between mb-4">
-                    <Range setLimit={setLimit} />
-                    <input className="px-4 py-2 rounded border" value={query} onChange={(e) => setQuery(e.target.value)} type="search" placeholder="Search" />
+            {isLoading && <Loading />}
+            <div className='absolute bg-white h-[78vh] -mt-10 min-h-[100vh] h-fit rounded-lg ml-8 w-[95%] text-black'>
+                <TableHeader limit={limit} setLimit={setLimit} query={query} setQuery={setQuery} />
+                <div className='px-10 mt-4'>
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-sm">
+                            <thead className="text-left text-gray-600 bg-[#F0F0F0] border-b border-zinc-400">
+                                <tr className=''>
+                                    <th scope="col" className="font-bold px-6 h-12 border border-[#b0b0b0]">Product</th>
+                                    <th scope="col" className="font-bold px-6 h-12 border border-[#b0b0b0]" colSpan="2">Beginning Amount</th>
+                                    <th scope="col" className="font-bold px-6 h-12 border border-[#b0b0b0]" colSpan="2">Difference</th>
+                                    <th scope="col" className="font-bold px-6 h-12 border border-[#b0b0b0]" colSpan="2">Ending Amount</th>
+                                    <th scope="col" className="font-bold px-6 h-12 border border-[#b0b0b0]">Date</th>    
+                                </tr>
+                                <tr>
+                                    <th scope="col" className="font-semibold px-6 h-12 border border-[#b0b0b0]">Item Name</th>
+                                    <th scope="col" className="font-semibold px-6 h-12 border border-[#b0b0b0]">Qty</th>
+                                    <th scope="col" className="font-semibold px-6 h-12 border border-[#b0b0b0]">Price</th>
+                                    <th scope="col" className="font-semibold px-6 h-12 border border-[#b0b0b0]">Qty</th>
+                                    <th scope="col" className="font-semibold px-6 h-12 border border-[#b0b0b0]">Price</th>    
+                                    <th scope="col" className="font-semibold px-6 h-12 border border-[#b0b0b0]">Qty</th>
+                                    <th scope="col" className="font-semibold px-6 h-12 border border-[#b0b0b0]">Price</th>
+                                    <th scope="col" className="font-semibold px-6 h-12 border border-[#b0b0b0   ]">Order Date</th>    
+                                </tr>
+                            </thead>
+                            <tbody className='bg-transparent '>
+                                {reports.map((report) => (
+                                <tr className="border-b border-[#5b5b5b]" key={report._id}>
+                                    <td className="px-6 h-12">{report.product_name}</td>
+                                    <td className="px-6 h-12">{report.beginning_amount.quantity}</td>
+                                    <td className="px-6 h-12">{report.beginning_amount.price}</td>
+                                    <td className="px-6 h-12">{report.difference.quantity}</td>
+                                    <td className="px-6 h-12">{report.difference.price}</td>
+                                    <td className="px-6 h-12">{report.ending_amount.quantity}</td>
+                                    <td className="px-6 h-12">{report.ending_amount.price}</td>
+                                    <td className="px-6 h-12">{report.createdAt}</td>
+                                </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <table className="w-full table-auto border-collapse border border-gray-300">
-                    <thead className="w-full text-sm text-left text-gray-500">
-                        <tr className="bg-gray-100">
-                            <th className='py-2 px-4 text-left border'>Product</th>
-                            <th className='py-2 px-4 text-left border' colSpan="2">Beginning Amount</th>
-                            <th className='py-2 px-4 text-left border' colSpan="2">Difference</th>
-                            <th className='py-2 px-4 text-left border' colSpan="2">Ending Amount</th>
-                            <th className='py-2 px-4 text-left border'>Date</th>
-                        </tr>
-                        <tr className="">
-                            <th className='py-2 px-4 text-left border'>Item Name</th>
-                            <th className='py-2 px-4 text-left border'>Qty</th>
-                            <th className='py-2 px-4 text-left border'>Price</th>
-                            <th className='py-2 px-4 text-left border'>Qty</th>
-                            <th className='py-2 px-4 text-left border'>Price</th>
-                            <th className='py-2 px-4 text-left border'>Qty</th>
-                            <th className='py-2 px-4 text-left border'>Price</th>
-                            <th className='py-2 px-4 text-left border'>Order Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {reports.map((report) => (
-                            <tr className="border" key={report._id}>
-                                <td className='py-2 px-4 text-left border'>{report.product_name}</td>
-                                <td className='py-2 px-4 text-left border'>{report.beginning_amount.quantity}</td>
-                                <td className='py-2 px-4 text-left border'>{report.beginning_amount.price}</td>
-                                <td className='py-2 px-4 text-left border'>{report.difference.quantity}</td>
-                                <td className='py-2 px-4 text-left border'>{report.difference.price}</td>
-                                <td className='py-2 px-4 text-left border'>{report.ending_amount.quantity}</td>
-                                <td className='py-2 px-4 text-left border'>{report.ending_amount.price}</td>
-                                <td className='py-2 px-4 text-left border'>{report.createdAt}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
             </div>
         </ReportLayout>
     )
