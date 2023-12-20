@@ -29,9 +29,6 @@ const Login = () => {
                     <input value={password} onChange={e => setPassword(e.target.value)} className='w-full px-3 py-1 rounded' type="password" id='password' placeholder='password' />
                 </div>
                 <div className='mt-2'>
-                    <a className='text-sm text-blue-500' href="">Forgot password?</a>
-                </div>
-                <div className='mt-2'>
                     <span className='text-sm'>No account yet?</span>
                     <Link className='text-sm text-blue-500' to="/register"> Sign up!</Link>
                 </div>

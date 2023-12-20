@@ -26,10 +26,15 @@ module.exports.register = async(req, res) => {
         municipal,
         province,
         email,
-        password
+        password,
+        confirm_password
     } = req.body;
     const hashedPassword = await bcrypt.hash(password, salt)
     try {
+        if(password !== confirm_password){
+            return res.status(400).json({error: "Password and confirm password didn't match"})
+        }
+
         if(!email || !password || !firstname || !middlename || !lastname || !contact){
             return res.status(400).json({error: "Please fill out all fields"})
         }

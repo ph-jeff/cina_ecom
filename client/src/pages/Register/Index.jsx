@@ -23,6 +23,7 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [emailExisted, setEmailExisted] = useState(false);
     const [password, setPassword] = useState("");
+    const [confirm_password, setConfirmPassword] = useState("");
 
     function emailChecker(e) {
         setEmail(e.target.value)
@@ -57,7 +58,8 @@ const Register = () => {
             municipal,
             barangay,
             email,
-            password
+            password,
+            confirm_password,
         })
             .then(response => {
                 console.log(response.data)
@@ -199,6 +201,10 @@ const Register = () => {
                             <div className='mt-2'>
                                 <label htmlFor="password">Password</label>
                                 <input value={password} onChange={(e) => setPassword(e.target.value)} className='w-full px-3 py-1 rounded' type="password" id='password' placeholder='password' />
+                            </div>
+                            <div className='mt-2'>
+                                <label htmlFor="confirm_password">Confirm Password</label>
+                                <input value={confirm_password} onChange={(e) => setConfirmPassword(e.target.value)} className='w-full px-3 py-1 rounded' type="password" id='confirm_password' placeholder='confirm password' />
                             </div>
                             <div className='mt-2'>
                                 <span className='text-sm'>Already have an account?</span>
