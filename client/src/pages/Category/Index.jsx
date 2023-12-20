@@ -20,8 +20,8 @@ const Index = () => {
         fetchProduct()
     }, [query])
     return (
-        <div className="min-h-screen h-fit flex justify-center items-center bg-[#C4A353]">
-            <div className='w-[80%] bg-[#C4A353] justify-center items-center flex flex-wrap flex overflow-hidden'>
+        <div className="min-h-screen h-fit flex justify-center items-center bg-slate-200">
+            <div className='w-[80%] justify-center items-center flex flex-wrap flex overflow-hidden'>
                 {products.length != 0 ? (
                     <>
                         {products.map((product) => (

@@ -18,7 +18,7 @@ const ChangePassword = () => {
                         </label>
                         <input
                             id="current_password"
-                            type="text"
+                            type="password"
                             className="w-full p-2 border rounded-md"
                         />
                     </div>
@@ -28,7 +28,7 @@ const ChangePassword = () => {
                         </label>
                         <input
                             id="new_password"
-                            type="text"
+                            type="password"
                             className="w-full p-2 border rounded-md"
                         />
                     </div>
@@ -38,7 +38,7 @@ const ChangePassword = () => {
                         </label>
                         <input
                             id="confirm_password"
-                            type="text"
+                            type="password"
                             className="w-full p-2 border rounded-md"
                         />
                     </div>

@@ -28,7 +28,7 @@ const Index = () => {
     return (
         <>
             {isLoading && <Loading />}
-            <div className="h-fit min-h-screen flex justify-center flex-col block px-10 py-10 bg-[#C4A353]">
+            <div className="h-fit min-h-screen flex justify-center flex-col block px-10 py-10 bg-slate-200">
                 {saleProduct.length !== 0 ? (
                     <>
                         <h1 className="text-gray-800 text-[1.5rem] font-medium text-center">

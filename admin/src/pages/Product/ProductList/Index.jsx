@@ -5,12 +5,13 @@ import api from "../../../services/apiRequest";
 import LinkButton from "../../../components/LinkButton";
 import Loading from '../../../components/Loading'
 import Range from "../../../components/Range";
+import TableHeader from "../../../components/TableHeader";
 
 
 const Index = () => {
     const [products, setProduct] = useState([]);
     const [query, setQuery] = useState("");
-    const [limit, setLimit] = useState(100);
+    const [limit, setLimit] = useState(10000);
     const [isLoading, setLoading] = useState(false);
 
     function deleteItem(id) {
@@ -46,31 +47,18 @@ const Index = () => {
     return (
         <ProductLayout>
             {isLoading && <Loading />}
-            <div className="mt-10 bg-white w-full p-4 shadow-md rounded-lg border border-slate-200">
-                <div className="flex justify-between mb-4">
-                    <LinkButton params={'/product/create'} actionName={'+'} />
-                    <input className="px-4 py-2 rounded border" value={query} onChange={(e) => setQuery(e.target.value)} type="search" placeholder="Search" />
+            <div className='flex w-full px-10 -mt-10 mb-[3rem]'>
+                <LinkButton params={'/product/create'} actionName={'Create Product'} />
+            </div>
+            <div className='absolute bg-white h-[78vh] -mt-10 min-h-[100vh] h-fit rounded-lg ml-8 w-[95%] text-black'>
+                <TableHeader limit={limit} setLimit={setLimit} query={query} setQuery={setQuery} />
+                <div className='px-10 mt-4'>
+                    <div className="overflow-x-auto">
+                        <Table products={products} deleteItem={deleteItem} />
+                    </div>
                 </div>
-                {/* <div>
-                    <Range setLimit={setLimit} />
-                </div> */}
-                <Table products={products} deleteItem={deleteItem} />
             </div>
         </ProductLayout>
-
-        // <ProductLayout>
-        //     <div className="mt-10 bg-gray-100 w-full p-6 shadow-lg rounded-lg">
-        //         <div className="flex justify-between items-center mb-4">
-        //             <LinkButton params={'/product/create'} actionName={'+'} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" />
-        //             <input className="px-4 py-2 rounded border focus:outline-none" value={query} onChange={(e) => setQuery(e.target.value)} type="search" placeholder="Search" />
-        //         </div>
-        //         <div className="mb-4">
-        //             <Range setLimit={setLimit} />
-        //         </div>
-        //         <Table products={products} deleteItem={deleteItem} />
-        //     </div>
-        // </ProductLayout>
-
     )
 }
 

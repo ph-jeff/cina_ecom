@@ -4,12 +4,14 @@ import api from '../../../services/apiRequest'
 import Create from './Create'
 import Table from './Table'
 import Loading from '../../../components/Loading'
+import TableHeader from '../../../components/TableHeader'
 
 const Category = () => {
     const [open, setOpen] = useState(false);
 
     const [categories, setCategories] = useState([]);
     const [query, setQuery] = useState("");
+    const [limit, setLimit] = useState(5);
     const [isLoading, setLoading] = useState(false)
 
     
@@ -33,14 +35,18 @@ const Category = () => {
     return (
         <ProductLayout>
             {isLoading && <Loading />}
-            <div className="mt-10 bg-white w-full p-4 shadow-md rounded-lg border border-slate-200">
-                <div className="flex justify-between mb-4">
-                    <button onClick={() => setOpen(!open)} className="bg-gray-800 hover:bg-gray-600 text-white py-2 px-4 rounded">+</button>
-                    <input className="px-4 py-2 rounded border" value={query} onChange={(e) => setQuery(e.target.value)} type="search" placeholder="Search" />
-                </div>
-                <Create open={open} setOpen={() => setOpen(!open)} fetchCategory={fetchCategory} />
-                <Table categories={categories} setLoading={setLoading} />
+            <div className='flex w-full px-10 -mt-10 mb-[3rem]'>
+                <button onClick={() => setOpen(!open)} className="bg-gray-800 hover:bg-gray-600 text-white py-2 px-4 rounded">Create Category</button>
             </div>
+            <div className='absolute bg-white h-[78vh] -mt-10 min-h-[100vh] h-fit rounded-lg ml-8 w-[95%] text-black'>
+                <TableHeader limit={limit} setLimit={setLimit} query={query} setQuery={setQuery} />
+                <div className='px-10 mt-4'>
+                    <div className="overflow-x-auto">
+                        <Table categories={categories} setLoading={setLoading} />
+                    </div>
+                </div>
+            </div>
+            <Create open={open} setOpen={() => setOpen(!open)} fetchCategory={fetchCategory} />
         </ProductLayout>
     )
 }

@@ -105,7 +105,7 @@ const CartPage = () => {
     return (
         <div>
             {isLoading && <Loading />}
-            <div className="min-h-screen h-fit flex flex-col justify-center items-center px-2 md:px-24 py-10 bg-[#C4A353]">
+            <div className="min-h-screen h-fit flex flex-col justify-center items-center px-2 md:px-24 py-10 bg-slate-200">
                 <h1 className="text-gray-800 text-3xl">Your Cart</h1>
                 {cart.length !== 0 ? (
                     <>

@@ -17,7 +17,7 @@ const Layout = ({ children }) => {
         // </div>
         <div className='h-full md:h-screen w-full md:flex flex-row overflow-hidden'>
             <SettingSidebar />
-            <div className='flex-1 bg-[#C4A353] h-full overflow-y-auto overflow-x-hidden'>
+            <div className='flex-1 bg-slate-200 h-full overflow-y-auto overflow-x-hidden'>
                 {children}
             </div>
         </div>
