@@ -154,12 +154,14 @@ const Update = () => {
     }
 
     useEffect(() => {
+        setIsLoading(true)
         fetchProduct();
         function fetchCategory(){
             api.get('/api/admin/category')
             .then(response => {
                 setCategories(response.data)
                 console.log(response)
+                setIsLoading(false)
             })
         }
         function fetchBrand(){
@@ -167,6 +169,7 @@ const Update = () => {
             .then(response => {
                 setBrands(response.data)
                 console.log(response.data)
+                setIsLoading(false)
             })
         }
         fetchCategory()
@@ -175,7 +178,7 @@ const Update = () => {
 
     return (
         <ProductLayout>
-        {isLoading && <Loading />}
+            {isLoading && <Loading />}
             <div className="mt-10 bg-white w-full p-4 shadow-md rounded-lg border border-slate-200">
                 <div className="mb-4 flex justify-between">
                     <LinkButton params={'/product'} actionName={'Back'} />

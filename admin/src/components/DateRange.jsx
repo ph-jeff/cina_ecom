@@ -13,10 +13,10 @@ const DateRange = () => {
                 <input className='py-2 px-4 w-full rounded-md border border-gray-300 text-sm text-[#4f4f4f] ' type="date" />
             </div>
         </div>
-        <div className='flex gap-2'>
+        {/* <div className='flex gap-2'>
             <div className='border border-gray-300 h-20 w-40'></div>
             <div className='border border-gray-300 h-20 w-40'></div>
-        </div>
+        </div> */}
     </div>
   )
 }
