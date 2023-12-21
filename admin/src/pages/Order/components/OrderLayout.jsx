@@ -15,7 +15,7 @@ const OrderLayout = ({children}) => {
     return (
         <div className='relative bg-[#FED32C] h-fit min-h-[38vh] text-[#515151]'>
             <div className='pt-10 px-8'>
-                <p className='text-[18px] font-bold tracking-wide'>Order</p>
+                <p className='text-[18px] font-bold tracking-wide'>Order Management</p>
 
                 <ul className='flex gap-4 justify-center text-center text-sm mt-2 bg-white w-fit px-4 rounded'>
                     {order_links.map((item, index) => (

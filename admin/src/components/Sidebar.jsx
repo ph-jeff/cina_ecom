@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import api from '../services/apiRequest'
 import { useNavigate } from 'react-router-dom'
 import logo from '../assets/logo.png'
@@ -15,6 +15,19 @@ import Logout from '@mui/icons-material/SettingsOutlined';
 
 
 const Sidebar = () => {
+    const location = useLocation();
+
+    // const menu_links = [
+    //     { name: 'Home', path: '/'},
+    //     { name: 'Product Management', path: '/product'},
+    //     { name: 'Order Management', path: '/order'},
+    //     { name: 'Product Management', path: '/product'},
+    //     { name: 'Product Management', path: '/product'},
+    //     { name: 'Product Management', path: '/product'},
+    //     { name: 'Product Management', path: '/product'},
+    //     { name: 'Product Management', path: '/product'},
+    // ]
+
     const navigate = useNavigate();
     function logout(e) {
         e.preventDefault()
@@ -37,6 +50,7 @@ const Sidebar = () => {
             </div>
 
             <ul className='mx-5 mb-6'>
+
                 <div className='my-3 '>
                     <p className='text-xs'>Dashboard</p>
                     <div className='mt-1'>  
