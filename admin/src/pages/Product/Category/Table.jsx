@@ -39,7 +39,7 @@ const Table = ({categories, setLoading, totalPages, currentPage, setCurrentPage}
                     ))}
                 </tbody>
             </table>
-            <Pagination totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+            {categories.length != 0 && <Pagination totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />}
             <Update category={category} open={open} setOpen={setOpen} handleClose={handleClose} setLoading={setLoading} />
         </>
     )

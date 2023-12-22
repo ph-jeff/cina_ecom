@@ -37,6 +37,7 @@ const Table = ({ products, totalPages, currentPage, setCurrentPage }) => {
                                         className="w-full h-full object-cover"
                                         src={product.img_url}
                                         alt=""
+                                        loading="lazy"
                                     />
                                 </div>
                             </td>

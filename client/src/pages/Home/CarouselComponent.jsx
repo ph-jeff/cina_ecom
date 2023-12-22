@@ -51,7 +51,7 @@ const CarouselComponent = ({ featuredProduct }) => {
                     // </div>
 
                     <div className="relative h-screen bg-red-900" key={index}>
-                        <img className="w-full h-full object-cover" src={product.img_url} alt="" />
+                        <img className="w-full h-full object-cover" src={product.img_url} alt="" loading="lazy" />
 
                         {/* Display discount or sale amount */}
                         {product.sale.is_sale && (

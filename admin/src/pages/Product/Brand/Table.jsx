@@ -39,7 +39,7 @@ const Table = ({brands, fetchBrand, totalPages, currentPage, setCurrentPage}) =>
                     ))}
                 </tbody>
             </table>
-            <Pagination totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+            {brands.length != 0 && <Pagination totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />}
             <Update brand={brand} open={open} setOpen={setOpen} handleClose={handleClose} fetchBrand={fetchBrand} />
         </>
     )
