@@ -23,10 +23,19 @@ const Items = ({ cart, sub, add, removeItem }) => {
                         <div className="flex items-center mb-2 md:mb-0 mr-4">
                             <span className="mr-2">Size: {item.size.selected_size}</span>
                             <span className="text-gray-800">
-                                {(item.product_id.price * item.quantity).toLocaleString("en-PH", {
-                                    style: "currency",
-                                    currency: "PHP",
-                                })}
+                                <span className='line-through'>
+                                    {(item.product_id.price * item.quantity).toLocaleString("en-PH", {
+                                        style: "currency",
+                                        currency: "PHP",
+                                    })}
+                                </span>
+                                <span className='ml-2 text-red-600'>
+                                    {((item.product_id.price - (item.product_id.price * (item.product_id.sale.discount / 100)) * item.quantity)).toLocaleString("en-PH", {
+                                        style: "currency",
+                                        currency: "PHP",
+                                    })}
+                                    
+                                </span>
                             </span>
                         </div>
 

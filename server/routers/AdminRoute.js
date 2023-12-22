@@ -43,11 +43,13 @@ router.get('/product/search', product.search);
 
 // brands
 router.get('/brand', isAdminLogin, brand.view);
+router.get('/brand/list', isAdminLogin, brand.list);
 router.post('/brand', isAdminLogin, upload.single('image'), brand.create);
 router.post('/brand/:id', isAdminLogin, upload.single('image'), brand.update);
 
 // category
 router.get('/category', isAdminLogin, category.view);
+router.get('/category/list', isAdminLogin, category.list);
 router.post('/category', isAdminLogin, category.create);
 router.post('/category/:id', isAdminLogin, category.update);
 

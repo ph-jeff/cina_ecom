@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import Pagination from '../../../components/Pagination'
 
-const Table = ({orders, setOrders}) => {
+const Table = ({orders, setOrders, totalPages, currentPage, setCurrentPage}) => {
     return (
         <>
             <table className="w-full table-auto border-collapse border border-gray-300">
@@ -33,6 +34,8 @@ const Table = ({orders, setOrders}) => {
                     ))}
                 </tbody>
             </table>
+            
+            {orders.length != 0 && <Pagination totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />}
         </>
     )
 }

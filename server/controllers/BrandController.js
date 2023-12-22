@@ -6,12 +6,41 @@ const fs = require('fs');
 
 module.exports.view = async(req, res) => {
     try {
-        const query = req.query.value || "";
+        const value = req.query.value || "";
+        const limit = req.query.limit || 5;
+        const page = req.query.page || 0;
+
+        const brandCount = await Brand.countDocuments({
+            $or: [
+                { brand_name: { $regex: value, $options: "i" } },
+            ]
+        });
+
+        const totalPages = Math.ceil(brandCount / limit);
+
         const brand = await Brand.find({
             $or: [
-                { brand_name: { $regex: query, $options: "i" } },
+                { brand_name: { $regex: value, $options: "i" } },
             ]
         })
+        .skip(limit * page)
+        .limit(limit)
+        .sort({createdAt: -1});
+        
+        const data = {
+            brand,
+            totalPages
+        }
+
+        res.json(data)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
+module.exports.list = async(req, res) => {
+    try {
+        const brand = await Brand.find()
         res.json(brand)
     } catch (error) {
         res.status(400).json({error: error.message})

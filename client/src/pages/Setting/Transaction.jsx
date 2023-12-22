@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import ActionButton from '../../components/ActionButton';
 import api from '../../services/apiRequest';
+import Track from './components/Track';
 
 const Transaction = () => {
     const defaultStar = Array.from({ length: 5 }, () => Array(5));
     const [rating, setRating] = useState(0)
     const [status, setStatus] = useState("pending")
     const [orders, setOrders] = useState([])
+    const [transaction, setTransaction] = useState({})
+    const [open, setOpen] = useState(false);
     useEffect(() => {
         function fetchOrders(){
             api.get('/api/user/transaction?status=' + status)
@@ -25,10 +28,10 @@ const Transaction = () => {
             <div className="container mx-auto p-4 min-h-screen">
                 <h1 className='font-medium text-2xl mb-4'>Transaction</h1>
                 <div className='flex justify-around my-5'>
-                    <button onClick={() => setStatus("pending")} className={`${status === "pending" ? 'bg-gray-500' : 'bg-slate-200'} rounded h-[100px] w-[200px]`}>Pending</button>
-                    <button onClick={() => setStatus("prepairing")} className={`${status === "prepairing" ? 'bg-gray-500' : 'bg-slate-200'} rounded h-[100px] w-[200px]`}>Prepairing</button>
-                    <button onClick={() => setStatus("to-ship")} className={`${status === "to-ship" ? 'bg-gray-500' : 'bg-slate-200'} rounded h-[100px] w-[200px]`}>To Ship</button>
-                    <button onClick={() => setStatus("delivered")} className={`${status === "delivered" ? 'bg-gray-500' : 'bg-slate-200'} rounded h-[100px] w-[200px]`}>Delivered</button>
+                    <button onClick={() => setStatus("pending")} className={`${status === "pending" ? 'bg-gray-400' : 'bg-slate-200'} rounded h-[100px] w-[200px] shadow`}>Pending</button>
+                    {/* <button onClick={() => setStatus("prepairing")} className={`${status === "prepairing" ? 'bg-gray-500' : 'bg-slate-200'} rounded h-[100px] w-[200px]`}>Prepairing</button>
+                    <button onClick={() => setStatus("to-ship")} className={`${status === "to-ship" ? 'bg-gray-500' : 'bg-slate-200'} rounded h-[100px] w-[200px]`}>To Ship</button> */}
+                    <button onClick={() => setStatus("delivered")} className={`${status === "delivered" ? 'bg-gray-400' : 'bg-slate-200'} rounded h-[100px] w-[200px] shadow`}>Delivered</button>
                 </div>
                 <div className="w-full mb-4">
                     <div className="bg-white shadow-md p-4 rounded-md">
@@ -60,7 +63,11 @@ const Transaction = () => {
                                             {status === 'pending'
                                                 &&
                                                 <td className="px-4 py-2">
-                                                    <button className='bg-red-700 text-white px-2 py-1 rounded'>cancel</button>
+                                                    <button onClick={() => {
+                                                        setTransaction(order)
+                                                        setOpen(!open)
+                                                    }} className='bg-slate-200 shadow underline px-4 rounded'>view</button>
+                                                    <button className='bg-red-700 text-white px-2 rounded'>cancel</button>
                                                 </td>
                                             }
                                         </tr>
@@ -71,6 +78,7 @@ const Transaction = () => {
                     </div>
                 </div>
             </div>
+            <Track open={open} setOpen={() => setOpen(!open) } transaction={transaction} />
         </>
     )
 }

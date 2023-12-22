@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Update from './Update';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
+import Pagination from '../../../components/Pagination';
 
-const Table = ({brands, fetchBrand}) => {
+const Table = ({brands, fetchBrand, totalPages, currentPage, setCurrentPage}) => {
     const [open, setOpen] = useState(false);
     const [brand, setBrand] = useState("");
     
@@ -38,6 +39,7 @@ const Table = ({brands, fetchBrand}) => {
                     ))}
                 </tbody>
             </table>
+            <Pagination totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
             <Update brand={brand} open={open} setOpen={setOpen} handleClose={handleClose} fetchBrand={fetchBrand} />
         </>
     )

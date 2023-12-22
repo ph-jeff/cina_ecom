@@ -10,9 +10,12 @@ import TableHeader from "../../../components/TableHeader";
 
 const Index = () => {
     const [products, setProduct] = useState([]);
-    const [query, setQuery] = useState("");
-    const [limit, setLimit] = useState(10000);
     const [isLoading, setLoading] = useState(false);
+
+    const [query, setQuery] = useState("")
+    const [limit, setLimit] = useState(5)
+    const [currentPage, setCurrentPage] = useState(0)
+    const [totalPages, setTotalPages] = useState(1);
 
     function deleteItem(id) {
         api.delete(`/api/admin/product/${id}`)
@@ -27,10 +30,11 @@ const Index = () => {
 
     async function fetchProduct() {
         setLoading(true);
-        api.get(`/api/admin/product?value=${query}&limit=${limit}`)
+        api.get(`/api/admin/product?value=${query}&limit=${limit}&page=${currentPage}`)
             .then(response => {
                 console.log(response);
-                setProduct(response.data);
+                setProduct(response.data.product);
+                setTotalPages(response.data.totalPages);
                 setLoading(false);
             })
             .catch(err => {
@@ -41,7 +45,7 @@ const Index = () => {
 
     useEffect(() => {
         fetchProduct();
-    }, [query, limit]);
+    }, [query, limit, currentPage]);
     // when query value is change, useEffect is reload
 
     return (
@@ -54,7 +58,7 @@ const Index = () => {
                 <TableHeader limit={limit} setLimit={setLimit} query={query} setQuery={setQuery} />
                 <div className='px-10 mt-4'>
                     <div className="overflow-x-auto">
-                        <Table products={products} deleteItem={deleteItem} />
+                        <Table products={products} deleteItem={deleteItem} totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
                     </div>
                 </div>
             </div>

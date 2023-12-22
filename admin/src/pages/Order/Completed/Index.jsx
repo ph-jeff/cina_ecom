@@ -8,24 +8,29 @@ import Loading from '../../../components/Loading'
 
 const Index = () => {
     const [orders, setOrders] = useState([])
+    const [isLoading, setLoading] = useState(false);
+
     const [query, setQuery] = useState("")
     const [limit, setLimit] = useState(5)
-    const [isLoading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(0)
+    const [totalPages, setTotalPages] = useState(1);
     
-    useEffect(() => {
+    function fetchOrder(){
         setLoading(true);
-        function fetchOrder(){
-            api.get('/api/admin/order/completed?value=' + query)
-            .then(response => {
-                console.log(response)
-                setOrders(response.data)
-                setLoading(false);
-            })
-            .catch(error => {
-                console.log(error)
-                setLoading(false);
-            })
-        }
+        api.get('/api/admin/order/completed?value=' + query)
+        .then(response => {
+            console.log(response)
+            setOrders(response.data.orders)
+            setTotalPages(response.data.totalPages)
+            setLoading(false);
+        })
+        .catch(error => {
+            console.log(error)
+            setLoading(false);
+        })
+    }
+
+    useEffect(() => {
         fetchOrder()
     }, [query])
     
@@ -36,7 +41,7 @@ const Index = () => {
                 <TableHeader limit={limit} setLimit={setLimit} query={query} setQuery={setQuery} />
                 <div className='px-10 mt-4'>
                     <div className="overflow-x-auto">
-                        <Table orders={orders} setOrders={setOrders} />
+                        <Table orders={orders} setOrders={setOrders} totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
                     </div>
                 </div>
             </div>

@@ -102,13 +102,13 @@ const Create = () => {
 
     useEffect(() => {
         function fetchCategory() {
-            api.get('/api/admin/category')
+            api.get('/api/admin/category/list')
                 .then(response => {
                     setCategories(response.data)
                 })
         }
         function fetchBrand() {
-            api.get('/api/admin/brand')
+            api.get('/api/admin/brand/list')
                 .then(response => {
                     setBrands(response.data)
                     console.log(response.data)

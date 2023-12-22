@@ -120,7 +120,7 @@ const Index = () => {
     return (
         <>
             {isLoading && <Loading />}
-            <div className="min-h-screen flex flex-col items-center justify-center bg-[#C4A353] py-10 px-4 md:px-24">
+            <div className="min-h-screen flex flex-col items-center justify-center bg-slate-200 py-10 px-4 md:px-24">
                 {product ? (
                     <>
                         <div className="w-full max-w-screen-md bg-white rounded-lg overflow-hidden mb-4">
@@ -143,7 +143,7 @@ const Index = () => {
                                     <h2 className="text-3xl font-medium text-gray-800 mb-4">
                                         {product.name}
                                     </h2>
-                                    <p className="text-lg text-gray-600 mb-4">{product.description}</p>
+                                    <p className="text-lg text-gray-600 mb-4 line-clamp-6">{product.description}</p>
                                     <div className="mt-2">
                                         <label className="block font-bold" htmlFor="sizeUnitSelect">
                                             Select Size Unit:

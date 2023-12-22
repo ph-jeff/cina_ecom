@@ -10,15 +10,19 @@ const Brand = () => {
     const [open, setOpen] = useState(false);
 
     const [brands, setBrands] = useState([]);
-    const [query, setQuery] = useState("");
-    const [limit, setLimit] = useState(5);
     const [isLoading, setLoading] = useState(false);
+
+    const [query, setQuery] = useState("")
+    const [limit, setLimit] = useState(5)
+    const [currentPage, setCurrentPage] = useState(0)
+    const [totalPages, setTotalPages] = useState(1);
 
     function fetchBrand(){
         setLoading(true);
-        api.get(`/api/admin/brand?value=${query}`)
+        api.get(`/api/admin/brand?value=${query}&limit=${limit}&page=${currentPage}`)
         .then(response => {
-            setBrands(response.data)
+            setBrands(response.data.brand)
+            setTotalPages(response.data.totalPages)
             setLoading(false);
         })
         .catch(error => {
@@ -30,7 +34,7 @@ const Brand = () => {
 
     useEffect(() => {
         fetchBrand()
-    }, [query])
+    }, [query, limit, currentPage])
 
     return (
         <ProductLayout>
@@ -42,7 +46,7 @@ const Brand = () => {
                 <TableHeader limit={limit} setLimit={setLimit} query={query} setQuery={setQuery} />
                 <div className='px-10 mt-4'>
                     <div className="overflow-x-auto">
-                        <Table brands={brands} setLoading={setLoading} fetchBrand={fetchBrand} />
+                        <Table brands={brands} setLoading={setLoading} fetchBrand={fetchBrand} totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
                     </div>
                 </div>
             </div>

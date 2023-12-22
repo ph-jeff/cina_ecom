@@ -3,12 +3,41 @@ const slug = require('slug');
 
 module.exports.view = async(req, res) => {
     try {
-        const query = req.query.value || "";
+        const value = req.query.value || "";
+        const limit = req.query.limit || 5;
+        const page = req.query.page || 0;
+
+        const categoryCount = await Category.countDocuments({
+            $or: [
+                { category_name: { $regex: value, $options: "i" } },
+            ]
+        });
+
+        const totalPages = Math.ceil(categoryCount / limit);
+
         const category = await Category.find({
             $or: [
-                { category_name: { $regex: query, $options: "i" } },
+                { category_name: { $regex: value, $options: "i" } },
             ]
         })
+        .skip(limit * page)
+        .limit(limit)
+        .sort({createdAt: -1});
+
+        const data = {
+            category,
+            totalPages
+        }
+        
+        res.json(data)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
+module.exports.list = async(req, res) => {
+    try {
+        const category = await Category.find()
         res.json(category)
     } catch (error) {
         res.status(400).json({error: error.message})

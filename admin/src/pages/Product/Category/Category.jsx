@@ -10,16 +10,19 @@ const Category = () => {
     const [open, setOpen] = useState(false);
 
     const [categories, setCategories] = useState([]);
-    const [query, setQuery] = useState("");
-    const [limit, setLimit] = useState(5);
     const [isLoading, setLoading] = useState(false)
 
+    const [query, setQuery] = useState("")
+    const [limit, setLimit] = useState(5)
+    const [currentPage, setCurrentPage] = useState(0)
+    const [totalPages, setTotalPages] = useState(1);
     
     function fetchCategory() {
         setLoading(true);
-        api.get(`/api/admin/category?value=${query}`)
+        api.get(`/api/admin/category?value=${query}&limit=${limit}&page=${currentPage}`)
             .then(response => {
-                setCategories(response.data)
+                setCategories(response.data.category)
+                setTotalPages(response.data.totalPages)
                 setLoading(false);
             })
             .catch(error => {
@@ -30,7 +33,7 @@ const Category = () => {
 
     useEffect(() => {
         fetchCategory();
-    }, [query])
+    }, [query, limit, currentPage])
 
     return (
         <ProductLayout>
@@ -42,7 +45,7 @@ const Category = () => {
                 <TableHeader limit={limit} setLimit={setLimit} query={query} setQuery={setQuery} />
                 <div className='px-10 mt-4'>
                     <div className="overflow-x-auto">
-                        <Table categories={categories} setLoading={setLoading} />
+                        <Table categories={categories} setLoading={setLoading} totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
                     </div>
                 </div>
             </div>

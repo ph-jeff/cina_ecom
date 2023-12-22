@@ -28,7 +28,7 @@ const Update = () => {
     const [saleStartDate, setSaleStartDate] = useState('');
     const [saleEndDate, setSaleEndDate] = useState('');
 
-    async function fetchProduct() {
+    function fetchProduct() {
         api.get(`/api/admin/product/update/${id}`)
             .then(response => {
                 console.log(response.data);
@@ -58,6 +58,24 @@ const Update = () => {
             .catch(err => {
                 console.log(err.response.data);
             })
+    }
+
+    function fetchCategory(){
+        api.get('/api/admin/category/list')
+        .then(response => {
+            setCategories(response.data)
+            console.log(response)
+            setIsLoading(false)
+        })
+    }
+
+    function fetchBrand(){
+        api.get('/api/admin/brand/list')
+        .then(response => {
+            setBrands(response.data)
+            console.log(response.data)
+            setIsLoading(false)
+        })
     }
 
     // check and save file into renderable file
@@ -155,25 +173,9 @@ const Update = () => {
 
     useEffect(() => {
         setIsLoading(true)
-        fetchProduct();
-        function fetchCategory(){
-            api.get('/api/admin/category')
-            .then(response => {
-                setCategories(response.data)
-                console.log(response)
-                setIsLoading(false)
-            })
-        }
-        function fetchBrand(){
-            api.get('/api/admin/brand')
-            .then(response => {
-                setBrands(response.data)
-                console.log(response.data)
-                setIsLoading(false)
-            })
-        }
-        fetchCategory()
         fetchBrand()
+        fetchCategory()
+        fetchProduct();
     }, [])
 
     return (

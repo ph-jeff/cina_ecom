@@ -34,17 +34,35 @@ module.exports.index = async (req, res) => {
 
 module.exports.admin_index = async (req, res) => {
     try {
-        const query = req.query.value || "";
-        const limit = req.query.limit || 0;
+        const value = req.query.value || "";
+        const limit = req.query.limit || 5;
+        const page = req.query.page || 0;
+
+        const productCount = await Product.countDocuments({
+            $or: [
+                { name: { $regex: value, $options: "i" } },
+            ]
+        });
+
+        const totalPages = Math.ceil(productCount / limit);
+
         const product = await Product.find(
             {
                 $or: [
-                    { name: { $regex: query, $options: "i" } },
-                    // {description: {$regex: query}}
+                    { name: { $regex: value, $options: "i" } },
                 ]
             }
-        ).sort('-createdAt').limit(limit);
-        res.status(200).json(product);
+        ).sort('-createdAt')
+        .skip(limit * page)
+        .limit(limit)
+        .sort({createdAt: -1});
+
+        const data = {
+            product,
+            totalPages
+        }
+
+        res.status(200).json(data);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -54,7 +72,7 @@ module.exports.latest = async (req, res) => {
     try {
         const product = await Product.find({
             quantity: {$ne: 0},
-        }).sort({createdAt: 1}).limit(5);
+        }).sort({createdAt: -1}).limit(5);
         res.status(200).json(product);
     } catch (error) {
         res.status(400).json({ error: error.message });

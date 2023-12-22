@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import ConfirmDialog from '../../../components/ConfirmDialog'
 import api from '../../../services/apiRequest';
+import Pagination from '../../../components/Pagination';
 
-const Table = ({orders, setOrders, onConfirm}) => {
+const Table = ({orders, setOrders, onConfirm, totalPages, currentPage, setCurrentPage}) => {
     const [open, setOpen] = useState(false)
     const [id, setId] = useState("");
 
@@ -63,6 +64,7 @@ const Table = ({orders, setOrders, onConfirm}) => {
                     ))}
                 </tbody>
             </table>
+            {orders.length != 0 && <Pagination totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />}
             <ConfirmDialog message={"Are you sure you want to proceed"} open={open} setOpen={setOpen} onConfirm={onConfirm} />
         </>
     )

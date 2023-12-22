@@ -33,24 +33,28 @@ const DetailsModal = ({ open, setOpen, salesId }) => {
     const [isLoading, setLoading] = useState(false);
     const [modalLoading, setModalLoading] = useState(false);
 
-    useEffect(() => {
+    function getDetails(){
         setLoading(true);
         setModalLoading(true);
         api.get(`/api/admin/report/sales/information/${salesId}`)
-            .then(response => {
-                console.log(response);
-                setCustomerInformation(response.data.customer_information);
-                setSalesInformation(response.data.information);
-                setSoldItems(response.data.sold_items);
-                setLoading(false);
-                setModalLoading(false);
-            })
-            .catch(error => {
-                console.log(error);
-                setLoading(false);
-                setModalLoading(false);
-            });
-        console.log(salesId);
+        .then(response => {
+            console.log(response);
+            setCustomerInformation(response.data.customer_information);
+            setSalesInformation(response.data.information);
+            setSoldItems(response.data.sold_items);
+            setLoading(false);
+            setModalLoading(false);
+        })
+        .catch(error => {
+            console.log(error);
+            setLoading(false);
+            setModalLoading(false);
+        });
+    }
+    useEffect(() => {
+        if(salesId){
+            getDetails()
+        }
     }, [salesId]);
 
     return (
