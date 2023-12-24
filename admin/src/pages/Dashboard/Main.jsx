@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import api from '../../services/apiRequest';
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import Loading from '../../components/Loading';
+import Gain from '@mui/icons-material/TrendingUp';
+import Loss from '@mui/icons-material/TrendingDown';
 
 
 const Main = () => {
@@ -64,8 +66,9 @@ const Main = () => {
                                 currency: "PHP",
                             })}
                         </p>
-                        <span className={`${month_over_month > 0 ? 'text-green-500' : 'text-red-500'}`}>
+                        <span className={`${month_over_month >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                             {month_over_month + "%"}
+                            {month_over_month >= 0 ? <Gain /> : <Loss />}
                         </span>
                     </div>
 
