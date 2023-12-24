@@ -13,13 +13,15 @@ const Brand = () => {
     const [isLoading, setLoading] = useState(false);
 
     const [query, setQuery] = useState("")
+    const [dateFrom, setDateFrom] = useState("")
+    const [dateTo, setDateTo] = useState("")
     const [limit, setLimit] = useState(5)
     const [currentPage, setCurrentPage] = useState(0)
     const [totalPages, setTotalPages] = useState(1);
 
     function fetchBrand(){
         setLoading(true);
-        api.get(`/api/admin/brand?value=${query}&limit=${limit}&page=${currentPage}`)
+        api.get(`/api/admin/brand?value=${query}&limit=${limit}&page=${currentPage}&date_from=${dateFrom}&date_to=${dateTo}`)
         .then(response => {
             setBrands(response.data.brand)
             setTotalPages(response.data.totalPages)
@@ -34,7 +36,7 @@ const Brand = () => {
 
     useEffect(() => {
         fetchBrand()
-    }, [query, limit, currentPage])
+    }, [query, limit, currentPage, dateFrom, dateTo])
 
     return (
         <ProductLayout>
@@ -43,7 +45,12 @@ const Brand = () => {
                 <button onClick={() => setOpen(!open)} className="bg-gray-800 hover:bg-gray-600 text-white py-2 px-4 rounded">+</button>
             </div>
             <div className='absolute bg-white h-[78vh] -mt-10 min-h-[100vh] h-fit rounded-lg ml-8 w-[95%] text-black'>
-                <TableHeader limit={limit} setLimit={setLimit} query={query} setQuery={setQuery} />
+                <TableHeader
+                    limit={limit} setLimit={setLimit}
+                    query={query} setQuery={setQuery}
+                    dateFrom={dateFrom} setDateFrom={setDateFrom}
+                    dateTo={dateTo} setDateTo={setDateTo}
+                />
                 <div className='px-10 mt-4'>
                     <div className="overflow-x-auto">
                         <Table brands={brands} setLoading={setLoading} fetchBrand={fetchBrand} totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />

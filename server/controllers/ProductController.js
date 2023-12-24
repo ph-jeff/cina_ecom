@@ -12,7 +12,6 @@ const InventoryReport = require('../models/InventoryReport');
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-// shared with products on table -> admin page
 module.exports.index = async (req, res) => {
     try {
         const query = req.query.value || "";
@@ -25,7 +24,9 @@ module.exports.index = async (req, res) => {
                     // {description: {$regex: query}}
                 ]
             }
-        ).sort('-createdAt').limit(limit);
+        )
+        .sort('-createdAt')
+        .limit(limit);
         res.status(200).json(product);
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -37,22 +38,26 @@ module.exports.admin_index = async (req, res) => {
         const value = req.query.value || "";
         const limit = req.query.limit || 5;
         const page = req.query.page || 0;
+        const date_from = req.query.date_from || "1994-11-20T00:00:00.000Z";
 
-        const productCount = await Product.countDocuments({
+        const defaultDateTo = new Date("9999-12-31T23:59:59.999Z");
+        const date_to = req.query.date_to ? new Date(req.query.date_to) : defaultDateTo;
+        const query_data = {
+            createdAt: {
+                $gte: new Date(date_from),
+                $lt: date_to
+            },
             $or: [
                 { name: { $regex: value, $options: "i" } },
             ]
-        });
+        }
+
+        const productCount = await Product.countDocuments(query_data);
 
         const totalPages = Math.ceil(productCount / limit);
 
-        const product = await Product.find(
-            {
-                $or: [
-                    { name: { $regex: value, $options: "i" } },
-                ]
-            }
-        ).sort('-createdAt')
+        const product = await Product.find(query_data)
+        .sort('-createdAt')
         .skip(limit * page)
         .limit(limit)
         .sort({createdAt: -1});

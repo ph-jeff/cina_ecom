@@ -6,20 +6,25 @@ module.exports.view = async(req, res) => {
         const value = req.query.value || "";
         const limit = req.query.limit || 5;
         const page = req.query.page || 0;
+        const date_from = req.query.date_from || "1994-11-20T00:00:00.000Z";
 
-        const categoryCount = await Category.countDocuments({
+        const defaultDateTo = new Date("9999-12-31T23:59:59.999Z");
+        const date_to = req.query.date_to ? new Date(req.query.date_to) : defaultDateTo;
+        const query_data = {
+            createdAt: {
+                $gte: new Date(date_from),
+                $lt: date_to
+            },
             $or: [
                 { category_name: { $regex: value, $options: "i" } },
             ]
-        });
+        }
+
+        const categoryCount = await Category.countDocuments(query_data);
 
         const totalPages = Math.ceil(categoryCount / limit);
 
-        const category = await Category.find({
-            $or: [
-                { category_name: { $regex: value, $options: "i" } },
-            ]
-        })
+        const category = await Category.find(query_data)
         .skip(limit * page)
         .limit(limit)
         .sort({createdAt: -1});

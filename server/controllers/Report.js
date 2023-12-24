@@ -4,13 +4,34 @@ const UserDetails = require("../models/UserDetails");
 
 module.exports.inventory = async(req, res) => {
     try {
-        const query = req.query.value || "";
-        const inventory_report = await InventoryReport.find({
+
+        const value = req.query.value || "";
+        const limit = req.query.limit || 5;
+        const page = req.query.page || 0;
+
+        const inventoryCount = await InventoryReport.countDocuments({
             $or: [
-                { product_name: { $regex: query, $options: "i" } },
+                { product_name: { $regex: value, $options: "i" } },
             ]
         });
-        res.json(inventory_report);
+
+        const totalPages = Math.ceil(inventoryCount / limit);
+
+        const inventory = await InventoryReport.find({
+            $or: [
+                { product_name: { $regex: value, $options: "i" } },
+            ]
+        })
+        .skip(limit * page)
+        .limit(limit)
+        .sort({createdAt: -1});
+
+        const data = {
+            inventory,
+            totalPages
+        }
+
+        res.json(data);
     } catch (error) {
         res.status(400).json({error: error.message})
     }
@@ -18,9 +39,29 @@ module.exports.inventory = async(req, res) => {
 
 module.exports.sales = async(req, res) => {
     try {
-        const query = req.body.query;
-        const sales = await Order.find({ status: { $regex: 'delivered', $options: 'i' } }).populate('items.product_id').populate('user_id');
-        res.json(sales)
+        const value = req.query.value || "";
+        const limit = req.query.limit || 5;
+        const page = req.query.page || 0;
+
+        const salesCount = await Order.countDocuments({
+            status: { $regex: 'delivered', $options: 'i' }
+        });
+
+        const totalPages = Math.ceil(salesCount / limit);
+
+        const sales = await Order.find({
+            status: { $regex: 'delivered', $options: 'i' }
+        }).populate('items.product_id').populate('user_id')
+        .skip(limit * page)
+        .limit(limit)
+        .sort({createdAt: -1});
+
+        const data = {
+            sales,
+            totalPages
+        }
+
+        res.json(data)
     } catch (error) {
         res.status(400).json({error: error.message})
     }

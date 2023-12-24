@@ -11,13 +11,15 @@ const Index = () => {
     const [isLoading, setLoading] = useState(false);
 
     const [query, setQuery] = useState("")
+    const [dateFrom, setDateFrom] = useState("")
+    const [dateTo, setDateTo] = useState("")
     const [limit, setLimit] = useState(5)
     const [currentPage, setCurrentPage] = useState(0)
     const [totalPages, setTotalPages] = useState(1);
     
     function fetchOrder(){
         setLoading(true);
-        api.get(`/api/admin/order/to-ship?value=${query}&limit=${limit}&page=${currentPage}`)
+        api.get(`/api/admin/order/to-ship?value=${query}&limit=${limit}&page=${currentPage}&date_from=${dateFrom}&date_to=${dateTo}`)
         .then(response => {
             console.log(response)
             setOrders(response.data.orders)
@@ -32,13 +34,18 @@ const Index = () => {
 
     useEffect(() => {
         fetchOrder()
-    }, [query, limit, currentPage])
+    }, [query, limit, currentPage, dateFrom, dateTo])
     
     return (
         <OrderLayout>
             {isLoading && <Loading />}
             <div className='absolute bg-white h-[78vh] -mt-10 min-h-[100vh] h-fit rounded-lg ml-8 w-[95%] text-black'>
-                <TableHeader limit={limit} setLimit={setLimit} query={query} setQuery={setQuery} />
+                <TableHeader
+                    limit={limit} setLimit={setLimit}
+                    query={query} setQuery={setQuery}
+                    dateFrom={dateFrom} setDateFrom={setDateFrom}
+                    dateTo={dateTo} setDateTo={setDateTo}
+                />
                 <div className='px-10 mt-4'>
                     <div className="overflow-x-auto">
                         <Table orders={orders} setOrders={setOrders} totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />

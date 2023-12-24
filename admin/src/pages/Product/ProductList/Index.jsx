@@ -13,6 +13,8 @@ const Index = () => {
     const [isLoading, setLoading] = useState(false);
 
     const [query, setQuery] = useState("")
+    const [dateFrom, setDateFrom] = useState("")
+    const [dateTo, setDateTo] = useState("")
     const [limit, setLimit] = useState(5)
     const [currentPage, setCurrentPage] = useState(0)
     const [totalPages, setTotalPages] = useState(1);
@@ -30,7 +32,7 @@ const Index = () => {
 
     async function fetchProduct() {
         setLoading(true);
-        api.get(`/api/admin/product?value=${query}&limit=${limit}&page=${currentPage}`)
+        api.get(`/api/admin/product?value=${query}&limit=${limit}&page=${currentPage}&date_from=${dateFrom}&date_to=${dateTo}`)
             .then(response => {
                 console.log(response);
                 setProduct(response.data.product);
@@ -45,7 +47,7 @@ const Index = () => {
 
     useEffect(() => {
         fetchProduct();
-    }, [query, limit, currentPage]);
+    }, [query, limit, currentPage, dateFrom, dateTo]);
     // when query value is change, useEffect is reload
 
     return (
@@ -55,7 +57,12 @@ const Index = () => {
                 <LinkButton params={'/product/create'} actionName={'Create Product'} />
             </div>
             <div className='absolute bg-white h-[78vh] -mt-10 min-h-[100vh] h-fit rounded-lg ml-8 w-[95%] text-black'>
-                <TableHeader limit={limit} setLimit={setLimit} query={query} setQuery={setQuery} />
+                <TableHeader
+                    limit={limit} setLimit={setLimit}
+                    query={query} setQuery={setQuery}
+                    dateFrom={dateFrom} setDateFrom={setDateFrom}
+                    dateTo={dateTo} setDateTo={setDateTo}
+                />
                 <div className='px-10 mt-4'>
                     <div className="overflow-x-auto">
                         <Table products={products} deleteItem={deleteItem} totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />

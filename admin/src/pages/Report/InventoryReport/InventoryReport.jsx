@@ -6,19 +6,24 @@ import Range from '../../../components/Range';
 import DateRange from '../../../components/DateRange';
 import TableHeader from '../../../components/TableHeader';
 import Loading from '../../../components/Loading';
+import Pagination from '../../../components/Pagination';
 
 const InventoryReport = () => {
-    const [query, setQuery] = useState("");
-    const [limit, setLimit] = useState(5);
     const [reports, setReports] = useState([]);
     const [isLoading, setLoading] = useState(false);
 
+    const [query, setQuery] = useState("")
+    const [limit, setLimit] = useState(5)
+    const [currentPage, setCurrentPage] = useState(0)
+    const [totalPages, setTotalPages] = useState(1);
+
     function fetchReport(){
         setLoading(true);
-        api.get(`/api/admin/report/inventory?value=${query}`)
+        api.get(`/api/admin/report/inventory?value=${query}&limit=${limit}&page=${currentPage}`)
         .then(response => {
             console.log(response)
-            setReports(response.data)
+            setReports(response.data.inventory)
+            setTotalPages(response.data.totalPages)
             setLoading(false);
         })
         .catch(error => {
@@ -29,7 +34,7 @@ const InventoryReport = () => {
 
     useEffect(() => {
         fetchReport();
-    }, [query])
+    }, [query, limit, currentPage])
 
     return (
         <ReportLayout>
@@ -73,6 +78,7 @@ const InventoryReport = () => {
                                 ))}
                             </tbody>
                         </table>
+                        {reports.length != 0 && <Pagination totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />}
                     </div>
                 </div>
             </div>

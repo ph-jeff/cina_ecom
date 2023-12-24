@@ -7,21 +7,26 @@ import DetailsModal from './DetailsModal';
 import DateRange from '../../../components/DateRange';
 import TableHeader from '../../../components/TableHeader';
 import Loading from '../../../components/Loading';
+import Pagination from '../../../components/Pagination';
 
 const SalesReport = () => {
-    const [query, setQuery] = useState("");
-    const [limit, setLimit] = useState(5);
     const [sales, setSales] = useState([]);
     const [open, setOpen] = useState(false);
     const [isLoading, setLoading] = useState(false);
     const [salesId, setSalesId] = useState("");
 
+    const [query, setQuery] = useState("")
+    const [limit, setLimit] = useState(5)
+    const [currentPage, setCurrentPage] = useState(0)
+    const [totalPages, setTotalPages] = useState(1);
+
     function fetchSales() {
         setLoading(true);
-        api.get('/api/admin/report/sales')
+        api.get(`/api/admin/report/sales?value=${query}&limit=${limit}&page=${currentPage}`)
             .then(response => {
                 console.log(response)
-                setSales(response.data);
+                setSales(response.data.sales);
+                setTotalPages(response.data.totalPages);
                 setLoading(false);
             })
             .catch(error => {
@@ -32,7 +37,7 @@ const SalesReport = () => {
 
     useEffect(() => {
         fetchSales();
-    }, [])
+    }, [query, limit, currentPage])
 
     const styles = {
         search_icon: { fontSize: 18 },
@@ -87,6 +92,7 @@ const SalesReport = () => {
                                 ))}
                             </tbody>
                         </table>
+                        {sales.length != 0 && <Pagination totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />}
                         <DetailsModal open={open} setOpen={() => setOpen(!open)} salesId={salesId} />
                     </div>
                 </div>

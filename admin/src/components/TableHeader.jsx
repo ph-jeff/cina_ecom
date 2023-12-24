@@ -2,10 +2,13 @@ import React from 'react'
 import DateRange from './DateRange';
 import Range from './Range';
 
-const TableHeader = ({limit, setLimit, query, setQuery}) => {
+const TableHeader = ({limit, setLimit, query, setQuery, dateFrom, setDateFrom, dateTo, setDateTo}) => {
   return (
     <div className='mt-8 px-10 text-sm'>
-        <DateRange />
+        <DateRange
+            dateFrom={dateFrom} setDateFrom={setDateFrom}
+            dateTo={dateTo} setDateTo={setDateTo}
+        />
         <div className='flex justify-between w-full'>
             <Range limit={limit} setLimit={setLimit} />
             <div className="relative flex justify-end w-full gap-3">
