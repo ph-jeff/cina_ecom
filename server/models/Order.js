@@ -39,6 +39,20 @@ const orderSchema = new mongoose.Schema({
         type: String,
         // required: true,
     },
+    // tracker: {
+    //     pending: {
+    //         type: Boolean,
+    //     },
+    //     prepairing: {
+    //         type: String
+    //     },
+    //     to_ship: {
+    //         type: String
+    //     },
+    //     delivered: {
+    //         type: String
+    //     },
+    // }
 },{ timestamps: true });
 const Order = mongoose.model('Order', orderSchema);
 module.exports = Order;

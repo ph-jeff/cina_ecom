@@ -39,7 +39,7 @@ const InventoryReport = () => {
     return (
         <ReportLayout>
             {isLoading && <Loading />}
-            <div className='absolute bg-white h-[78vh] -mt-10 min-h-[100vh] h-fit rounded-lg ml-8 w-[95%] text-black'>
+            <div className='absolute bg-white h-[78vh] -mt-10 min-h-[70vh] h-fit rounded-lg ml-8 w-[95%] text-black'>
                 <TableHeader limit={limit} setLimit={setLimit} query={query} setQuery={setQuery} />
                 <div className='px-10 mt-4'>
                     <div className="overflow-x-auto">

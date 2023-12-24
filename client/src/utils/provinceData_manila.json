@@ -1,6 +1,44 @@
 {
     "provinces": [
         {
+            "name": "Metro Manila",
+            "municipalities": [
+                {
+                    "name": "Manila",
+                    "barangays": [
+                        "Santa Cruz",
+                        "Ermita",
+                        "Malate",
+                        "Intramuros"
+                    ]
+                },
+                {
+                    "name": "Quezon City",
+                    "barangays": [
+                        "Diliman",
+                        "Loyola Heights",
+                        "Novaliches"
+                    ]
+                },
+                {
+                    "name": "Makati",
+                    "barangays": [
+                        "Bel-Air",
+                        "San Lorenzo",
+                        "Urdaneta"
+                    ]
+                },
+                {
+                    "name": "Pasig",
+                    "barangays": [
+                        "Ortigas",
+                        "Kapitolyo",
+                        "San Joaquin"
+                    ]
+                }
+            ]
+        },
+        {
             "name": "Cavite",
             "municipalities": [
                 {

@@ -44,7 +44,7 @@ const Brand = () => {
             <div className='flex w-full px-10 -mt-10 mb-[3rem]'>
                 <button onClick={() => setOpen(!open)} className="bg-gray-800 hover:bg-gray-600 text-white py-2 px-4 rounded">+</button>
             </div>
-            <div className='absolute bg-white h-[78vh] -mt-10 min-h-[100vh] h-fit rounded-lg ml-8 w-[95%] text-black'>
+            <div className='absolute bg-white h-[78vh] -mt-10 min-h-[70vh] h-fit rounded-lg ml-8 w-[95%] text-black'>
                 <TableHeader
                     limit={limit} setLimit={setLimit}
                     query={query} setQuery={setQuery}
