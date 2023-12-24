@@ -89,16 +89,20 @@ const NavigationBar = () => {
                         </div>
                     </div>
 
-                    {/* Cart Icon */}
-                    <Link to="/cart">
-                        <div className="mr-4">
-                            <img
-                                className="h-10 w-10 px-1 py-1 hover:bg-gray-700 hover:rounded cursor-pointer"
-                                src={cart_icon}
-                                alt=""
-                            />
-                        </div>
-                    </Link>
+                    {user && (
+                        <>
+                            {/* Cart Icon */}
+                            <Link to="/cart">
+                                <div className="mr-4">
+                                    <img
+                                        className="h-10 w-10 px-1 py-1 hover:bg-gray-700 hover:rounded cursor-pointer"
+                                        src={cart_icon}
+                                        alt=""
+                                    />
+                                </div>
+                            </Link>
+                        </>
+                    )}
 
                     {user ? (
                         <>
