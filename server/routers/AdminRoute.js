@@ -70,6 +70,7 @@ router.get('/order/to-ship', isAdminLogin, order.to_ship)
 router.put('/order/to-ship/:id', isAdminLogin, order.to_arrive)
 router.get('/order/completed', isAdminLogin, order.completed)
 router.get('/order/cancelled', isAdminLogin, order.cancelled)
+router.put('/order/cancelled/:id', isAdminLogin, order.cancelling)
 
 router.get('/transactions', isAdminLogin, transaction.index)
 

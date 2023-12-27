@@ -212,6 +212,16 @@ module.exports.completed = async (req, res) => {
     }
 }
 
+module.exports.cancelling = async(req, res) => {
+    try {
+        const order_id = req.params.id;
+        const orders = await Order.findByIdAndUpdate(order_id, { status: 'cancelled' }, {new: true}).populate('items.product_id')
+        res.json(orders)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
 module.exports.cancelled = async (req, res) => {
     try {
         const value = req.query.value || "";

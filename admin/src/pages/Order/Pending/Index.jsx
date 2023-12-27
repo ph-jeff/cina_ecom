@@ -49,7 +49,7 @@ const Index = () => {
                 />
                 <div className='px-10 mt-4'>
                     <div className="overflow-x-auto">
-                        <Table orders={orders} setOrders={setOrders} totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+                        <Table orders={orders} setOrders={setOrders} fetchOrder={fetchOrder} totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
                     </div>
                 </div>
             </div>

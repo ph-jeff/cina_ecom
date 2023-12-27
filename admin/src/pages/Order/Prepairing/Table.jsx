@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import ConfirmDialog from '../../../components/ConfirmDialog'
 import api from '../../../services/apiRequest';
 import Pagination from '../../../components/Pagination';
+import WarningDialog from '../../../components/WarningDialog';
 
-const Table = ({orders, setOrders, onConfirm, totalPages, currentPage, setCurrentPage}) => {
+const Table = ({orders, setOrders, fetchOrder, totalPages, currentPage, setCurrentPage}) => {
     const [open, setOpen] = useState(false)
     const [id, setId] = useState("");
 
@@ -11,12 +12,15 @@ const Table = ({orders, setOrders, onConfirm, totalPages, currentPage, setCurren
         api.put('/api/admin/order/prepairing/' + id)
         .then(response => {
             console.log(response)
-            setOrders(prev => prev.filter(order => order._id !== id))
+            fetchOrder();
+            // setOrders(prev => prev.filter(order => order._id !== id))
         })
         .catch(error => {
+            fetchOrder();
             console.log(error)
         })
     }
+
     return (
         <>
             <table className="w-full table-auto border-collapse border border-gray-300">

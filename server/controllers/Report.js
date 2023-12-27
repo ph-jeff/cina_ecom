@@ -8,20 +8,26 @@ module.exports.inventory = async(req, res) => {
         const value = req.query.value || "";
         const limit = req.query.limit || 5;
         const page = req.query.page || 0;
+        const date_from = req.query.date_from || "1994-11-20T00:00:00.000Z";
 
-        const inventoryCount = await InventoryReport.countDocuments({
+        const defaultDateTo = new Date("9999-12-31T23:59:59.999Z");
+        const date_to = req.query.date_to ? new Date(req.query.date_to) : defaultDateTo;
+
+        const query_data = {
+            createdAt: {
+                $gte: new Date(date_from),
+                $lt: date_to
+            },
             $or: [
                 { product_name: { $regex: value, $options: "i" } },
             ]
-        });
+        }
+
+        const inventoryCount = await InventoryReport.countDocuments(query_data);
 
         const totalPages = Math.ceil(inventoryCount / limit);
 
-        const inventory = await InventoryReport.find({
-            $or: [
-                { product_name: { $regex: value, $options: "i" } },
-            ]
-        })
+        const inventory = await InventoryReport.find(query_data)
         .skip(limit * page)
         .limit(limit)
         .sort({createdAt: -1});
@@ -42,16 +48,26 @@ module.exports.sales = async(req, res) => {
         const value = req.query.value || "";
         const limit = req.query.limit || 5;
         const page = req.query.page || 0;
+        const date_from = req.query.date_from || "1994-11-20T00:00:00.000Z";
 
-        const salesCount = await Order.countDocuments({
+        const defaultDateTo = new Date("9999-12-31T23:59:59.999Z");
+        const date_to = req.query.date_to ? new Date(req.query.date_to) : defaultDateTo;
+
+        const query_data = {
+            createdAt: {
+                $gte: new Date(date_from),
+                $lt: date_to
+            },
             status: { $regex: 'delivered', $options: 'i' }
-        });
+        }
+
+        const salesCount = await Order.countDocuments(query_data);
 
         const totalPages = Math.ceil(salesCount / limit);
 
-        const sales = await Order.find({
-            status: { $regex: 'delivered', $options: 'i' }
-        }).populate('items.product_id').populate('user_id')
+        const sales = await Order.find(query_data)
+        .populate('items.product_id')
+        .populate('user_id')
         .skip(limit * page)
         .limit(limit)
         .sort({createdAt: -1});

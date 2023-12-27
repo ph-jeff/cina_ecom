@@ -2,25 +2,41 @@ import React, { useEffect, useRef, useState } from 'react'
 import ConfirmDialog from '../../../components/ConfirmDialog'
 import api from '../../../services/apiRequest';
 import Pagination from '../../../components/Pagination';
+import WarningDialog from '../../../components/WarningDialog';
 
-const Table = ({orders, setOrders, onConfirm, totalPages, currentPage, setCurrentPage}) => {
+const Table = ({orders, setOrders, fetchOrder, totalPages, currentPage, setCurrentPage}) => {
     const [open, setOpen] = useState(false)
+    const [warning, setWarning] = useState(false);
     const [id, setId] = useState("");
 
     function onConfirm(){
         api.put('/api/admin/order/' + id)
         .then(response => {
+            fetchOrder();
             console.log(response)
-            setOrders(prev => prev.filter(order => order._id !== id))
+            // setOrders(prev => prev.filter(order => order._id !== id))
         })
         .catch(error => {
             console.log(error)
         })
     }
 
-    useEffect(() => {
+    function onCancel(){
+        console.log(id)
+        api.put('/api/admin/order/cancelled/' + id)
+        .then(response => {
+            fetchOrder();
+            console.log(response)
+            // setOrders(prev => prev.filter(order => order._id !== id))
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
 
-    }, [id])
+    // useEffect(() => {
+
+    // }, [id])
 
     return (
         <>
@@ -62,10 +78,18 @@ const Table = ({orders, setOrders, onConfirm, totalPages, currentPage, setCurren
                             <td className="px-6 h-12">{order.payment}</td>
                             <td className="px-6 h-12">{order.destination}</td>
                             <td className="px-6 h-12">
-                                <button className='border shadow p-1 rounded' onClick={() => {
-                                    setId(order._id)
-                                    setOpen(!open)
-                                }}>accept</button>
+                                <div className='flex'>
+                                    <button className='border shadow p-1 rounded' onClick={() => {
+                                        setId(order._id)
+                                        setOpen(!open)
+                                    }}>accept</button>
+                                    <button className='border shadow p-1 rounded text-red-600'
+                                        onClick={() => {
+                                            setId(order._id)
+                                            setWarning(!warning)
+                                        }}
+                                    >cancel</button>
+                                </div>
                             </td>
                         </tr>
                     ))}
@@ -73,6 +97,7 @@ const Table = ({orders, setOrders, onConfirm, totalPages, currentPage, setCurren
             </table>
             {orders.length != 0 && <Pagination totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />}
             <ConfirmDialog message={"Are you sure you want to proceed"} open={open} setOpen={setOpen} onConfirm={onConfirm} />
+            <WarningDialog message={"Are you sure you want to cancel this order?"} warning={warning} setWarning={setWarning} onCancel={onCancel} />
         </>
     )
 }
