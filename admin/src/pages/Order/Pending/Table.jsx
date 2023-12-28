@@ -3,6 +3,7 @@ import ConfirmDialog from '../../../components/ConfirmDialog'
 import api from '../../../services/apiRequest';
 import Pagination from '../../../components/Pagination';
 import WarningDialog from '../../../components/WarningDialog';
+import { toast } from 'react-hot-toast'
 
 const Table = ({orders, setOrders, fetchOrder, totalPages, currentPage, setCurrentPage}) => {
     const [open, setOpen] = useState(false)
@@ -18,6 +19,7 @@ const Table = ({orders, setOrders, fetchOrder, totalPages, currentPage, setCurre
         })
         .catch(error => {
             console.log(error)
+            toast.error(error.response.data.error)
         })
     }
 

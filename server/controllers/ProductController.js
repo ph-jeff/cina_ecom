@@ -57,7 +57,6 @@ module.exports.admin_index = async (req, res) => {
         const totalPages = Math.ceil(productCount / limit);
 
         const product = await Product.find(query_data)
-        .sort('-createdAt')
         .skip(limit * page)
         .limit(limit)
         .sort({createdAt: -1});
@@ -126,6 +125,7 @@ module.exports.create = async (req, res) => {
             name,
             quantity,
             price,
+            stock_threshold,
             category,
             brand,
             description,
@@ -149,6 +149,7 @@ module.exports.create = async (req, res) => {
             slug: slug_name,
             quantity,
             price,
+            stock_threshold,
             img_url: result.url,
             category,
             brand,
@@ -210,6 +211,7 @@ module.exports.update = async (req, res) => {
             name,
             quantity,
             price,
+            stock_threshold,
             category,
             brand,
             description,
@@ -238,6 +240,7 @@ module.exports.update = async (req, res) => {
             slug: slug_name,
             quantity,
             price,
+            stock_threshold,
             img_url: result && result.url ? result.url : this.img_url,
             category,
             brand,

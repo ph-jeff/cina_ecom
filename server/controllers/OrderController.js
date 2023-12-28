@@ -1,4 +1,5 @@
 const Order = require('../models/Order')
+const Product = require('../models/Product')
 
 module.exports.pending = async (req, res) => {
     try {
@@ -47,8 +48,21 @@ module.exports.pending = async (req, res) => {
 module.exports.to_be_prepared = async (req, res) => {
     try {
         const order_id = req.params.id;
-        const orders = await Order.findByIdAndUpdate(order_id, { status: 'prepairing' }, {new: true}).populate('items.product_id')
-        res.json(orders)
+        const order = await Order.findById(order_id).populate('items.product_id');
+
+        if (!order) {
+            return res.status(404).json({ error: 'Order not found' });
+        }
+
+        for (const item of order.items) {
+            if (item.quantity > item.product_id.quantity) {
+                throw new Error('Ordered quantity exceeds remaining quantity for an item');
+            }
+        }
+
+        const updatedOrder = await Order.findByIdAndUpdate(order_id, {status: 'prepairing'}, {new: true}).populate('items.product_id');
+
+        res.json(updatedOrder);
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -99,8 +113,22 @@ module.exports.prepairing = async (req, res) => {
 module.exports.to_be_ship = async (req, res) => {
     try {
         const order_id = req.params.id;
-        const orders = await Order.findByIdAndUpdate(order_id, { status: 'to-ship' }, {new: true}).populate('items.product_id')
-        res.json(orders)
+        // const orders = await Order.findByIdAndUpdate(order_id, { status: 'to-ship' }, {new: true}).populate('items.product_id')
+        const order = await Order.findById(order_id).populate('items.product_id');
+
+        if (!order) {
+            return res.status(404).json({ error: 'Order not found' });
+        }
+
+        for (const item of order.items) {
+            if (item.quantity > item.product_id.quantity) {
+                throw new Error('Ordered quantity exceeds remaining quantity for an item');
+            }
+        }
+
+        const updatedOrder = await Order.findByIdAndUpdate(order_id, {status: 'to-ship'}, {new: true}).populate('items.product_id');
+
+        res.json(updatedOrder);
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -151,8 +179,35 @@ module.exports.to_ship = async (req, res) => {
 module.exports.to_arrive = async(req, res) => {
     try {
         const order_id = req.params.id;
-        const orders = await Order.findByIdAndUpdate(order_id, { status: 'delivered' }, {new: true}).populate('items.product_id')
-        res.json(orders)
+        // const orders = await Order.findByIdAndUpdate(order_id, { status: 'delivered' }, {new: true}).populate('items.product_id');
+        const order = await Order.findById(order_id).populate('items.product_id');
+
+        if (!order) {
+            return res.status(404).json({ error: 'Order not found' });
+        }
+    
+        // Check if ordered quantity exceeds remaining quantity for any item
+        for (const item of order.items) {
+            if (item.quantity > item.product_id.quantity) {
+                throw new Error('Ordered quantity exceeds remaining quantity for an item');
+            }
+        }
+    
+        // Update product quantities and set order status
+        const updateOperations = order.items.map(item => ({
+            updateOne: {
+                filter: { _id: item.product_id._id },
+                update: { $inc: { quantity: -item.quantity } },
+            },
+        }));
+        
+        // Use bulkWrite for atomic updates
+        await Product.bulkWrite(updateOperations);
+    
+        // Use bulkWrite for atomic updates
+        const updatedOrder = await Order.findByIdAndUpdate(order._id, { $set: { status: 'delivered' } }, { new: true }).populate('items.product_id');
+    
+        res.json(updatedOrder);
     } catch (error) {
         res.status(400).json({ error: error.message })
     }

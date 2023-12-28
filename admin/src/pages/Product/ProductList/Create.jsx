@@ -13,6 +13,7 @@ const Create = () => {
     const [name, setName] = useState("");
     const [quantity, setQuantity] = useState("");
     const [price, setPrice] = useState("");
+    const [stock_threshold, setThreshold] = useState(0);
     const [image, setImage] = useState(null);
     const [category, setCategory] = useState("");
     const [brand, setBrand] = useState("");
@@ -78,6 +79,7 @@ const Create = () => {
         formData.append('name', name);
         formData.append('quantity', quantity);
         formData.append('price', price);
+        formData.append('stock_threshold', stock_threshold)
         formData.append('category', category);
         formData.append('brand', brand);
         formData.append('description', description);
@@ -316,7 +318,7 @@ const Create = () => {
                             />
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-3 gap-4">
                             <div className="mb-4">
                                 <label htmlFor="quantity" className="block text-sm font-medium text-gray-700">Quantity</label>
                                 <input
@@ -339,6 +341,19 @@ const Create = () => {
                                     onChange={(e) => setPrice(e.target.value)}
                                     type="number"
                                     placeholder="Price"
+                                    required
+                                />
+                            </div>
+
+                            <div className="mb-4">
+                                <label htmlFor="price" className="block text-sm font-medium text-gray-700">Stock Threshold</label>
+                                <input
+                                    id="price"
+                                    className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
+                                    value={stock_threshold}
+                                    onChange={(e) => setThreshold(e.target.value)}
+                                    type="number"
+                                    placeholder="Stock Threshold"
                                     required
                                 />
                             </div>
