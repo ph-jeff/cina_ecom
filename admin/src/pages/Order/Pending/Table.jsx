@@ -42,16 +42,16 @@ const Table = ({orders, setOrders, fetchOrder, totalPages, currentPage, setCurre
 
     return (
         <>
-            <table className="w-full text-sm">
-                <thead className="text-left text-gray-600 bg-[#F0F0F0] border-b border-zinc-400">
-                    <tr>
-                        <th scope="col" className="font-semibold px-6 h-12 border border-[#b0b0b0]">Item Name</th>
-                        <th scope="col" className="font-semibold px-6 h-12 border border-[#b0b0b0]">Size</th>
-                        <th scope="col" className="font-semibold px-6 h-12 border border-[#b0b0b0]">Quantity</th>
-                        <th scope="col" className="font-semibold px-6 h-12 border border-[#b0b0b0]">Price</th>
-                        <th scope="col" className="font-semibold px-6 h-12 border border-[#b0b0b0]">Mode</th>    
-                        <th scope="col" className="font-semibold px-6 h-12 border border-[#b0b0b0]">Destination</th>
-                        <th scope="col" className="font-semibold px-6 h-12 border border-[#b0b0b0]">Action</th>
+            <table className="w-full table-auto border-collapse border border-gray-300">
+                <thead className="w-full text-sm text-left text-gray-500">
+                    <tr className="bg-gray-100">
+                        <th scope="col" className='py-2 px-4 text-left border'>Items</th>
+                        <th scope="col" className='py-2 px-4 text-left border'>Size</th>
+                        <th scope="col" className='py-2 px-4 text-left border'>Quantity</th>
+                        <th scope="col" className='py-2 px-4 text-left border'>Price</th>
+                        <th scope="col" className='py-2 px-4 text-left border'>Mode</th>    
+                        <th scope="col" className='py-2 px-4 text-left border'>Destination</th>
+                        <th scope="col" className='py-2 px-4 text-left border'>Action</th>
                     </tr>
                 </thead>
                 <tbody className='bg-transparent '>

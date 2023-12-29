@@ -19,6 +19,10 @@ const SettingPage = () => {
     const [lastname, setLastname] = useState('');
     const [contact, setContact] = useState('');
 
+    const [house_number, setHouseNumber] = useState("");
+    const [street_address, setStreetAddress] = useState("");
+    const [zip_code, setZipCode] = useState("");
+
     const [province, setProvince] = useState("");
     const [municipal, setMunicipal] = useState("");
     const [barangay, setBarangay] = useState("");
@@ -33,6 +37,7 @@ const SettingPage = () => {
 
     const handleProvinceChange = (event) => {
         const selectedProvince = event.target.value;
+        console.log(selectedProvince);
         setProvince(selectedProvince)
         setSelectedProvince(selectedProvince);
         // reset city and barangay
@@ -40,6 +45,7 @@ const SettingPage = () => {
         setSelectedBarangay('');
 
         const province = provincesData.provinces.find(province => province.name === selectedProvince);
+        console.log(province)
         setMunicipals(province)
     };
 
@@ -69,6 +75,12 @@ const SettingPage = () => {
                 middlename,
                 lastname,
                 contact,
+                house_number,
+                street_address,
+                zip_code,
+                province: selectedProvince,
+                municipal: selectedMunicipality,
+                barangay: selectedBarangay,
                 // address,
             })
             .then(({ data }) => {
@@ -87,17 +99,21 @@ const SettingPage = () => {
         setLoading(true);
         api.get('/api/user/account')
         .then((response) => {
-            // console.log(response)
-            setUserDetails(response.data.userdetails);
-            setUser(response.data.userdetails.user_id);
-            setFirstname(response.data.userdetails.firstname);
-            setMiddlename(response.data.userdetails.middlename);
-            setLastname(response.data.userdetails.lastname);
-            setContact(response.data.userdetails.contact);
+            console.log(response)
+            setUserDetails(response.data.userdetails || '');
+            setUser(response.data.userdetails.user_id || '');
+            setFirstname(response.data.userdetails.firstname || '');
+            setMiddlename(response.data.userdetails.middlename || '');
+            setLastname(response.data.userdetails.lastname || '');
+            setContact(response.data.userdetails.contact || '');
 
-            setProvince(response.data.userdetails.province || '')
-            setMunicipal(response.data.userdetails.municipal || '')
-            setBarangay(response.data.userdetails.barangay || '')
+            setHouseNumber(response.data.userdetails.house_number || '');
+            setStreetAddress(response.data.userdetails.street_address || '');
+            setZipCode(response.data.userdetails.zip_code || '');
+            // setSelectedProvince(response.data.userdetails.province || '');
+            // setProvince(response.data.userdetails.province || '')
+            // setMunicipal(response.data.userdetails.municipal || '')
+            // setBarangay(response.data.userdetails.barangay || '')
 
             setLoading(false);
         })
@@ -133,6 +149,7 @@ const SettingPage = () => {
                                             id="firstname"
                                             type="text"
                                             className="w-full p-2 border rounded-md"
+                                            placeholder='Firstname'
                                         />
                                     </div>
                                     <div className="mb-2">
@@ -145,6 +162,7 @@ const SettingPage = () => {
                                             id="middlename"
                                             type="text"
                                             className="w-full p-2 border rounded-md"
+                                            placeholder='Middlename'
                                         />
                                     </div>
                                     <div className="mb-2">
@@ -157,8 +175,44 @@ const SettingPage = () => {
                                             id="lastname"
                                             type="text"
                                             className="w-full p-2 border rounded-md"
+                                            placeholder='Lastname'
                                         />
                                     </div>
+
+                                    <div className='block md:grid grid-cols-2 gap-4'>
+                                        <div className='mt-2'>
+                                            <label htmlFor="zip_code">Zip Code</label>
+                                            <input
+                                                value={zip_code}
+                                                onChange={(e) => setZipCode(e.target.value)}
+                                                className="w-full p-2 border rounded-md"
+                                                type="text"
+                                                id='zip_code'
+                                                placeholder='Zip Code' />
+                                        </div>
+
+                                        <div className='mt-2'>
+                                            <label htmlFor="house_number">House Number</label>
+                                            <input
+                                                value={house_number}
+                                                onChange={(e) => setHouseNumber(e.target.value)}
+                                                className="w-full p-2 border rounded-md"
+                                                type="text"
+                                                id='house_number'
+                                                placeholder='House Number' />
+                                        </div>
+                                    </div>
+
+                                    <div className='mt-2'>
+                                            <label htmlFor="street_address">Street/Building</label>
+                                            <input
+                                                value={street_address}
+                                                onChange={(e) => setStreetAddress(e.target.value)}
+                                                className="w-full p-2 border rounded-md"
+                                                type="text"
+                                                id='street_address'
+                                                placeholder='Street/Building/Subdivision' />
+                                        </div>
 
                                     <div className='mb-2'>
                                         <label htmlFor="province">Province</label>
