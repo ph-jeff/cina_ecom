@@ -36,7 +36,7 @@ const Transaction = () => {
     }, [status])
 
     function onCancel(){
-        api.put('/api/admin/order/cancelled/' + id)
+        api.put('/api/user/transaction/cancel-order/' + id)
         .then(response => {
             fetchOrders();
             console.log(response)

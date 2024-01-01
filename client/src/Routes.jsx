@@ -26,6 +26,7 @@ import Category from './pages/Category/Index'
 import Brand from './pages/Brand/Index';
 import SelectedBrand from './pages/Brand/SelectedBrand';
 import Sale from './pages/Sale/Index'
+import ThreeD from './pages/ProductDetails/ThreeD';
 
 const AppRoutes = () => {
     const {user} = useAuthContext();
@@ -49,6 +50,7 @@ const AppRoutes = () => {
             </SettingLayout> : <Navigate to={'/login'}/>}/>
 
             <Route path='/product/details/:id' element={<ProductDetails/>}/>
+            <Route path='/product/3d-view/:id' element={<ThreeD/>}/>
             <Route path='/product/try-it-on/:id' element={<TryItOn/>}/>
             <Route path='/check-out/:id' element={user ? <CheckOut/> : <Navigate to={'/login'}/>}/>
 
