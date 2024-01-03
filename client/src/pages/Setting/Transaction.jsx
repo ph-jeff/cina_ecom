@@ -5,6 +5,12 @@ import Track from './components/Track';
 import WarningDialog from '../../components/WarningDialog';
 import Loading from '../../components/Loading';
 
+// icons
+import Pending from '@mui/icons-material/PendingActions';
+import ToPay from '@mui/icons-material/Payment';
+import ToDeliver from '@mui/icons-material/CallMissedOutgoing';
+import Delivered from '@mui/icons-material/LocalShipping';
+
 const Transaction = () => {
     const defaultStar = Array.from({ length: 5 }, () => Array(5));
     const [rating, setRating] = useState(0)
@@ -66,12 +72,25 @@ const Transaction = () => {
         {isLoading && <Loading />}
             <div className="container mx-auto p-4 min-h-screen">
                 <h1 className='font-medium text-2xl mb-4'>Transaction</h1>
-                <div className='flex justify-around my-5'>
-                    <button onClick={() => setStatus("pending")} className={`${status === "pending" ? 'bg-gray-400' : 'bg-slate-200'} rounded h-[100px] w-[200px] shadow`}>Pending</button>
-                    <button onClick={() => setStatus("prepairing")} className={`${status === "prepairing" ? 'bg-gray-500' : 'bg-slate-200'} rounded h-[100px] w-[200px] shadow`}>Prepairing</button>
-                    <button onClick={() => setStatus("to-ship")} className={`${status === "to-ship" ? 'bg-gray-500' : 'bg-slate-200'} rounded h-[100px] w-[200px] shadow`}>To Ship</button>
-                    <button onClick={() => setStatus("delivered")} className={`${status === "delivered" ? 'bg-gray-400' : 'bg-slate-200'} rounded h-[100px] w-[200px] shadow`}>Delivered</button>
+                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-5'>
+                    <button onClick={() => setStatus("pending")} className={`status-button ${status === "pending" ? 'bg-orange-300' : 'bg-slate-200'} rounded shadow h-[100px] w-[100vw md:w-[200px] `}>
+                        <Pending className='text-orange-800' />
+                        <p className={`${status === "pending" ? 'text-orange-800' : ''}`}>Order</p>
+                    </button>
+                    <button onClick={() => setStatus("prepairing")} className={`status-button ${status === "prepairing" ? 'bg-blue-300' : 'bg-slate-200'} rounded shadow h-[100px] w-[100vw md:w-[200px] `}>
+                        <ToPay className='text-blue-800' />
+                        <p className={`${status === "prepairing" ? 'text-blue-800' : ''}`}>To Pay</p>
+                    </button>
+                    <button onClick={() => setStatus("to-ship")} className={`status-button ${status === "to-ship" ? 'bg-green-300' : 'bg-slate-200'} rounded shadow h-[100px] w-[100vw md:w-[200px] `}>
+                        <ToDeliver className='text-green-800' />
+                        <p className={`${status === "to-ship" ? 'text-green-800' : ''}`}>To Ship</p>
+                    </button>
+                    <button onClick={() => setStatus("delivered")} className={`status-button ${status === "delivered" ? 'bg-red-300' : 'bg-slate-200'} rounded shadow h-[100px] w-[100vw md:w-[200px] `}>
+                        <Delivered className='text-red-800' />
+                        <p className={`${status === "delivered" ? 'text-red-800' : ''}`}>Delivered</p>
+                    </button>
                 </div>
+
                 <div className="w-full mb-4">
                     <div className="bg-white shadow-md p-4 rounded-md">
                         <div className="mb-4">
