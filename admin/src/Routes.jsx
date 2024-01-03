@@ -28,6 +28,7 @@ import User from './pages/User/Index';
 import Report from './pages/Report/Index';
 import SalesReport from './pages/Report/SalesReport/SalesReport';
 import InventoryReport from './pages/Report/InventoryReport/InventoryReport';
+import Archive from "./pages/Product/ProductList/Archive";
 
 const AppRoutes = () => {
     return(
@@ -45,6 +46,10 @@ const AppRoutes = () => {
 
             <Route path="/product" element={<MainLayout>
                 <Product />
+            </MainLayout>} />
+
+            <Route path="/product/archive" element={<MainLayout>
+                <Archive />
             </MainLayout>} />
 
             <Route path="/product/category" element={<MainLayout>

@@ -47,13 +47,13 @@ const Table = ({ products, totalPages, currentPage, setCurrentPage }) => {
                             <td className="px-4 py-2 text-left border">{product.category}</td>
                             <td className="px-4 py-2 text-left border">{product.quantity}</td>
                             <td className="px-4 py-2 text-left border">{product.quantity <= 0 ? (
-                                <span className='text-sm text-white rounded bg-red-600 py-1 px-2'>
+                                <button className='text-sm text-white rounded bg-red-600 py-1 px-2'>
                                     No Stock!
-                                </span>
+                                </button>
                             ) : (
-                                <span className='text-sm bg-green-600 text-white px-2 py-1 rounded'>
+                                <button className='text-sm bg-green-600 text-white px-2 py-1 rounded'>
                                     Good
-                                </span>
+                                </button>
                             )}</td>
                             <td className="px-4 py-2">
                                 <Link to={`/product/update/${product._id}`} className="bg-blue-200 rounded hover:underline mr-2"><BorderColorIcon /></Link>

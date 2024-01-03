@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 const ProductLayout = ({ children }) => {
     const product_links = [
         { name: 'Product', path: '/product'},
+        { name: 'Archive', path: '/product/archive'},
         { name: 'Category', path: '/product/category'},
         { name: 'Brand', path: '/product/brand'},
     ]

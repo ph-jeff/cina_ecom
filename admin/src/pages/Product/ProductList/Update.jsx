@@ -184,10 +184,10 @@ const Update = () => {
     return (
         <ProductLayout>
             {isLoading && <Loading />}
-            <div className='absolute bg-white h-[78vh] -mt-10 min-h-[100vh] h-fit rounded-lg ml-8 w-[95%] text-black'>
+            <div className='absolute bg-white h-[78vh] -mt-10 h-[100vh] min-h-fit rounded-lg ml-8 w-[95%] text-black'>
                 <div className="bg-white w-full p-4 shadow-md rounded-lg border border-slate-200">
                     <div className="mb-4 flex justify-between">
-                        <LinkButton params={'/product'} actionName={'Back'} />
+                        <LinkButton params={`${quantity == 0 ? '/product/archive' : '/product'}`} actionName={'Back'} />
                         <div>
                             <input onChange={setAsfeatured} checked={featured} className="mx-2" type="checkbox" id="featured" />
                             <label htmlFor="featured">Set as featured</label>

@@ -35,6 +35,7 @@ router.post('/message', isAdminLogin, message.create);
 
 // products
 router.get('/product', isAdminLogin, product.admin_index);
+router.get('/product/archive', isAdminLogin, product.archive);
 router.post('/product', isAdminLogin, generateInventoryReport, upload.single('image'), product.create);
 router.delete('/product/:id', isAdminLogin, product.delete);
 router.get('/product/update/:id', isAdminLogin, product.get_update);
