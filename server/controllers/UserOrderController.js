@@ -1,30 +1,30 @@
 const Order = require('../models/Order')
 
-// module.exports.index = async(req, res) => {
-//     try {
-//         const user_id = res.locals.userID;
-//         const status = req.query.status || "";
-//         const orders = await Order.find({user_id, status: { $regex: status, $options: 'i' }}).populate('items.product_id');
-//         res.json(orders)
-//     } catch (error) {
-//         res.status(400).json({ error: error.message })
-//     }
-// }
-
 module.exports.index = async(req, res) => {
     try {
         const user_id = res.locals.userID;
-        const orders = await Order.find({
-            user_id, status: {$ne: 'cancelled'}
-        })
-        .populate('items.product_id')
-        .sort({createdAt: -1})
-
+        const status = req.query.status || "";
+        const orders = await Order.find({user_id, status: { $regex: status, $options: 'i' }}).populate('items.product_id');
         res.json(orders)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
 }
+
+// module.exports.index = async(req, res) => {
+//     try {
+//         const user_id = res.locals.userID;
+//         const orders = await Order.find({
+//             user_id, status: {$ne: 'cancelled'}
+//         })
+//         .populate('items.product_id')
+//         .sort({createdAt: -1})
+
+//         res.json(orders)
+//     } catch (error) {
+//         res.status(400).json({ error: error.message })
+//     }
+// }
 
 module.exports.pending = async (req, res) => {
     try {
