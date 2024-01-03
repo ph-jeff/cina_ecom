@@ -17,6 +17,11 @@ const productSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    stock_threshold: {
+        type: Number,
+        default: 0,
+        required: true,
+    },
     price: {
         type: Number,
         required: true,

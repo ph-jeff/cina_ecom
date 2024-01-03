@@ -126,7 +126,7 @@ const Index = () => {
                         <div className="w-full max-w-screen-md bg-white rounded-lg overflow-hidden mb-4">
                             <div className='p-5'>
                                 <p><span className='font-medium'>Customer Name: </span>{user.firstname} {user.middlename} {user.lastname}</p>
-                                <p><span className='font-medium'>Address: </span>{user.house_number} {user.zip_code} {user.barangay} {user.municipal} {user.province}</p>
+                                <p><span className='font-medium'>Address: </span>{user.house_number} {user.zip_code} {user.street_address} {user.barangay} {user.municipal} {user.province}</p>
                                 <Link to={'/account'} className='underline underline-offset-1'>update information</Link>
                             </div>
                         </div>
@@ -248,7 +248,7 @@ const Index = () => {
                                         <div className="flex justify-between mb-2">
                                             <span>Item Price:</span>
                                             <span>
-                                                {parseInt(product.price).toLocaleString("en-PH", {
+                                                {(product.price - (product.price * (product.sale.discount / 100))).toLocaleString("en-PH", {
                                                     style: "currency",
                                                     currency: "PHP",
                                                 })}
@@ -261,9 +261,7 @@ const Index = () => {
                                         <div className="flex justify-between mb-4">
                                             <span>Total:</span>
                                             <span>
-                                                {(
-                                                    parseInt(product.price) * quantity
-                                                ).toLocaleString("en-PH", {
+                                                {((product.price - (product.price * (product.sale.discount / 100))) * quantity).toLocaleString("en-PH", {
                                                     style: "currency",
                                                     currency: "PHP",
                                                 })}

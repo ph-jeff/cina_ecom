@@ -24,6 +24,10 @@ const userDetailsSchema = new mongoose.Schema({
         type: String,
         required: [true, 'house number should not be empty'],
     },
+    street_address: {
+        type: String,
+        required: [true, 'house number should not be empty'],
+    },
     zip_code: {
         type: String,
         required: [true, 'zip code should not be empty'],

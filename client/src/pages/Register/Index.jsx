@@ -89,7 +89,7 @@ const Register = () => {
 
     const handleProvinceChange = (event) => {
         const selectedProvince = event.target.value;
-        setProvince(selectedProvince)
+        setProvince(selectedProvince);
         setSelectedProvince(selectedProvince);
         // reset city and barangay
         setSelectedMunicipality('');

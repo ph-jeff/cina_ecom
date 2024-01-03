@@ -11,7 +11,7 @@ const SettingSidebar = () => {
         // </div>
 
         <div className='w-screen md:w-[20vw] min-w-[150px] h-full text-slate-200 flex justify-center'>
-            <ul className='h-fit w-[100%] p-4'>
+            <ul className='h-fit w-[100vw] p-4'>
                 <li className='mb-5'>
                     <Link className='w-full bg-gray-800 text-center py-2 px-4 rounded-md hover:bg-gray-900 transition duration-300' to={'/account'}>
                         Profile Settings

@@ -23,8 +23,8 @@ const Table = ({ users, totalPages, currentPage, setCurrentPage }) => {
                                     <tr className="hover:bg-gray-200" key={user._id}>
                                         <td className="px-4 py-2">{user._id}</td>
                                         <td className="px-4 py-2">{user.email}</td>
-                                        <td className="px-4 py-2">{user.createdAt}</td>
-                                        <td className="px-4 py-2">{user.updatedAt}</td>
+                                        <td className="px-4 py-2">{new Date(user.createdAt).toLocaleDateString()}</td>
+                                        <td className="px-4 py-2">{new Date(user.updatedAt).toLocaleDateString()}</td>
                                         {/* <td className="px-4 py-2">
                                             <Link  className="text-blue-500 hover:underline mr-2">Edit</Link>
                                             <button className="text-red-500 hover:underline">Delete</button>

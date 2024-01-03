@@ -76,7 +76,7 @@ const DetailsModal = ({ open, setOpen, salesId }) => {
                         </div>
                         <div>
                             <label className="text-gray-600" htmlFor="">Customer since: </label>
-                            <span className="font-medium text-gray-800">{customer_information.createdAt}</span>
+                            <span className="font-medium text-gray-800">{new Date(customer_information.createdAt).toLocaleDateString()}</span>
                         </div>
                     </div>
                 </div>

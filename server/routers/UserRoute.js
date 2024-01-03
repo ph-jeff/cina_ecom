@@ -44,8 +44,10 @@ router.post('/checkout', isLogin, cart.checkout)
 
 router.get('/account', isLogin, user.account);
 router.put('/account', isLogin, user.update);
+router.put('/account/change-password', isLogin, user.update_password);
 
 router.get('/transaction', isLogin, order.index);
+router.put('/transaction/cancel-order/:id', isLogin, order.cancelling);
 
 router.get('/account/balance', isLogin, top_up.balance);
 router.post('/account/balance', isLogin, top_up.deposit);

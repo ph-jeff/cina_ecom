@@ -14,6 +14,7 @@ const Update = () => {
     const [name, setName] = useState("");
     const [quantity, setQuantity] = useState(1);
     const [price, setPrice] = useState(1);
+    const [stock_threshold, setThreshold] = useState(0);
     const [image, setImage] = useState(null);
     const [category, setCategory] = useState("");
     const [brand, setBrand] = useState("");
@@ -33,8 +34,9 @@ const Update = () => {
             .then(response => {
                 console.log(response.data);
                 setName(response.data.name);
-                setQuantity(response.data.quantity);
-                setPrice(response.data.price);
+                setQuantity(response.data.quantity || 0);
+                setPrice(response.data.price || 0);
+                setThreshold(response.data.stock_threshold || 0);
                 setCategory(response.data.category)
                 setBrand(response.data.brand)
                 setDescription(response.data.description)
@@ -149,6 +151,7 @@ const Update = () => {
         formData.append('name', name);
         formData.append('quantity', quantity);
         formData.append('price', price);
+        formData.append('stock_threshold', stock_threshold)
         formData.append('category', category);
         formData.append('brand', brand);
         formData.append('description', description);
@@ -181,10 +184,10 @@ const Update = () => {
     return (
         <ProductLayout>
             {isLoading && <Loading />}
-            <div className='absolute bg-white h-[78vh] -mt-10 min-h-[100vh] h-fit rounded-lg ml-8 w-[95%] text-black'>
+            <div className='absolute bg-white h-[78vh] -mt-10 h-[100vh] min-h-fit rounded-lg ml-8 w-[95%] text-black'>
                 <div className="bg-white w-full p-4 shadow-md rounded-lg border border-slate-200">
                     <div className="mb-4 flex justify-between">
-                        <LinkButton params={'/product'} actionName={'Back'} />
+                        <LinkButton params={`${quantity == 0 ? '/product/archive' : '/product'}`} actionName={'Back'} />
                         <div>
                             <input onChange={setAsfeatured} checked={featured} className="mx-2" type="checkbox" id="featured" />
                             <label htmlFor="featured">Set as featured</label>
@@ -208,7 +211,7 @@ const Update = () => {
                             />
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-3 gap-4">
                             <div className="mb-4">
                                 <label htmlFor="quantity" className="block text-sm font-medium text-gray-700">Quantity</label>
                                 <input
@@ -231,6 +234,19 @@ const Update = () => {
                                     onChange={(e) => setPrice(e.target.value)}
                                     type="number"
                                     placeholder="Price"
+                                    required
+                                />
+                            </div>
+
+                            <div className="mb-4">
+                                <label htmlFor="price" className="block text-sm font-medium text-gray-700">Stock Threshold</label>
+                                <input
+                                    id="price"
+                                    className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
+                                    value={stock_threshold}
+                                    onChange={(e) => setThreshold(e.target.value)}
+                                    type="number"
+                                    placeholder="Stock Threshold"
                                     required
                                 />
                             </div>
