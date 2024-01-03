@@ -92,47 +92,44 @@ const Transaction = () => {
                 </div>
 
                 <div className="w-full mb-4">
-                    <div className="bg-white shadow-md p-4 rounded-md">
-                        <div className="mb-4">
-                            <table className="w-full table-auto border-collapse border border-gray-300">
-                                <thead>
-                                    <tr className="bg-gray-100">
-                                        <th className="px-4 py-2 text-left">Items</th>
-                                        <th className="px-4 py-2 text-left">Address</th>
-                                        <th className="px-4 py-2 text-left">Date Ordered</th>
+                    <div className="bg-white shadow-md p-4 rounded-md overflow-x-auto">
+                        <table className="w-full table-auto border-collapse border border-gray-300">
+                            <thead>
+                                <tr className="bg-gray-100">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">Items</th>
+                                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">Address</th>
+                                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">Date Ordered</th>
+                                    {status === 'pending' && (
+                                        <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">Action</th>
+                                    )}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {orders.map((order) => (
+                                    <tr key={order._id} className="transition-all hover:bg-gray-50">
+                                        <td className="px-6 py-4">
+                                            {order.items.map((item, index) => (
+                                                <div key={item._id} className={`${index > 0 ? 'mt-1' : ''}`}>
+                                                    {item.product_id.name}
+                                                </div>
+                                            ))}
+                                        </td>
+                                        <td className="px-6 py-4">{order.destination}</td>
+                                        <td className="px-6 py-4">{new Date(order.createdAt).toLocaleDateString()}</td>
                                         {status === 'pending' && (
-                                            <th className="px-4 py-2 text-left">Action</th>
+                                            <td className="px-6 py-4">
+                                                <button className='text-red-600 hover:underline focus:outline-none'
+                                                    onClick={() => {
+                                                        setId(order._id)
+                                                        setWarning(!warning)
+                                                    }}
+                                                >Cancel</button>
+                                            </td>
                                         )}
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    {orders.map((order) => (
-                                        <tr key={order._id}>
-                                            <td className="px-4 py-2">
-                                                {order.items.map((item) => (
-                                                    <div key={item._id}>
-                                                        {item.product_id.name}
-                                                    </div>
-                                                ))}
-                                            </td>
-                                            <td className="px-4 py-2">{order.destination}</td>
-                                            <td className="px-4 py-2">{order.createdAt}</td>
-                                            {status === 'pending'
-                                                &&
-                                                <td className="px-4 py-2">
-                                                     <button className='border shadow p-1 rounded text-red-600'
-                                                        onClick={() => {
-                                                            setId(order._id)
-                                                            setWarning(!warning)
-                                                        }}
-                                                    >cancel</button>
-                                                </td>
-                                            }
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

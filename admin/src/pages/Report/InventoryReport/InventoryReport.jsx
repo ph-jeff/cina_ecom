@@ -67,7 +67,7 @@ const InventoryReport = () => {
                                     <th scope="col" className="font-semibold px-6 h-12 border border-[#b0b0b0]">Price</th>    
                                     <th scope="col" className="font-semibold px-6 h-12 border border-[#b0b0b0]">Qty</th>
                                     <th scope="col" className="font-semibold px-6 h-12 border border-[#b0b0b0]">Price</th>
-                                    <th scope="col" className="font-semibold px-6 h-12 border border-[#b0b0b0   ]">Order Date</th>    
+                                    <th scope="col" className="font-semibold px-6 h-12 border border-[#b0b0b0]">Date</th>    
                                 </tr>
                             </thead>
                             <tbody className='bg-transparent '>
@@ -80,7 +80,7 @@ const InventoryReport = () => {
                                     <td className="px-6 h-12">{report.difference.price}</td>
                                     <td className="px-6 h-12">{report.ending_amount.quantity}</td>
                                     <td className="px-6 h-12">{report.ending_amount.price}</td>
-                                    <td className="px-6 h-12">{report.createdAt}</td>
+                                    <td className="px-6 h-12">{new Date(report.createdAt).toLocaleDateString()}</td>
                                 </tr>
                                 ))}
                             </tbody>

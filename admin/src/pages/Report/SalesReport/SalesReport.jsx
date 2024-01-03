@@ -85,7 +85,7 @@ const SalesReport = () => {
                                                 </div>
                                             ))}
                                         </td> */}
-                                        <td className="px-6 h-12">{sale.createdAt}</td>
+                                        <td className="px-6 h-12">{new Date(sale.createdAt).toLocaleDateString()}</td>
                                         <td className="px-6 h-12">{sale.sub_total.toLocaleString("en-PH", { style: "currency", currency: "PHP" })}</td>
                                         {/* <td className="px-6 h-12">{sale.user_id.email}</td> */}
                                         <td className="px-6 h-12">
