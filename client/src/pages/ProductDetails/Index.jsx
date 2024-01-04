@@ -230,7 +230,7 @@ const ProductDetails = () => {
                                                 </Link>
                                                 <button onClick={addToCart} className="mx-2 p-2 bg-gray-800 hover:bg-gray-700 text-slate-200 rounded">Add to cart</button>
                                                 {/* <button onClick={() => setOpen(!open)} className="mx-2 p-2 bg-gray-800 hover:bg-gray-700 text-slate-200 rounded">Try it on</button> */}
-                                                <Link to={'/product/3d-view/' + id} className="mx-2 p-2 bg-slate-200 hover:bg-slate-300 text-gray-800 rounded">3D View</Link>
+                                                {/* <Link to={'/product/3d-view/' + id} className="mx-2 p-2 bg-slate-200 hover:bg-slate-300 text-gray-800 rounded">3D View</Link> */}
                                             </>
 
                                         ) : (
