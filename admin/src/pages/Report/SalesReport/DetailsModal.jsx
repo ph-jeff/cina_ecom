@@ -13,7 +13,7 @@ const style = {
     bgcolor: "#fff", // Set background color
     boxShadow: 24,
     p: 4, // Padding
-    borderRadius: 8, // Rounded corners
+    borderRadius: 2, // Rounded corners
 };
 
 const ModalLoading = () => {
