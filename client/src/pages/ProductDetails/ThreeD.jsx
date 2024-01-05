@@ -35,27 +35,38 @@
 
 // export default ThreeD;
 
-import React from 'react';
-import { Canvas } from '@react-three/fiber';
-import { useGLTF, PerspectiveCamera, OrbitControls } from '@react-three/drei';
+// import React from 'react';
+// import { Canvas } from '@react-three/fiber';
+// import { useGLTF, PerspectiveCamera, OrbitControls } from '@react-three/drei';
 
-const ShoeModel = () => {
-  const { scene } = useGLTF('/assets/camera.gltf');
-  return <primitive object={scene} />;
-};
+// const ShoeModel = () => {
+//   const { scene } = useGLTF('/assets/camera.gltf');
+//   return <primitive object={scene} />;
+// };
+
+// const ThreeD = () => {
+//   return (
+//     <div className="min-h-screen h-fit px-2 md:px-24 py-10 md:flex block">
+//       <Canvas>
+//         <ambientLight intensity={0.1} />
+//         <pointLight position={[10, 10, 50]} />
+//         <ShoeModel />
+//         <PerspectiveCamera position={[0, 0, 20]} />
+//         <OrbitControls />
+//       </Canvas>
+//     </div>
+//   );
+// };
+
+// export default ThreeD;
+
+
+import React from 'react'
 
 const ThreeD = () => {
   return (
-    <div className="min-h-screen h-fit px-2 md:px-24 py-10 md:flex block">
-      <Canvas>
-        <ambientLight intensity={0.1} />
-        <pointLight position={[10, 10, 50]} />
-        <ShoeModel />
-        <PerspectiveCamera position={[0, 0, 20]} />
-        <OrbitControls />
-      </Canvas>
-    </div>
-  );
-};
+    <div>ThreeD</div>
+  )
+}
 
-export default ThreeD;
+export default ThreeD

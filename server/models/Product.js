@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const slug = require('slug');
+const cron = require('node-cron');
 
 const productSchema = new mongoose.Schema({
     name: {
@@ -93,3 +94,34 @@ async function createProduct(){
 }
 
 // createProduct();
+
+// automatic update every minute
+cron.schedule('* * * * *', async () => {
+    try {
+        // cron.schedule('* * * * *', async () => {});
+        const currentDate = new Date();
+            // Find products where sale is active and 'to' date is in the past
+        const expiredProducts = await Product.find({
+            'sale.is_sale' : true,
+            'sale.end' : {
+                $lt: currentDate
+            }
+        });
+
+        // Update expired products
+        for (const product of expiredProducts) {
+            product.sale.is_sale = false;
+            product.sale.discount = 0;
+            product.sale.start = null;
+            product.sale.end = null;
+
+            await product.save();
+        }
+
+        if(expiredProducts.length != 0){
+            console.log('Products updated successfully. (automatic sale update)');
+        }
+    } catch (error) {
+        console.error('Error updating products:', error);
+    }
+});

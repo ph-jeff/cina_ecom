@@ -1,5 +1,5 @@
 const generateInventoryReport = (req, res, next) => {
-    console.log(req._parsedUrl.pathname)
+    // console.log(req._parsedUrl.pathname)
     next();
 }
 

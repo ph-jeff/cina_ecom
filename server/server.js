@@ -67,6 +67,7 @@ connectDB()
     // app.listen(PORT, () => {
     //     console.log(`The server is running on http://${getLocalIpAddress()}:${PORT}`);
     // })
+    
 })
 
 app.get('/', (req, res) => {
