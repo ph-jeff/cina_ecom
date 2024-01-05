@@ -73,19 +73,19 @@ const Transaction = () => {
             <div className="container mx-auto p-4 min-h-screen">
                 <h1 className='font-medium text-2xl mb-4'>Transaction</h1>
                 <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-5'>
-                    <button onClick={() => setStatus("pending")} className={`status-button ${status === "pending" ? 'bg-orange-300' : 'bg-slate-200'} rounded shadow h-[100px] w-[100vw md:w-[200px] `}>
+                    <button onClick={() => setStatus("pending")} className={`status-button ${status === "pending" ? 'bg-orange-300' : 'bg-white'} rounded shadow-md h-[100px] w-[100vw md:w-[200px] `}>
                         <Pending className='text-orange-800' />
                         <p className={`${status === "pending" ? 'text-orange-800' : ''}`}>Order</p>
                     </button>
-                    <button onClick={() => setStatus("prepairing")} className={`status-button ${status === "prepairing" ? 'bg-blue-300' : 'bg-slate-200'} rounded shadow h-[100px] w-[100vw md:w-[200px] `}>
+                    <button onClick={() => setStatus("prepairing")} className={`status-button ${status === "prepairing" ? 'bg-blue-300' : 'bg-white'} rounded shadow-md h-[100px] w-[100vw md:w-[200px] `}>
                         <ToPay className='text-blue-800' />
                         <p className={`${status === "prepairing" ? 'text-blue-800' : ''}`}>To Pay</p>
                     </button>
-                    <button onClick={() => setStatus("to-ship")} className={`status-button ${status === "to-ship" ? 'bg-green-300' : 'bg-slate-200'} rounded shadow h-[100px] w-[100vw md:w-[200px] `}>
+                    <button onClick={() => setStatus("to-ship")} className={`status-button ${status === "to-ship" ? 'bg-green-300' : 'bg-white'} rounded shadow-md h-[100px] w-[100vw md:w-[200px] `}>
                         <ToDeliver className='text-green-800' />
                         <p className={`${status === "to-ship" ? 'text-green-800' : ''}`}>To Ship</p>
                     </button>
-                    <button onClick={() => setStatus("delivered")} className={`status-button ${status === "delivered" ? 'bg-red-300' : 'bg-slate-200'} rounded shadow h-[100px] w-[100vw md:w-[200px] `}>
+                    <button onClick={() => setStatus("delivered")} className={`status-button ${status === "delivered" ? 'bg-red-300' : 'bg-white'} rounded shadow-md h-[100px] w-[100vw md:w-[200px] `}>
                         <Delivered className='text-red-800' />
                         <p className={`${status === "delivered" ? 'text-red-800' : ''}`}>Delivered</p>
                     </button>
