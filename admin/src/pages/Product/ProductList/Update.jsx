@@ -158,7 +158,7 @@ const Update = () => {
         formData.append('is_featured', featured);
         formData.append('is_sale', isOnSale);
         formData.append('discount', discount);
-        formData.append('start', saleStartDate);
+        // formData.append('start', saleStartDate);
         formData.append('end', saleEndDate);
 
         api.put(`/api/admin/product/update/${id}`, formData)
@@ -271,7 +271,7 @@ const Update = () => {
                         </div>
 
                         {isOnSale && (
-                            <div className="grid grid-cols-3 gap-4">
+                            <div className="grid grid-cols-2 gap-4">
                                 <div className="mb-4">
                                     <label htmlFor="discount" className="block text-sm font-medium text-gray-700">Discount (%)</label>
                                     <input
@@ -287,7 +287,7 @@ const Update = () => {
                                     />
                                 </div>
 
-                                <div className="mb-4">
+                                {/* <div className="mb-4">
                                     <label htmlFor="saleStartDate" className="block text-sm font-medium text-gray-700">Sale Start Date</label>
                                     <input
                                         id="saleStartDate"
@@ -298,7 +298,7 @@ const Update = () => {
                                         placeholder="Sale start date"
                                         required
                                     />
-                                </div>
+                                </div> */}
 
                                 <div className="mb-4">
                                     <label htmlFor="saleEndDate" className="block text-sm font-medium text-gray-700">Sale End Date</label>
