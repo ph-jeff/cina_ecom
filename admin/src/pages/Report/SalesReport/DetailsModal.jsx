@@ -65,54 +65,54 @@ const DetailsModal = ({ open, setOpen, salesId }) => {
             aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
-                <div className="border mb-2">
-                    <h1 className="text-xl font-semibold text-gray-800">Customer Details:</h1>
-                    <div className="container">
-                        <div>
-                            <label className="text-gray-600" htmlFor="">Name: </label>
-                            <span className="font-medium text-gray-800">
-                                {customer_information.firstname} {customer_information.middlename} {customer_information.lastname}
-                            </span>
+                {modalLoading && <ModalLoading />}
+                {!modalLoading && (
+                    <>
+                        <div className="border mb-2">
+                            <h1 className="text-xl font-semibold text-gray-800">Customer Details:</h1>
+                            <div className="container">
+                                <div>
+                                    <label className="text-gray-600" htmlFor="">Name: </label>
+                                    <span className="font-medium text-gray-800">
+                                        {customer_information.firstname} {customer_information.middlename} {customer_information.lastname}
+                                    </span>
+                                </div>
+                                <div>
+                                    <label className="text-gray-600" htmlFor="">Customer since: </label>
+                                    <span className="font-medium text-gray-800">{new Date(customer_information.createdAt).toLocaleDateString()}</span>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <label className="text-gray-600" htmlFor="">Customer since: </label>
-                            <span className="font-medium text-gray-800">{new Date(customer_information.createdAt).toLocaleDateString()}</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="border">
-                    <h1 className="text-xl font-semibold text-gray-800">Order Details:</h1>
-                    <div className="container">
-                        <table className="w-full">
-                            <thead>
-                                <tr>
-                                    <th className="text-left">Purchase Item</th>
-                                    <th className="text-left">Unit Size</th>
-                                    <th className="text-left">Quantity</th>
-                                    <th className="text-left">Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {modalLoading ? (
-                                    <tr>
-                                        <td colSpan="4" className="text-center py-4">
-                                            <ModalLoading />
-                                        </td>
-                                    </tr>
-                                ) : (
-                                    sold_items.map((item) => (
-                                        <tr key={item._id}>
-                                            <td className="text-left">{item.product_id.name}</td>
-                                            <td className="text-left">{item.size.unit_size}</td>
-                                            <td className="text-left">{item.quantity}</td>
-                                            <td className="text-left">{item.quantity * item.product_id.price}</td>
+                        <div className="border">
+                            <h1 className="text-xl font-semibold text-gray-800">Order Details:</h1>
+                            <div className="container">
+                                <table className="w-full">
+                                    <thead>
+                                        <tr>
+                                            <th className="text-left">Purchase Item</th>
+                                            <th className="text-left">Unit Size</th>
+                                            <th className="text-left">Quantity</th>
+                                            <th className="text-left">Amount</th>
                                         </tr>
-                                    ))
-                                )}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            sold_items.map((item) => (
+                                                <tr key={item._id}>
+                                                    <td className="text-left">{item.product_id.name}</td>
+                                                    <td className="text-left">{item.size.unit_size}</td>
+                                                    <td className="text-left">{item.quantity}</td>
+                                                    <td className="text-left">{item.quantity * item.product_id.price}</td>
+                                                </tr>
+                                            ))
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </>
+                )}
+                
             </Box>
         </Modal>
     );

@@ -67,7 +67,7 @@ const InventoryReport = () => {
                                     <th scope="col" className="font-semibold px-6 h-12 border border-[#b0b0b0]">Price</th>    
                                     <th scope="col" className="font-semibold px-6 h-12 border border-[#b0b0b0]">Qty</th>
                                     <th scope="col" className="font-semibold px-6 h-12 border border-[#b0b0b0]">Price</th>
-                                    <th scope="col" className="font-semibold px-6 h-12 border border-[#b0b0b0]">Date</th>    
+                                    <th scope="col" className="font-semibold px-6 h-12 border border-[#b0b0b0]">Updated On</th>    
                                 </tr>
                             </thead>
                             <tbody className='bg-transparent '>
